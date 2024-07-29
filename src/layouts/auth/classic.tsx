@@ -1,32 +1,14 @@
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 // auth
-import { useAuthContext } from 'src/auth/hooks';
 // routes
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 // hooks
-import { useResponsive } from 'src/hooks/use-responsive';
 // theme
-import { bgGradient } from 'src/theme/css';
 // components
 import Logo from 'src/components/logo';
+import {AuthBackground, LogoZapBlue} from "src/assets/icons";
 
 // ----------------------------------------------------------------------
-
-const METHODS = [
-  {
-    id: 'jwt',
-    label: 'Jwt',
-    path: paths.auth.jwt.login,
-    icon: '/assets/icons/auth/ic_jwt.svg',
-  },
-];
 
 type Props = {
   title?: string;
@@ -35,99 +17,41 @@ type Props = {
 };
 
 export default function AuthClassicLayout({ children, image, title }: Props) {
-  const { method } = useAuthContext();
 
-  const theme = useTheme();
-
-  const upMd = useResponsive('up', 'md');
-
-  const renderLogo = (
-    <Logo
-      sx={{
-        zIndex: 9,
-        position: 'absolute',
-        m: { xs: 2, md: 5 },
-      }}
-    />
-  );
-
-  const renderContent = (
-    <Stack
-      sx={{
-        width: 1,
-        mx: 'auto',
-        maxWidth: 480,
-        px: { xs: 2, md: 8 },
-        py: { xs: 15, md: 30 },
-      }}
-    >
-      {children}
-    </Stack>
-  );
-
-  const renderSection = (
-    <Stack
-      flexGrow={1}
-      alignItems="center"
-      justifyContent="center"
-      spacing={10}
-      sx={{
-        ...bgGradient({
-          color: alpha(
-            theme.palette.background.default,
-            theme.palette.mode === 'light' ? 0.88 : 0.94
-          ),
-          imgUrl: '/assets/background/overlay_2.jpg',
-        }),
-      }}
-    >
-      <Typography variant="h3" sx={{ maxWidth: 480, textAlign: 'center' }}>
-        {title || 'Hi, Welcome back'}
-      </Typography>
-
-      <Box
-        component="img"
-        alt="auth"
-        src={image || '/assets/illustrations/illustration_dashboard.png'}
-        sx={{ maxWidth: 720 }}
-      />
-
-      <Stack direction="row" spacing={2}>
-        {METHODS.map((option) => (
-          <Tooltip key={option.label} title={option.label}>
-            <Link component={RouterLink} href={option.path}>
-              <Box
-                component="img"
-                alt={option.label}
-                src={option.icon}
-                sx={{
-                  width: 32,
-                  height: 32,
-                  ...(method !== option.id && {
-                    filter: 'grayscale(100%)',
-                  }),
-                }}
-              />
-            </Link>
-          </Tooltip>
-        ))}
-      </Stack>
-    </Stack>
-  );
 
   return (
-    <Stack
-      component="main"
-      direction="row"
-      sx={{
-        minHeight: '100vh',
-      }}
-    >
-      {renderLogo}
-
-      {upMd && renderSection}
-
-      {renderContent}
-    </Stack>
+      <div className='flex bs-full justify-center'>
+          <div className='flex justify-center items-center bs-full min-is-full p-6 md:!min-is-[unset] md:py-12 md:px-[10%] md:is-[50dvw]'>
+              <div className='flex flex-col gap-5 is-full sm:is-auto md:is-full max-is-[400px]'>
+                  <div className="flex flex-col items-center justify-center is-full gap-2 mb-10">
+                      <div className="w-[11rem]">
+                          <Logo />
+                      </div>
+                      <Typography variant='h4'>به زپ اکسپرس خوش آمدید</Typography>
+                  </div>
+                  {children}
+              </div>
+          </div>
+          <div
+              className="flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden"
+          >
+              <div className="flex flex-1 h-full bg-primary relative rounded-[2rem] overflow-hidden pt-[20dvh]">
+                  <div className="flex flex-col items-center space-y-2 w-full">
+                      <div className="w-[270px]">
+                          <LogoZapBlue />
+                      </div>
+                      <Typography color="white" component="h1" variant="h4">
+                           زپ اکسپرس
+                      </Typography>
+                      <Typography color="white" component="h2" variant="caption">
+                           زپ اکسپرس
+                      </Typography>
+                  </div>
+                  <div className="absolute  md:-bottom-[1%] lg:-bottom-[5%] xl:-bottom-[10%] is-full">
+                      <AuthBackground />
+                  </div>
+              </div>
+          </div>
+      </div>
   );
 }

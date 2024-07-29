@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 // auth
 import { GuestGuard } from 'src/auth/guard';
 // layouts
-import AuthClassicLayout from 'src/layouts/auth/classic';
+import AuthClassicLayout from '@/layouts/auth/classic';
 
 // ----------------------------------------------------------------------
 
