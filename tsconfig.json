@@ -29,11 +29,11 @@
       "@/*": ["src/*"],
       "src/*": ["src/*"],
       "@mui/*": ["node_modules/@mui/*"]
-    },
+    }
   },
   "exclude": [
     "node_modules"
   ],
-  "include": ["src", "tsconfig.json","vite.config.ts"],
+  "include": ["src", "types/vite-env.d.ts","tsconfig.json","vite.config.ts","tailwind.config.js","postcss.config.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -53,6 +53,9 @@ export default defineConfig(({ mode }: { mode: string }) => {
       alias: {
         '@': path.resolve(__dirname, 'src'),
         src: path.join(__dirname, 'src'),
+        // "@widgets": path.resolve("src/widgets"),
+        // "@features": path.resolve("src/features"),
+        // "@entities": path.resolve("src/entities"),
       },
     },
     server: { port: PORT, host: true },
