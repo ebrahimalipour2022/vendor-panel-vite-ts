@@ -5,7 +5,6 @@ import 'simplebar-react/dist/simplebar.min.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // ----------------------------------------------------------------------
-
 // routes
 import Router from 'src/routes/sections';
 // theme
@@ -15,9 +14,10 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 // components
 import ProgressBar from 'src/components/progress-bar';
 import MotionLazy from 'src/components/animate/motion-lazy';
-import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
+import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 // auth
-import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
+import { AuthConsumer, AuthProvider } from 'src/auth/context/jwt';
+import CssBaseline from '@mui/material/CssBaseline';
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +47,7 @@ export default function App() {
         }}
       >
         <ThemeProvider>
+          <CssBaseline />
           <MotionLazy>
             <SettingsDrawer />
             <ProgressBar />

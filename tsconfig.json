@@ -34,6 +34,6 @@
   "exclude": [
     "node_modules"
   ],
-  "include": ["src", "types/vite-env.d.ts","tsconfig.json","vite.config.ts","tailwind.config.js","postcss.config.js"],
+  "include": ["src","tsconfig.json","vite.config.ts","tailwind.config.js","postcss.config.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

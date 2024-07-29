@@ -1,14 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-const tailwindlogoical = require("tailwindcss-logical")
-const plugin = require("./src/theme/tailwind/plugin")
+const tailwindlogoical = require('tailwindcss-logical');
+const plugin = require('./src/theme/tailwind/plugin');
 
-export default {
-    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,css}'],
-    corePlugins: {
-        preflight: false
-    },
-    plugins: [tailwindlogoical, plugin],
-    theme: {
-        extend: {}
-    }
-}
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  important: '#root',
+  plugins: [tailwindlogoical, plugin],
+  theme: {
+    extend: {},
+  },
+  corePlugins: {
+    // Remove the Tailwind CSS preflight styles so it can use Material UI's preflight instead (CssBaseline).
+    preflight: false,
+  },
+};

@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies,import/no-import-module-exports
-import plugin from 'tailwindcss/plugin'
+import plugin from 'tailwindcss/plugin';
 
 module.exports = plugin(() => {}, {
   theme: {
     borderColor: ({ theme }) => ({
       ...theme('colors'),
-      DEFAULT: 'var(--border-color, currentColor)'
+      DEFAULT: 'var(--border-color, currentColor)',
     }),
     borderRadius: {
       none: '0px',
@@ -18,14 +18,14 @@ module.exports = plugin(() => {}, {
       '2xl': '0.75rem',
       '3xl': '1rem',
       '4xl': '1.5rem',
-      full: '9999px'
+      full: '9999px',
     },
     screens: {
       sm: '600px',
       md: '900px',
       lg: '1200px',
       xl: '1536px',
-      '2xl': '1920px'
+      '2xl': '1920px',
     },
     extend: {
       boxShadow: {
@@ -34,41 +34,38 @@ module.exports = plugin(() => {}, {
         DEFAULT: 'var(--mui-customShadows-md)',
         md: 'var(--mui-customShadows-md)',
         lg: 'var(--mui-customShadows-lg)',
-        xl: 'var(--mui-customShadows-xl)'
+        xl: 'var(--mui-customShadows-xl)',
       },
       colors: {
-        primary: 'var(--primary-color)',
-        primaryLight: 'var(--mui-palette-primary-lightOpacity)',
-        primaryDark: 'var(--mui-palette-primary-dark)',
-        secondary: 'var(--mui-palette-secondary-main)',
-        error: 'var(--mui-palette-error-main)',
-        errorLight: 'var(--mui-palette-error-lightOpacity)',
-        warning: 'var(--mui-palette-warning-main)',
-        info: 'var(--mui-palette-info-main)',
-        success: 'var(--mui-palette-success-main)',
-        successLight: 'var(--mui-palette-success-lightOpacity)',
-        textPrimary: 'var(--mui-palette-text-primary)',
-        textSecondary: 'var(--mui-palette-text-secondary)',
-        textDisabled: 'var(--mui-palette-text-disabled)',
-        actionActive: 'var(--mui-palette-action-active)',
-        actionHover: 'var(--mui-palette-action-hover)',
-        actionSelected: 'var(--mui-palette-action-selected)',
-        actionFocus: 'var(--mui-palette-action-focus)',
-        backgroundPaper: 'var(--mui-palette-background-paper)',
-        backgroundDefault: 'var(--mui-palette-background-default)',
-        track: 'var(--mui-palette-customColors-trackBg)',
-        backdrop: 'var(--backdrop-color)',
-        facebook: '#497CE2',
-        twitter: '#1DA1F2',
-        googlePlus: '#DB4437'
+        primary: 'rgba(18, 92, 204, 1)',
+        primaryLight: 'rgba(22, 115, 255, 1)',
+        primaryDark: 'rgba(17, 86, 191, 1)',
+        secondary: '#68686B',
+        error: 'rgba(242, 25, 74, 1)',
+        errorLight: 'rgba(246, 101, 134, 1)',
+        warning: 'rgba(252, 215, 123, 1)',
+        info: '#26C6F9',
+        success: 'rgba(19, 195, 156, 1)',
+        successLight: 'rgba(97, 215, 189, 1)',
+        textPrimary: '#141414',
+        textSecondary: '#68686B',
+        textDisabled: '#68686B',
+        actionActive: '#E1E1E7',
+        actionHover: '#E1E1E7',
+        actionSelected: '#F7F7FE',
+        actionFocus: '#E1E1E7',
+        backgroundPaper: '#FFFFFF',
+        backgroundDefault: '#F7F7FE',
+        track: '#F5F5F8',
+        backdrop: '#F7F7FE',
       },
       zIndex: {
         header: 'var(--header-z-index)',
         footer: 'var(--footer-z-index)',
         customizer: 'var(--customizer-z-index)',
         search: 'var(--search-z-index)',
-        drawer: 'var(--drawer-z-index)'
-      }
-    }
-  }
-})
+        drawer: 'var(--drawer-z-index)',
+      },
+    },
+  },
+});

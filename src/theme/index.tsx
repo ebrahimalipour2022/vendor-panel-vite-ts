@@ -1,11 +1,11 @@
 import merge from 'lodash/merge';
 import { useMemo } from 'react';
 // @mui
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider as MuiThemeProvider, ThemeOptions } from '@mui/material/styles';
+import { createTheme, ThemeOptions, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 // components
 import { useSettingsContext } from 'src/components/settings';
 // system
+import { StyledEngineProvider } from '@mui/material';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
@@ -40,7 +40,17 @@ export default function ThemeProvider({ children }: Props) {
       shadows: shadows('light'),
       customShadows: customShadows('light'),
       typography,
-      shape: { borderRadius: 8 },
+      // shape: { borderRadius: 8 },
+      shape: {
+        borderRadius: 8,
+        customBorderRadius: {
+          xs: 2,
+          sm: 4,
+          md: 6,
+          lg: 8,
+          xl: 10,
+        },
+      },
     }),
 
     []
@@ -68,11 +78,10 @@ export default function ThemeProvider({ children }: Props) {
   theme.components = merge(componentsOverrides(theme), contrastOption.components);
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <RTL themeDirection={settings.themeDirection}>
-        <CssBaseline />
-        {children}
-      </RTL>
-    </MuiThemeProvider>
+    <StyledEngineProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <RTL themeDirection={settings.themeDirection}>{children}</RTL>
+      </MuiThemeProvider>
+    </StyledEngineProvider>
   );
 }

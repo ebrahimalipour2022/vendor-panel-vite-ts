@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 :root {
-    --border-radius: var(--mui-shape-borderRadius);
-    --border-color: var(--mui-palette-divider);
-    --primary-color: var(--mui-palette-primary-main);
-    --background-color: var(--mui-palette-background-default);
-    --background-color-rgb: var(--mui-palette-background-paperChannel);
+    --border-radius: 10px;
+    --border-color: #E1E1E7;
+    --primary-color: rgba(22, 115, 255, 1);
+    --background-color: #F7F7FE;
+    --background-color-rgb: #FFFFFF;
     --header-height: 64px;
-    --header-z-index: var(--mui-zIndex-appBar);
+    --header-z-index: 1100;
     --footer-z-index: 10;
-    --customizer-z-index: var(--mui-zIndex-drawer);
-    --search-z-index: var(--mui-zIndex-tooltip);
-    --drawer-z-index: var(--mui-zIndex-drawer);
-    --backdrop-color: rgb(var(--mui-mainColorChannels-light) / 0.5);
+    --customizer-z-index: 1200;
+    --search-z-index: 1500;
+    --drawer-z-index: 1200;
+    --backdrop-color: rgba(0 0 0 / 0.5);
 }
 
 [data-mui-color-scheme='dark'] {
