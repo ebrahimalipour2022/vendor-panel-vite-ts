@@ -6,3 +6,7 @@ export { default as PlanStarterIcon } from './plan-starter-icon';
 export { default as PlanPremiumIcon } from './plan-premium-icon';
 export { default as LogoZapBlue } from './LogoZapBlue';
 export { default as AuthBackground } from './Auth-Background';
+export { default as KeyIcon } from './KeyIcon';
+export { default as UserEditIcon } from './UserEdit';
+export { default as ArrowLeftIcon } from './ArrowLeft';
+export { default as ExitIcon } from './ExitIcon';

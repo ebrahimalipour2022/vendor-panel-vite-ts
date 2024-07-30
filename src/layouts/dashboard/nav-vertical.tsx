@@ -13,11 +13,8 @@ import Scrollbar from 'src/components/scrollbar';
 import { usePathname } from 'src/routes/hook';
 import { NavSectionVertical } from 'src/components/nav-section';
 //
-import NavItem from '@/components/nav-section/vertical/nav-item';
-import List from '@mui/material/List';
-import { navVerticalConfig } from '@/components/nav-section/config';
-import SvgColor from '@/components/svg-color';
 import { useTranslation } from 'react-i18next';
+import AccountMenuItem from '@/components/profile-section/AccountMenuItem';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
 import { NavToggleButton } from '../_common';
@@ -29,20 +26,7 @@ type Props = {
   onCloseNav: VoidFunction;
 };
 
-const icon = (name: string) => (
-  <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
-  // OR
-  // <Iconify icon="fluent:mail-24-filled" />
-  // https://icon-sets.iconify.design/solar/
-  // https://www.streamlinehq.com/icons
-);
-
-const ICONS = {
-  job: icon('ic_job'),
-};
-
 export default function NavVertical({ openNav, onCloseNav }: Props) {
-  const { t } = useTranslation();
   const { user } = useMockedUser();
 
   const pathname = usePathname();
@@ -58,8 +42,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleToggle = () => {};
-
   const renderContent = (
     <Scrollbar
       sx={{
@@ -72,17 +54,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       }}
     >
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
-      <List disablePadding sx={{ px: 2 }}>
-        <NavItem
-          item={{ title: t('profile.username'), path: '', icon: ICONS.job }}
-          depth={1}
-          // open={open}
-          active={false}
-          // externalLink={''}
-          onClick={handleToggle}
-          config={navVerticalConfig()}
-        />
-      </List>
+      <AccountMenuItem />
       <NavSectionVertical
         data={navData}
         config={{

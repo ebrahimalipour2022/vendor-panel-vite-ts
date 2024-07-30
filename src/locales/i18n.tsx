@@ -33,6 +33,8 @@ i18next
   });
 
 // ----------------------------------------------------------------------
+export const i18n = i18next;
+// ----------------------------------------------------------------------
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   return <Provider i18n={i18next}>{children}</Provider>;
