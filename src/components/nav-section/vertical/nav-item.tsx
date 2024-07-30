@@ -120,19 +120,22 @@ export default function NavItem({
   }
 
   // Default
-  return (
-    <Link
-      component={RouterLink}
-      href={path}
-      underline="none"
-      color="inherit"
-      sx={{
-        ...(disabled && {
-          cursor: 'default',
-        }),
-      }}
-    >
-      {renderContent}
-    </Link>
-  );
+  if (path)
+    return (
+      <Link
+        component={RouterLink}
+        href={path}
+        underline="none"
+        color="inherit"
+        sx={{
+          ...(disabled && {
+            cursor: 'default',
+          }),
+        }}
+      >
+        {renderContent}
+      </Link>
+    );
+
+  return renderContent;
 }
