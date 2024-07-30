@@ -1,11 +1,15 @@
 import merge from 'lodash/merge';
 import { useMemo } from 'react';
 // @mui
-import { createTheme, ThemeOptions, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
 // components
 import { useSettingsContext } from 'src/components/settings';
 // system
-import { StyledEngineProvider } from '@mui/material';
+import {
+  Experimental_CssVarsProvider as CssVarsProvider,
+  experimental_extendTheme as extendTheme,
+  StyledEngineProvider,
+} from '@mui/material';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
@@ -77,11 +81,19 @@ export default function ThemeProvider({ children }: Props) {
 
   theme.components = merge(componentsOverrides(theme), contrastOption.components);
 
+  const _theme = extendTheme(theme);
   return (
     <StyledEngineProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
+      <CssVarsProvider
+        theme={_theme}
+        defaultMode="light"
+        // modeStorageKey={`${themeConfig.templateName
+        //   .toLowerCase()
+        //   .split(' ')
+        //   .join('-')}-mui-template-mode`}
+      >
         <RTL themeDirection={settings.themeDirection}>{children}</RTL>
-      </MuiThemeProvider>
+      </CssVarsProvider>
     </StyledEngineProvider>
   );
 }
