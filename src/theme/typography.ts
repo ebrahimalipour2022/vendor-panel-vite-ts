@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import {CSSProperties} from "react";
+
 export function remToPx(value: string) {
   return Math.round(parseFloat(value) * 16);
 }
@@ -24,11 +26,11 @@ export function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
-    fontWeightSemiBold: React.CSSProperties['fontWeight'];
+    fontWeightSemiBold: CSSProperties['fontWeight'];
   }
 }
 
-const primaryFont = 'Public Sans, sans-serif'; // Google Font
+const primaryFont = 'YekanBakhFaNum, tahoma, Public Sans, sans-serif'; // Google Font
 // const secondaryFont = 'CircularStd, sans-serif'; // Local Font
 
 // ----------------------------------------------------------------------

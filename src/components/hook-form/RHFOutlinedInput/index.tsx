@@ -13,8 +13,7 @@ const RHFOutlinedInput = ({
   required,
   inputProps,
   ...rest
-}: OutlinedInputProps & { helperText?: ReactNode }) => {
-  return (
+}: OutlinedInputProps & { helperText?: ReactNode }) => (
     <Stack spacing={2}>
       <InputLabel shrink={false} htmlFor={name}>
         {label || ''}
@@ -22,7 +21,7 @@ const RHFOutlinedInput = ({
       <OutlinedInput
         fullWidth
         required={required}
-        type={'text'}
+        type="text"
         placeholder={placeholder}
         inputProps={{
           ...inputProps,
@@ -36,6 +35,5 @@ const RHFOutlinedInput = ({
       </FormHelperText>
     </Stack>
   )
-}
 
 export default RHFOutlinedInput

@@ -1,5 +1,3 @@
-'use client';
-
 // Next Imports
 // import { useRouter, useSearchParams } from 'next/navigation';
 
