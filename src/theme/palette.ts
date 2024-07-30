@@ -19,7 +19,7 @@ declare module '@mui/material/styles/createPalette' {
 }
 
 // SETUP COLORS
-
+// SURFACE
 const GREY = {
   0: '#FFFFFF',
   100: '#F9FAFB',
@@ -33,21 +33,30 @@ const GREY = {
   900: '#161C24',
 };
 
+const SURFACE = {
+  surface0: '#FFFFFF',
+  surface1: '#FAFAFE',
+  surface2: '#F7F7FE',
+  surface3: '#E1E1E7',
+  surface4: '#68686B',
+  surface5: '#141414',
+};
+
 const PRIMARY = {
-  lighter: '#C8FAD6',
-  light: '#5BE49B',
-  main: '#00A76F',
-  dark: '#007867',
-  darker: '#004B50',
+  lighter: 'rgba(183, 212, 255, 1)',
+  light: 'rgba(22, 115, 255, 1)',
+  main: 'rgba(18, 92, 204, 1)',
+  dark: 'rgba(17, 86, 191, 1)',
+  darker: 'rgba(13, 69, 153, 1)',
   contrastText: '#FFFFFF',
 };
 
 const SECONDARY = {
-  lighter: '#EFD6FF',
-  light: '#C684FF',
-  main: '#8E33FF',
-  dark: '#5119B7',
-  darker: '#27097A',
+  lighter: SURFACE.surface2,
+  light: SURFACE.surface3,
+  main: SURFACE.surface4,
+  dark: SURFACE.surface5,
+  darker: '#000000',
   contrastText: '#FFFFFF',
 };
 
@@ -61,29 +70,29 @@ const INFO = {
 };
 
 const SUCCESS = {
-  lighter: '#D3FCD2',
-  light: '#77ED8B',
-  main: '#22C55E',
-  dark: '#118D57',
-  darker: '#065E49',
+  lighter: 'rgba(182, 236, 224, 1)',
+  light: 'rgba(97, 215, 189, 1)',
+  main: 'rgba(19, 195, 156, 1)',
+  dark: 'rgba(17, 177, 142, 1)',
+  darker: 'rgba(13, 138, 111, 1)',
   contrastText: '#ffffff',
 };
 
 const WARNING = {
-  lighter: '#FFF5CC',
-  light: '#FFD666',
-  main: '#FFAB00',
-  dark: '#B76E00',
-  darker: '#7A4100',
+  lighter: 'rgba(254, 236, 194, 1)',
+  light: 'rgba(255, 249, 235, 1)',
+  main: 'rgba(252, 215, 123, 1)',
+  dark: 'rgba(228, 177, 53, 1)',
+  darker: 'rgba(178, 138, 41, 1)',
   contrastText: GREY[800],
 };
 
 const ERROR = {
-  lighter: '#FFE9D5',
-  light: '#FFAC82',
-  main: '#FF5630',
-  dark: '#B71D18',
-  darker: '#7A0916',
+  lighter: 'rgba(251, 184, 199, 1)',
+  light: 'rgba(246, 101, 134, 1)',
+  main: 'rgba(242, 25, 74, 1)',
+  dark: 'rgba(220, 23, 67, 1)',
+  darker: 'rgba(172, 18, 53, 1)',
   contrastText: '#FFFFFF',
 };
 
@@ -99,13 +108,14 @@ const COMMON = {
   warning: WARNING,
   error: ERROR,
   grey: GREY,
-  divider: alpha(GREY[500], 0.2),
+  // divider: alpha(GREY[500], 0.2),
+  divider: SURFACE.surface3,
   action: {
-    hover: alpha(GREY[500], 0.08),
-    selected: alpha(GREY[500], 0.16),
-    disabled: alpha(GREY[500], 0.8),
-    disabledBackground: alpha(GREY[500], 0.24),
-    focus: alpha(GREY[500], 0.24),
+    hover: SURFACE.surface3,
+    selected: SURFACE.surface2,
+    disabled: SURFACE.surface2,
+    disabledBackground: SURFACE.surface2,
+    focus: SURFACE.surface3,
     hoverOpacity: 0.08,
     disabledOpacity: 0.48,
   },
@@ -121,13 +131,13 @@ export function palette(mode: 'light' | 'dark') {
       disabled: GREY[500],
     },
     background: {
-      paper: '#FFFFFF',
+      paper: SURFACE.surface2,
       default: '#FFFFFF',
-      neutral: GREY[200],
+      neutral: SURFACE.surface2,
     },
     action: {
       ...COMMON.action,
-      active: GREY[600],
+      active: SURFACE.surface3,
     },
   };
 
