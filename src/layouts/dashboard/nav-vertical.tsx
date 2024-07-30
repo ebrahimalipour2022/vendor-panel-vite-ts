@@ -17,6 +17,7 @@ import NavItem from '@/components/nav-section/vertical/nav-item';
 import List from '@mui/material/List';
 import { navVerticalConfig } from '@/components/nav-section/config';
 import SvgColor from '@/components/svg-color';
+import { useTranslation } from 'react-i18next';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
 import { NavToggleButton } from '../_common';
@@ -41,6 +42,7 @@ const ICONS = {
 };
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
+  const { t } = useTranslation();
   const { user } = useMockedUser();
 
   const pathname = usePathname();
@@ -72,7 +74,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
       <List disablePadding sx={{ px: 2 }}>
         <NavItem
-          item={{ title: 'پروفایل', path: '', icon: ICONS.job }}
+          item={{ title: t('profile.username'), path: '', icon: ICONS.job }}
           depth={1}
           // open={open}
           active={false}
