@@ -6,7 +6,12 @@ import Typography from '@mui/material/Typography';
 // theme
 // components
 import Logo from 'src/components/logo';
-import {AuthBackground, LogoZapBlue} from "src/assets/icons";
+import { AuthBackground, LogoZapBlue } from 'src/assets/icons';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { Grid } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -16,42 +21,106 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function AuthClassicLayout({ children, image, title }: Props) {
-
-
+function AuthClassicLayout({ children, image, title }: Props) {
+  const theme = useTheme();
+  const { t } = useTranslation();
   return (
-      <div className='flex bs-full justify-center'>
-          <div className='flex justify-center items-center bs-full min-is-full p-6 md:!min-is-[unset] md:py-12 md:px-[10%] md:is-[50dvw]'>
-              <div className='flex flex-col gap-5 is-full sm:is-auto md:is-full max-is-[400px]'>
-                  <div className="flex flex-col items-center justify-center is-full gap-2 mb-10">
-                      <div className="w-[11rem]">
-                          <Logo />
-                      </div>
-                      <Typography variant='h4'>به زپ اکسپرس خوش آمدید</Typography>
-                  </div>
-                  {children}
-              </div>
-          </div>
-          <div
-              className="flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden"
+    <Box display="flex" height="100vh" justifyContent="center">
+      <Container
+        maxWidth="md"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          padding: '2rem',
+          [theme.breakpoints.up('md')]: {
+            padding: '4rem 10%',
+            minHeight: 'unset',
+            paddingTop: '12rem',
+            paddingBottom: '12rem',
+            width: '50vw',
+          },
+        }}
+      >
+        <Grid
+          container
+          direction="column"
+          spacing={3}
+          sx={{
+            maxWidth: 400,
+            [theme.breakpoints.up('sm')]: { maxWidth: 'auto' },
+            [theme.breakpoints.up('md')]: { maxWidth: '100%' },
+          }}
+        >
+          <Grid item container alignItems="center" justifyContent="center" spacing={2}>
+            <Grid item>
+              <Logo />
+            </Grid>
+            <Grid item>
+              <Typography variant="h4">{`${t('authLogin.welcome', {
+                value: t('brandTitle'),
+              })} 👋`}</Typography>
+            </Grid>
+          </Grid>
+          {children}
+        </Grid>
+      </Container>
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+          position: 'relative',
+          padding: '2rem',
+          [theme.breakpoints.down('md')]: { display: 'none' },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            height: '100%',
+            backgroundColor: 'primary.main',
+            borderRadius: 2,
+            overflow: 'hidden',
+            paddingTop: '20vh',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 2,
+              width: '100%',
+            }}
           >
-              <div className="flex flex-1 h-full bg-primary relative rounded-[2rem] overflow-hidden pt-[20dvh]">
-                  <div className="flex flex-col items-center space-y-2 w-full">
-                      <div className="w-[270px]">
-                          <LogoZapBlue />
-                      </div>
-                      <Typography color="white" component="h1" variant="h4">
-                           زپ اکسپرس
-                      </Typography>
-                      <Typography color="white" component="h2" variant="caption">
-                           زپ اکسپرس
-                      </Typography>
-                  </div>
-                  <div className="absolute  md:-bottom-[1%] lg:-bottom-[5%] xl:-bottom-[10%] is-full">
-                      <AuthBackground />
-                  </div>
-              </div>
-          </div>
-      </div>
+            <Box sx={{ width: 270 }}>
+              <LogoZapBlue />
+            </Box>
+            <Typography color="white" variant="h4" component="h1">
+              {t('brandTitle')}
+            </Typography>
+            <Typography color="white" variant="caption" component="h2">
+              {t('brandSubtitle')}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: { xs: '-1%', md: '-1%', lg: '-5%', xl: '-10%' },
+              width: '100%',
+            }}
+          >
+            <AuthBackground />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
+
+export default AuthClassicLayout;

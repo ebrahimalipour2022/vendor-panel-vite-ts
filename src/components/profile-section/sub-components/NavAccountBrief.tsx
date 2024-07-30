@@ -17,7 +17,8 @@ const NavAccountBrief = ({ userInfo, isLoading }: { userInfo: any; isLoading: bo
             component="p"
             className="overflow-hidden whitespace-nowrap text-ellipsis font-semibold text-[var(--mui-palette-common-white)]"
           >
-            {userInfo?.name || '-----'}
+            {/*{userInfo?.name || '-----'}*/}
+            {'کوروش کبیر'}
           </Typography>
           <Typography
             component="p"

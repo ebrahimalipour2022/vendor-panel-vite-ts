@@ -1,10 +1,7 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import useSWR from 'swr';
 import Paper from '@mui/material/Paper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import type { Theme } from '@mui/material/styles';
 
@@ -19,12 +16,17 @@ import MobileAccountBrief from '@/components/profile-section/sub-components/Mobi
 import { KeyIcon, UserEditIcon } from '@/assets/icons';
 import CustomDialog from '@/components/dialogs/custom-dialog';
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
-import NavAccountBrief from '@/components/profile-section/sub-components/NavAccountBrief';
 // import CustomAvatar from '@/components/mui/Avatar';
 import { umAPI } from '@/utils/axios/api';
 import urls from '@/utils/axios/urls';
 import SvgColor from '@/components/svg-color';
 import { useSettingsContext } from '@/components/settings';
+import { navVerticalConfig } from '@/components/nav-section/config';
+import CustomAvatar from '@/components/mui/Avatar';
+import List from '@mui/material/List';
+import NavItem from '@/components/nav-section/vertical/nav-item';
+import Popover from '@mui/material/Popover';
+import { Fade, Popper } from '@mui/material';
 
 type ModalType = 'avatar' | 'password' | null;
 
@@ -45,86 +47,110 @@ function AccountMenuItem() {
   // fetch data
   const { data: userInfo, isLoading } = useSWR(urls.userInfo(), () => umAPI.userInfoAxios());
   // Hooks
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
   const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const [modal, setModal] = useState<ModalType>(null);
   const settings = useSettingsContext();
-  const handleClose = () => {
-    setOpen(false);
-  };
 
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState(false);
   const onMouseEnter = () => {
-    if (!isSmallScreen) {
-      setOpen((prevOpen) => !prevOpen);
-    }
+    // if (!isSmallScreen) {
+    // }
   };
 
-  const onMouseLeave = () => {
-    if (!isSmallScreen) {
-      setOpen((prevOpen) => !prevOpen);
-    }
+  const onMouseLeave = () => {};
+
+  const onToggleMenu = (event: any) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => !prev);
   };
 
-  const onToggleMenu = () => {
-    if (isSmallScreen) {
-      setOpen((prevOpen) => !prevOpen);
-    }
-  };
-
-  const handleOpenFormModal = (val: ModalType) => {
-    setModal(val);
-  };
+  const handleOpenFormModal = (event: any) => {};
 
   const handleCloseFormModal = () => {
-    setModal(null);
+    setAnchorEl(null);
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handlePopoverOpen = (event: any) => {
+    if (!isSmallScreen) {
+      setAnchorEl(event.currentTarget);
+    }
+  };
+
+  const handlePopoverClose = () => {
+    if (!isSmallScreen) {
+      setAnchorEl(null);
+    }
+  };
+
+  const id = 'profile-button';
   return (
     <>
-      <div
-        ref={anchorRef}
-        id="profile-button"
-        aria-controls={open ? 'profile-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        onClick={onToggleMenu}
-        // icon={<CustomAvatar src="" alt={userInfo?.name} size={40} />}
-        // suffix={<i className="ri-arrow-left-s-line text-xl" />}
-      >
-        {settings.themeLayout === 'vertical' && (
-          <NavAccountBrief userInfo={userInfo} isLoading={isLoading} />
-        )}
+      <List disablePadding sx={{ px: 2 }}>
+        <NavItem
+          id={id}
+          aria-owns={open ? 'mouse-over-popover' : undefined}
+          aria-controls={open ? 'profile-menu' : undefined}
+          aria-expanded={open ? 'true' : undefined}
+          aria-haspopup="true"
+          aria-label="open profile"
+          item={{
+            title: t('profile.username'),
+            path: '',
+            icon: <CustomAvatar src="" alt={userInfo?.name} size={40} />,
+          }}
+          depth={1}
+          active={false}
+          // onMouseEnter={handlePopoverOpen}
+          // onMouseLeave={handlePopoverClose}
+          onClick={onToggleMenu}
+          config={navVerticalConfig()}
+        />
         {!isSmallScreen && (
           <Popper
+            id={id}
             open={open}
+            anchorEl={anchorEl}
             transition
             disablePortal={false}
-            placement="left-start"
-            anchorEl={anchorRef.current}
-            className={`is-96 !mbs-4 z-[1] !mr-3 `}
+            placement={'left-start'}
+            sx={{ zIndex: 2000 }}
           >
-            {({ TransitionProps, placement }) => (
-              <Fade
-                {...TransitionProps}
-                style={{ transformOrigin: placement === 'left-end' ? 'right left' : 'left right' }}
-              >
+            {({ TransitionProps }) => (
+              <Fade {...TransitionProps} timeout={350}>
                 <Paper className={classnames('shadow-lg', modal ? 'hidden' : '')}>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <ProfileMenuItems
-                      userInfo={userInfo}
-                      isLoading={isLoading}
-                      setOpen={handleOpenFormModal}
-                    />
-                  </ClickAwayListener>
+                  <ProfileMenuItems
+                    userInfo={userInfo}
+                    isLoading={isLoading}
+                    setOpen={handleOpenFormModal}
+                  />
                 </Paper>
               </Fade>
             )}
           </Popper>
         )}
-      </div>
+      </List>
+      {/*<div*/}
+      {/*  ref={anchorRef}*/}
+      {/*  id="profile-button"*/}
+      {/*  aria-controls={open ? 'profile-menu' : undefined}*/}
+      {/*  aria-expanded={open ? 'true' : undefined}*/}
+      {/*  aria-haspopup="true"*/}
+      {/*  onMouseEnter={onMouseEnter}*/}
+      {/*  onMouseLeave={onMouseLeave}*/}
+      {/*  onClick={onToggleMenu}*/}
+      {/*  // icon={<CustomAvatar src="" alt={userInfo?.name} size={40} />}*/}
+      {/*  // suffix={<i className="ri-arrow-left-s-line text-xl" />}*/}
+      {/*>*/}
+      {/*</div>*/}
+      {/*{settings.themeLayout === 'vertical' && (*/}
+      {/*  <NavAccountBrief userInfo={userInfo} isLoading={isLoading} />*/}
+      {/*)}*/}
+
       {/* Must be outside VMenuItem because closeable outside VMenuItem */}
       {isSmallScreen && (
         <MobileDialog open={open} setOpen={handleClose} puller>

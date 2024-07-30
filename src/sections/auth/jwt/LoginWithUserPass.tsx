@@ -13,14 +13,13 @@ import FormHelperText from '@mui/material/FormHelperText';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 // import { toast } from 'react-toastify'
-
 // Hook Imports
 // import { useTranslations } from 'next-intl'
-
 // Util Imports
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
+import { useTranslation } from 'react-i18next';
 
 // import { YupValidators } from '@/utils/forms-validation'
 // import RHFPasswordField from '@core/components/hook-form/RHFPasswordInput'
@@ -32,7 +31,7 @@ interface FormData {
 
 const LoginWithUserPass = () => {
   // Hooks
-  // const t = useTranslations()
+  const { t } = useTranslation();
   // const router = useRouter();
   // const searchParams = useSearchParams();
 
@@ -90,8 +89,7 @@ const LoginWithUserPass = () => {
         render={({ field }) => (
           <Stack spacing={1.7}>
             <FormLabel required error={!!errors.username} disabled={isSubmitting}>
-              {/* {t('authLogin.username')} */}
-              نام کاربری
+              {t('authLogin.username')}
             </FormLabel>
             <OutlinedInput
               {...field}
@@ -99,8 +97,7 @@ const LoginWithUserPass = () => {
               autoFocus
               disabled={isSubmitting}
               type="text"
-              placeholder="نام کاربری"
-              // placeholder={t('authLogin.username_placeholder')}
+              placeholder={t('authLogin.username_placeholder')}
               onChange={(e) => {
                 field.onChange(e.target.value);
                 // errorState !== null && setErrorState(null)
@@ -124,10 +121,8 @@ const LoginWithUserPass = () => {
         rules={{ required: true }}
         render={({ field, fieldState: { error } }) => (
           <RHFPasswordField
-            // label={t('authLogin.password')}
-            label="رمز عبور"
-            placeholder="رمز عبور"
-            // placeholder={t('authLogin.password_placeholder')}
+            label={t('authLogin.password')}
+            placeholder={t('authLogin.password_placeholder')}
             error={!!error?.message}
             helperText={error?.message}
             required
@@ -142,8 +137,9 @@ const LoginWithUserPass = () => {
         type="submit"
         loading={isSubmitting}
       >
-        ورود به زپ
-        {/* {t('authLogin.login_to', { value: t('brandTitle') })} */}
+        {`${t('authLogin.login_to', {
+          value: t('brandTitle'),
+        })}`}
       </LoadingButton>
     </form>
   );
