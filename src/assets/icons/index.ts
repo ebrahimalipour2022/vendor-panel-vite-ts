@@ -1,3 +1,4 @@
+export { default as SplashBgIcon } from './SplashBgIcon';
 export { default as LogoZapBlue } from './LogoZapBlue';
 export { default as AuthBackground } from './AuthBackground';
 export { default as EmptyStateIcon } from './EmptyStateIcon';

@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 import Box, { BoxProps } from '@mui/material/Box';
 // routes
 import { RouterLink } from '@/routes/components';
-import LogoZapBlue from '@/assets/icons/LogoZapBlue';
+import { LogoZapBlue } from '@/assets/icons';
 
 // ----------------------------------------------------------------------
 
@@ -22,16 +22,6 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     const PRIMARY_MAIN = theme.palette.primary.main;
 
     const PRIMARY_DARK = theme.palette.primary.dark;
-
-    // OR using local (public folder)
-    // -------------------------------------------------------
-    // const logo = (
-    //   <Box
-    //     component="img"
-    //     src="/logo/logo_single.svg" => your path
-    //     sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
-    //   />
-    // );
 
     const logo = (
       <Box

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { AuthGuard } from 'src/auth/guard';
 // layouts
 // components
-import { LoadingScreen } from 'src/components/loading-screen';
+import { LoadingScreen, SplashScreen } from 'src/components/loading-screen';
 import DashboardLayout from '@/layouts/dashboard/dashboard';
 
 // ----------------------------------------------------------------------
@@ -28,7 +28,13 @@ export const dashboardRoutes = [
     element: (
       <AuthGuard>
         <DashboardLayout>
-          <Suspense fallback={<LoadingScreen />}>
+          <Suspense
+            fallback={
+              <div className={'absolute inset-0'}>
+                <LoadingScreen />
+              </div>
+            }
+          >
             <Outlet />
           </Suspense>
         </DashboardLayout>
