@@ -12,7 +12,7 @@ import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSetting
 // Util Imports
 import { useTranslation } from 'react-i18next';
 import { AuthBackground, LogoZapBlue } from '@/assets/icons';
-import Logo from '@/components/logo';
+import ZapLogo from '@/assets/icons/Logo';
 
 const AuthLayout = (props: ChildrenType) => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ const AuthLayout = (props: ChildrenType) => {
         <div className="flex flex-col gap-5 is-full sm:is-auto md:is-full max-is-[400px]">
           <div className={'flex flex-col items-center justify-center is-full gap-2 mb-10'}>
             <div className={'w-[11rem]'}>
-              <Logo />
+              <ZapLogo />
             </div>
             <Typography variant="h4">{`${t('authLogin.welcome', {
               value: t('brandTitle'),
