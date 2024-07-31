@@ -1,4 +1,3 @@
-// Next Imports
 // MUI Imports
 import { useTheme } from '@mui/material/styles';
 
@@ -24,7 +23,7 @@ import StyledVerticalNavExpandIcon from '@/layouts/materialize-layout/@menu/styl
 import menuItemStyles from '@/layouts/materialize-layout/@core/styles/vertical/menuItemStyles';
 import menuSectionStyles from '@/layouts/materialize-layout/@core/styles/vertical/menuSectionStyles';
 import WalletBalance from '@/layouts/materialize-layout/components/layout/shared/WalletBalance';
-// import AccountMenuItem from '@/layouts/materialize-layout/menu/components/vertical-menu/AccountMenuItem'
+import AccountMenuItem from '@/layouts/materialize-layout/@menu/components/vertical-menu/AccountMenuItem';
 
 // Menu Data Imports
 // import menuData from '@/data/navigation/verticalMenuData'
@@ -82,7 +81,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
-        {/*<AccountMenuItem settings={settings} />*/}
+        <AccountMenuItem settings={settings} />
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
         <MenuItem href="/orders" icon={<i className="ri-home-smile-line" />}>{`سفارش ها`}</MenuItem>
         <MenuItem

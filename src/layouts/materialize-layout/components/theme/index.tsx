@@ -26,6 +26,7 @@ import type { ChildrenType, Direction, SystemMode } from '@/layouts/materialize-
 import themeConfig from '@/layouts/materialize-layout/configs/themeConfig';
 import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSettings';
 import RTL from '@/layouts/materialize-layout/components/theme/right-to-left';
+import { StyledEngineProvider } from '@mui/material';
 import ModeChanger from './ModeChanger';
 
 type Props = ChildrenType & {
@@ -94,11 +95,13 @@ const ThemeProvider = (props: Props) => {
         .split(' ')
         .join('-')}-mui-template-mode`}
     >
-      <>
-        <ModeChanger />
-        <CssBaseline />
-        <RTL themeDirection={theme.direction}>{children}</RTL>
-      </>
+      <StyledEngineProvider injectFirst>
+        <>
+          <ModeChanger />
+          <CssBaseline />
+          <RTL themeDirection={theme.direction}>{children}</RTL>
+        </>
+      </StyledEngineProvider>
     </CssVarsProvider>
   );
 };
