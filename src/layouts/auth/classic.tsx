@@ -7,9 +7,6 @@ import Typography from '@mui/material/Typography';
 // components
 import Logo from 'src/components/logo';
 import { AuthBackground, LogoZapBlue } from 'src/assets/icons';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import { Grid } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 
@@ -25,101 +22,47 @@ function AuthClassicLayout({ children, image, title }: Props) {
   const theme = useTheme();
   const { t } = useTranslation();
   return (
-    <Box display="flex" height="100vh" justifyContent="center">
-      <Container
-        maxWidth="md"
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          padding: '2rem',
-          [theme.breakpoints.up('md')]: {
-            padding: '4rem 10%',
-            minHeight: 'unset',
-            paddingTop: '12rem',
-            paddingBottom: '12rem',
-            width: '50vw',
-          },
-        }}
-      >
-        <Grid
-          container
-          direction="column"
-          spacing={3}
-          sx={{
-            maxWidth: 400,
-            [theme.breakpoints.up('sm')]: { maxWidth: 'auto' },
-            [theme.breakpoints.up('md')]: { maxWidth: '100%' },
-          }}
-        >
-          <Grid item container alignItems="center" justifyContent="center" spacing={2}>
-            <Grid item>
+    <div className="flex bs-full justify-center">
+      <div className="flex justify-center items-center bs-full min-is-full p-6 md:!min-is-[unset] md:py-12 md:px-[10%] md:is-[50dvw]">
+        <div className="flex flex-col gap-5 is-full sm:is-auto md:is-full max-is-[400px]">
+          <div className={'flex flex-col items-center justify-center is-full gap-2 mb-10'}>
+            <div className={'w-[11rem]'}>
               <Logo />
-            </Grid>
-            <Grid item>
-              <Typography variant="h4">{`${t('authLogin.welcome', {
-                value: t('brandTitle'),
-              })} 👋`}</Typography>
-            </Grid>
-          </Grid>
+            </div>
+            <Typography variant="h4">{`${t('authLogin.welcome', {
+              value: t('brandTitle'),
+            })} 👋`}</Typography>
+          </div>
           {children}
-        </Grid>
-      </Container>
-      <Box
-        sx={{
-          display: 'flex',
-          height: '100vh',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-          position: 'relative',
-          padding: '2rem',
-          [theme.breakpoints.down('md')]: { display: 'none' },
-        }}
+        </div>
+      </div>
+      <div
+        className={
+          'flex bs-full items-center justify-center flex-1 min-bs-[100dvh] relative p-6 max-md:hidden'
+        }
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 1,
-            height: '100%',
-            backgroundColor: 'primary.main',
-            borderRadius: 2,
-            overflow: 'hidden',
-            paddingTop: '20vh',
-          }}
+        <div
+          className={
+            'flex flex-1 h-full bg-primary relative rounded-[2rem] overflow-hidden pt-[20dvh]'
+          }
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 2,
-              width: '100%',
-            }}
-          >
-            <Box sx={{ width: 270 }}>
+          <div className={'flex flex-col items-center space-y-2 w-full'}>
+            <div className={'w-[270px]'}>
               <LogoZapBlue />
-            </Box>
-            <Typography color="white" variant="h4" component="h1">
+            </div>
+            <Typography color={'white'} component={'h1'} variant={'h4'}>
               {t('brandTitle')}
             </Typography>
-            <Typography color="white" variant="caption" component="h2">
+            <Typography color={'white'} component={'h2'} variant={'caption'}>
               {t('brandSubtitle')}
             </Typography>
-          </Box>
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: { xs: '-1%', md: '-1%', lg: '-5%', xl: '-10%' },
-              width: '100%',
-            }}
-          >
+          </div>
+          <div className={'absolute  md:-bottom-[1%] lg:-bottom-[5%] xl:-bottom-[10%] is-full'}>
             <AuthBackground />
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
