@@ -36,7 +36,7 @@ const theme = (settings: Settings, mode: SystemMode, direction: Theme['direction
       },
     },
     shadows: shadows(mode),
-    typography: typography(''),
+    typography: typography('YekanBakhFaNum'),
     customShadows: customShadows(mode),
     mainColorChannels: {
       // light: '38 43 67',
