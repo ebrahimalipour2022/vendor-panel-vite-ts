@@ -84,15 +84,15 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         <AccountMenuItem settings={settings} />
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
         <MenuItem
-          href="/dashboard"
+          href="/dashboard/orders"
           icon={<i className="ri-home-smile-line" />}
         >{`سفارش ها`}</MenuItem>
         <MenuItem
-          href="/dashboard"
+          href="/dashboard/reports"
           icon={<i className="ri-home-smile-line" />}
         >{`گزارش ها`}</MenuItem>
         <MenuItem
-          href="/dashboard"
+          href="/dashboard/transactions"
           icon={<i className="ri-home-smile-line" />}
         >{`موجودی و تراکنش ها`}</MenuItem>
         <SubMenu

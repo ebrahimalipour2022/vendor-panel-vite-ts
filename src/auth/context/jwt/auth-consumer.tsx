@@ -1,12 +1,13 @@
 // components
 import { SplashScreen } from '@/components/loading-screen';
 //
+import type { ReactNode } from 'react';
 import { AuthContext } from './auth-context';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function AuthConsumer({ children }: Props) {

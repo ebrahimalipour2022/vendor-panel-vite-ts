@@ -1,20 +1,16 @@
 import { Helmet } from 'react-helmet-async';
-// sections
-import { NotFoundView } from 'src/sections/error';
 import { useTranslation } from 'react-i18next';
+// sections
 
 // ----------------------------------------------------------------------
 
-export default function NotFoundPage() {
+export default function Page() {
   const { t } = useTranslation();
-
   return (
     <>
       <Helmet>
-        <title> {t('pagesTitle.notFound')}</title>
+        <title> {t('pagesTitle.dashboard')}</title>
       </Helmet>
-
-      <NotFoundView />
     </>
   );
 }

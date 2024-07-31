@@ -230,5 +230,15 @@
     "timeValidateMessage": "ساعت شروع  باید کوچکتر از ساعت پایان باشد",
     "selectedTimeInvalidate": " ساعت  انتخاب شده باید بزرگتر از صفر باشد",
     "justPersianRegexError": "فقط کارکترهای فارسی مجاز می باشد"
+  },
+  "pagesTitle": {
+    "dashboard": "زَپ اکسپرس | داشبورد",
+    "orders": "زَپ اکسپرس | سفارش ها",
+    "reports": "زَپ اکسپرس | گزارش ها",
+    "transactions": "زَپ اکسپرس | موجودی و تراکنش ها",
+    "settings": {
+      "ordersAddress": "زَپ اکسپرس | تنظیمات | آدرس ها"
+    },
+    "notFound": "زَپ اکسپرس | خطای 404"
   }
 }

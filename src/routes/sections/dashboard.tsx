@@ -9,8 +9,11 @@ import DashboardLayout from '@/layouts/dashboard/dashboard';
 
 // ----------------------------------------------------------------------
 
-const IndexPage = lazy(() => import('src/pages/dashboard/one'));
-const OrderAddress = lazy(() => import('src/pages/dashboard/order-address'));
+const IndexPage = lazy(() => import('src/pages/dashboard/home'));
+const Orders = lazy(() => import('src/pages/dashboard/orders'));
+const Reports = lazy(() => import('src/pages/dashboard/reports'));
+const Transactions = lazy(() => import('src/pages/dashboard/transactions'));
+const OrderAddress = lazy(() => import('src/pages/dashboard/settings/order-address'));
 // const PageTwo = lazy(() => import('src/pages/dashboard/two'));
 // const PageThree = lazy(() => import('src/pages/dashboard/three'));
 // const PageFour = lazy(() => import('src/pages/dashboard/four'));
@@ -34,15 +37,9 @@ export const dashboardRoutes = [
     children: [
       { element: <IndexPage />, index: true },
       { path: 'order-address', element: <OrderAddress /> },
-      // { path: 'three', element: <PageThree /> },
-      {
-        path: 'group',
-        children: [
-          // { element: <PageFour />, index: true },
-          // { path: 'five', element: <PageFive /> },
-          // { path: 'six', element: <PageSix /> },
-        ],
-      },
+      { path: 'orders', element: <Orders /> },
+      { path: 'reports', element: <Reports /> },
+      { path: 'transactions', element: <Transactions /> },
     ],
   },
 ];
