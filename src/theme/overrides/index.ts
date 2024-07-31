@@ -44,12 +44,11 @@ import ButtonGroup from './components/button-group';
 import Autocomplete from './components/autocomplete';
 import MuiDatePicker from './components/date-picker';
 import ToggleButton from './components/toggle-button';
-import LoadingButton from './components/loading-button';
 
 // ----------------------------------------------------------------------
 
 export function componentsOverrides(theme: Theme) {
-  const components = merge(
+  return merge(
     Fab(theme),
     Tabs(theme),
     Chip(theme),
@@ -92,9 +91,7 @@ export function componentsOverrides(theme: Theme) {
     CssBaseline(theme),
     Autocomplete(theme),
     ToggleButton(theme),
-    MuiDatePicker(theme),
-    LoadingButton(theme)
+    MuiDatePicker(theme)
+    // LoadingButton(theme)
   );
-
-  return components;
 }

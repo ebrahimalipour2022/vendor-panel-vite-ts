@@ -11,6 +11,7 @@ import {
   StyledEngineProvider,
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+import spacing from '@/theme/spacing';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
@@ -46,6 +47,7 @@ export default function ThemeProvider({ children }: Props) {
       customShadows: customShadows('light'),
       typography,
       // shape: { borderRadius: 8 },
+      ...spacing,
       shape: {
         borderRadius: 8,
         customBorderRadius: {
