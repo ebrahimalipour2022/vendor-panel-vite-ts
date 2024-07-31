@@ -85,7 +85,7 @@ const MobileDialog = ({
       classes={{
         root: classes,
         paper:
-          'fixed bottom-0 left-0 right-0 w-full max-w-full overflow-auto max-h-[90dvh] min-h-[20dvh] m-0',
+          '!mx-auto !my-0 fixed bottom-2 left-2 right-2 !w-[calc(100%_-_1rem)] overflow-auto max-h-[90dvh] min-h-[20dvh]',
       }}
     >
       {puller && (
