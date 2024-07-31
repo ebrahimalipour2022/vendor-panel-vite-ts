@@ -131,8 +131,8 @@ export function palette(mode: 'light' | 'dark') {
       disabled: GREY[500],
     },
     background: {
-      paper: SURFACE.surface2,
-      default: '#FFFFFF',
+      default: SURFACE.surface2,
+      paper: '#FFFFFF',
       neutral: SURFACE.surface2,
     },
     action: {

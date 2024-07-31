@@ -26,6 +26,7 @@ export type NavListProps = {
   title: string;
   path: string;
   icon?: React.ReactElement;
+  suffix?: React.ReactElement;
   info?: React.ReactElement;
   caption?: string;
   disabled?: boolean;

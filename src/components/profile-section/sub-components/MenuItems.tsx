@@ -20,7 +20,7 @@ const ProfileMenuItems = ({
   setOpen: (value: 'avatar' | 'password' | null) => void;
   element?: ComponentType<any>;
 }) => {
-  const { t } = useTranslation('profile');
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleUserLogout = async () => {
@@ -57,29 +57,29 @@ const ProfileMenuItems = ({
           <MenuItem disabled tabIndex={-1} className="gap-2 pli-5 plb-4 ">
             <div className="flex items-center justify-between w-full relative">
               <Typography variant="body2" color="text.primary">
-                {t('username')}
+                {t('profile.username')}
               </Typography>
               <Typography variant="body2" className="font-bold" color="text.primary">
                 {userInfo?.name || '-----'}
               </Typography>
-              <div className="absolute -bottom-[1rem] border-b w-full" />
+              <div className="absolute -bottom-[1rem] border-b border-[var(--mui-palette-divider)] w-full" />
             </div>
           </MenuItem>
           <MenuItem disabled tabIndex={-1} className="gap-2 pli-5 plb-4 ">
             <div className="flex items-center justify-between w-full relative">
               <Typography variant="body2" color="text.primary">
-                {t('phone')}
+                {t('profile.phone')}
               </Typography>
               <Typography variant="body2" className="font-bold" color="text.primary">
                 {userInfo?.mobile || '-----'}
               </Typography>
-              <div className="absolute -bottom-[1rem] border-b w-full" />
+              <div className="absolute -bottom-[1rem] border-b border-[var(--mui-palette-divider)] w-full" />
             </div>
           </MenuItem>
           <MenuItem disabled tabIndex={-1} className="gap-2 pli-5 plb-4 ">
             <div className="flex items-center justify-between w-full">
               <Typography variant="body2" color="text.primary">
-                {t('nationalCode')}
+                {t('profile.nationalCode')}
               </Typography>
               <Typography variant="body2" className="font-bold" color="text.primary">
                 {userInfo?.nationalCode || '-----'}
@@ -93,7 +93,7 @@ const ProfileMenuItems = ({
             <UserEditIcon />
           </div>
           <Typography className="font-bold text-[0.875rem]" color="text.primary">
-            {t('changeImage')}
+            {t('profile.changeImage')}
           </Typography>
           <div className="w-6 h-6 mr-auto">
             <ArrowLeftIcon />
@@ -104,7 +104,7 @@ const ProfileMenuItems = ({
             <KeyIcon />
           </div>
           <Typography className="font-bold text-[0.875rem]" color="text.primary">
-            {t('changePassword')}
+            {t('profile.changePassword')}
           </Typography>
           <div className="w-6 h-6 mr-auto">
             <ArrowLeftIcon />
@@ -115,7 +115,7 @@ const ProfileMenuItems = ({
             <ExitIcon />
           </div>
           <Typography className="font-bold text-[0.875rem]" color="error.main">
-            {t('logout')}
+            {t('profile.logout')}
           </Typography>
           <div className="w-6 h-6 mr-auto" />
         </MenuItem>

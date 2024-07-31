@@ -26,7 +26,7 @@ export default function NavItem({
   externalLink,
   ...other
 }: Props) {
-  const { title, path, icon, info, children, disabled, caption, roles } = item;
+  const { title, path, icon, suffix, info, children, disabled, caption, roles } = item;
 
   const subItem = depth !== 1;
 
@@ -87,6 +87,8 @@ export default function NavItem({
           sx={{ ml: 1, flexShrink: 0 }}
         />
       )}
+
+      {suffix && <StyledIcon size={config.iconSize}>{suffix}</StyledIcon>}
     </StyledItem>
   );
 

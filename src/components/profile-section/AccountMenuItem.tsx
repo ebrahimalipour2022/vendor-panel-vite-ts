@@ -13,7 +13,7 @@ import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import ProfileMenuItems from '@/components/profile-section/sub-components/MenuItems';
 import MobileAccountBrief from '@/components/profile-section/sub-components/MobileAccountBrief';
-import { KeyIcon, UserEditIcon } from '@/assets/icons';
+import { ArrowLeftIcon, KeyIcon, UserEditIcon } from '@/assets/icons';
 import CustomDialog from '@/components/dialogs/custom-dialog';
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 // import CustomAvatar from '@/components/mui/Avatar';
@@ -102,6 +102,7 @@ function AccountMenuItem() {
             title: t('profile.username'),
             path: '',
             icon: <CustomAvatar src="" alt={userInfo?.name} size={40} />,
+            suffix: <ArrowLeftIcon />,
           }}
           depth={1}
           active={false}
@@ -122,7 +123,7 @@ function AccountMenuItem() {
           >
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
-                <Paper className={classnames('shadow-lg', modal ? 'hidden' : '')}>
+                <Paper className={classnames('shadow-xl w-[360px]', modal ? 'hidden' : '')}>
                   <ProfileMenuItems
                     userInfo={userInfo}
                     isLoading={isLoading}
