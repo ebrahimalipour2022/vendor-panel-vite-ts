@@ -17,7 +17,6 @@ import MotionLazy from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 // auth
 import { AuthConsumer, AuthProvider } from 'src/auth/context/jwt';
-import CssBaseline from '@mui/material/CssBaseline';
 import ReduxProvider from '@/redux/redux-provider';
 import { LocalizationProvider } from '@/locales/localization-provider';
 import { I18nProvider } from '@/locales/i18n';
@@ -59,7 +58,6 @@ export default function App() {
               }}
             >
               <ThemeProvider>
-                <CssBaseline />
                 <MotionLazy>
                   <SettingsDrawer />
                   <ProgressBar />

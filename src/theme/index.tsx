@@ -10,6 +10,7 @@ import {
   experimental_extendTheme as extendTheme,
   StyledEngineProvider,
 } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
@@ -84,16 +85,21 @@ export default function ThemeProvider({ children }: Props) {
   const _theme = extendTheme(theme);
   return (
     <StyledEngineProvider injectFirst>
-      <CssVarsProvider
-        theme={_theme}
-        defaultMode="light"
-        // modeStorageKey={`${themeConfig.templateName
-        //   .toLowerCase()
-        //   .split(' ')
-        //   .join('-')}-mui-template-mode`}
-      >
-        <RTL themeDirection={settings.themeDirection}>{children}</RTL>
-      </CssVarsProvider>
+      <RTL themeDirection={settings.themeDirection}>
+        <CssVarsProvider
+          theme={_theme}
+          defaultMode="light"
+          // modeStorageKey={`${themeConfig.templateName
+          //   .toLowerCase()
+          //   .split(' ')
+          //   .join('-')}-mui-template-mode`}
+        >
+          <>
+            <CssBaseline />
+            {children}
+          </>
+        </CssVarsProvider>
+      </RTL>
     </StyledEngineProvider>
   );
 }
