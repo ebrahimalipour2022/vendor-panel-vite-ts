@@ -12,11 +12,11 @@ import {
 } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import spacing from '@/theme/spacing';
+import { componentsOverrides } from '@/theme/overrides';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
 import { customShadows } from './custom-shadows';
-import { componentsOverrides } from './overrides';
 // options
 import { presets } from './options/presets';
 import { darkMode } from './options/dark-mode';
@@ -46,7 +46,6 @@ export default function ThemeProvider({ children }: Props) {
       shadows: shadows('light'),
       customShadows: customShadows('light'),
       typography,
-      // shape: { borderRadius: 8 },
       ...spacing,
       shape: {
         borderRadius: 8,
@@ -84,7 +83,10 @@ export default function ThemeProvider({ children }: Props) {
 
   theme.components = merge(componentsOverrides(theme), contrastOption.components);
 
+  // theme.components = merge(overrides(theme), contrastOption.components);
+
   const _theme = extendTheme(theme);
+
   return (
     <StyledEngineProvider injectFirst>
       <RTL themeDirection={settings.themeDirection}>

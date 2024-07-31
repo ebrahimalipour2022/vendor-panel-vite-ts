@@ -20,6 +20,7 @@ import Avatar from './components/avatar';
 import Rating from './components/rating';
 import Slider from './components/slider';
 import Button from './components/button';
+import OutlinedInput from './components/outlined-input';
 import Switch from './components/switch';
 import Select from './components/select';
 import Tooltip from './components/tooltip';
@@ -64,6 +65,7 @@ export function componentsOverrides(theme: Theme) {
     Switch(theme),
     Select(theme),
     Button(theme),
+    OutlinedInput(theme),
     Rating(theme),
     Dialog(theme),
     AppBar(theme),
