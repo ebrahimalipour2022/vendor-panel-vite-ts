@@ -12,11 +12,10 @@ import ModeDropdown from '@/layouts/materialize-layout/components/layout/shared/
 
 // Util Imports
 import { verticalLayoutClasses } from '@/layouts/materialize-layout/@layouts/utils/layoutClasses';
-import NewOrder from '@/components/dialogs/orders-dialogs/new-order';
 import { useTranslation } from 'react-i18next';
 import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
-// import WalletBalance from '@/components/layout/shared/WalletBalance';
 import WalletBalance from '@/layouts/materialize-layout/components/layout/shared/WalletBalance';
+import NewOrder from '@/components/dialogs/orders-dialogs/new-order';
 import NavToggle from './NavToggle';
 
 const notifications: NotificationsType[] = [

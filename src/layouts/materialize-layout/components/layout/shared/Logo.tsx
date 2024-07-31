@@ -12,11 +12,12 @@ import { Link } from 'react-router-dom';
 // import type { VerticalNavContextProps } from '@menu/contexts/verticalNavContext'
 
 // Component Imports
-import MaterializeLogo from '@/layouts/materialize-layout/@core/svg/LogoZapBlue';
+// import LogoZapBlue from '@/layouts/materialize-layout/@core/svg/LogoZapBlue';
 
 // Hook Imports
 import useVerticalNav from '@/layouts/materialize-layout/@menu/hooks/useVerticalNav';
 import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSettings';
+import { LogoZapBlue } from '@/assets/icons';
 
 // type LogoTextProps = {
 //   isHovered?: VerticalNavContextProps['isHovered']
@@ -72,7 +73,7 @@ const Logo = ({ component = false }: { component?: boolean }) => {
     // eslint-disable-next-line lines-around-comment
     /* @ts-ignore */
     <LogoWrapper className="flex items-center min-bs-[24px]" {...(!component && { href: '/' })}>
-      <MaterializeLogo />
+      <LogoZapBlue />
       {/*<LogoText*/}
       {/*  ref={logoTextRef}*/}
       {/*  isHovered={isHovered}*/}

@@ -10,10 +10,9 @@ import type { ChildrenType } from '@/layouts/materialize-layout/@core/types';
 import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSettings';
 
 // Util Imports
-import LogoZapBlue from '@/layouts/materialize-layout/@core/svg/LogoZapBlue';
-import AuthBackground from '@/layouts/materialize-layout/@core/svg/Auth-Background';
-import Logo from '@/layouts/materialize-layout/@core/svg/Logo';
 import { useTranslation } from 'react-i18next';
+import { AuthBackground, LogoZapBlue } from '@/assets/icons';
+import Logo from '@/components/logo';
 
 const AuthLayout = (props: ChildrenType) => {
   const { t } = useTranslation();

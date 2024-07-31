@@ -10,6 +10,7 @@ import DashboardLayout from '@/layouts/dashboard/dashboard';
 // ----------------------------------------------------------------------
 
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
+const OrderAddress = lazy(() => import('src/pages/dashboard/order-address'));
 // const PageTwo = lazy(() => import('src/pages/dashboard/two'));
 // const PageThree = lazy(() => import('src/pages/dashboard/three'));
 // const PageFour = lazy(() => import('src/pages/dashboard/four'));
@@ -32,7 +33,7 @@ export const dashboardRoutes = [
     ),
     children: [
       { element: <IndexPage />, index: true },
-      // { path: 'two', element: <PageTwo /> },
+      { path: 'order-address', element: <OrderAddress /> },
       // { path: 'three', element: <PageThree /> },
       {
         path: 'group',

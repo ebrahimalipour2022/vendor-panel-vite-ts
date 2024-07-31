@@ -13,8 +13,8 @@ import { toast } from 'react-toastify';
 
 import { YupValidators } from '@/utils/forms-validation';
 import { useTranslation } from 'react-i18next';
-import RHFPasswordField from '@/layouts/materialize-layout/@core/components/hook-form/RHFPasswordInput';
 import { authAPI } from '@/utils/axios/api';
+import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
 
 type FormValues = {
   oldPassword: string;

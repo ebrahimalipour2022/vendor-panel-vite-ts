@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import CustomAvatar from '@/layouts/materialize-layout/@core/components/mui/Avatar';
-import UploadCameraIcon from '@/layouts/materialize-layout/@core/svg/UploadCamera';
+import { UploadCameraIcon } from '@/assets/icons';
 
 interface AvatarUploaderProps {
   // Optional prop to specify initial avatar

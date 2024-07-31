@@ -83,13 +83,16 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
         <AccountMenuItem settings={settings} />
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
-        <MenuItem href="/orders" icon={<i className="ri-home-smile-line" />}>{`سفارش ها`}</MenuItem>
         <MenuItem
-          href="/reports"
+          href="/dashboard"
+          icon={<i className="ri-home-smile-line" />}
+        >{`سفارش ها`}</MenuItem>
+        <MenuItem
+          href="/dashboard"
           icon={<i className="ri-home-smile-line" />}
         >{`گزارش ها`}</MenuItem>
         <MenuItem
-          href="/transactions"
+          href="/dashboard"
           icon={<i className="ri-home-smile-line" />}
         >{`موجودی و تراکنش ها`}</MenuItem>
         <SubMenu
@@ -97,7 +100,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           icon={<i className="ri-home-smile-line" />}
           // suffix={<Chip label='3' size='small' color='error' />}
         >
-          <MenuItem href="/addresses">{`آدرس ها`}</MenuItem>
+          <MenuItem href="/dashboard/order-address">{`آدرس ها`}</MenuItem>
         </SubMenu>
         <div className="block md:hidden w-full border-b my-2 border-[--mui-palette-primary-light]" />
       </Menu>

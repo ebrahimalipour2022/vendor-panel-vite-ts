@@ -1,6 +1,3 @@
-// Next Imports
-// import { useRouter, useSearchParams } from 'next/navigation';
-
 // MUI Imports
 import Stack from '@mui/material/Stack';
 import FormLabel from '@mui/material/FormLabel';
@@ -9,17 +6,14 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import FormHelperText from '@mui/material/FormHelperText';
 
 // Third-party Imports
-// import { signIn } from 'next-auth/react'
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
-// import { toast } from 'react-toastify'
-// Hook Imports
-// import { useTranslations } from 'next-intl'
+
 // Util Imports
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
-import RHFPasswordField from '@/layouts/materialize-layout/@core/components/hook-form/RHFPasswordInput';
+import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
 
 interface FormData {
   username: string;

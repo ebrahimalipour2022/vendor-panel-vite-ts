@@ -19,7 +19,7 @@ import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSetting
 
 // Style Imports
 import navigationCustomStyles from '@/layouts/materialize-layout/@core/styles/vertical/navigationCustomStyles';
-import LogoZapBlue from '@/layouts/materialize-layout/@core/svg/LogoZapBlue';
+import { LogoZapBlue } from '@/assets/icons';
 import VerticalMenu from './VerticalMenu';
 
 type Props = {
