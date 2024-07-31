@@ -347,6 +347,7 @@ const SubMenu: ForwardRefRenderFunction<HTMLLIElement, SubMenuProps> = (props, r
       isCollapsed={isCollapsed}
       isHovered={isHovered}
       className={classnames(menuClasses.subMenuContent, contentClassName)}
+      //@ts-ignore
       rootStyles={{
         ...(isCollapsed && level === 0 && isPopoutWhenCollapsed && floatingStyles),
         ...getSubMenuItemStyles('subMenuContent'),

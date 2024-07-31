@@ -5,7 +5,7 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 import { authRoutes } from './auth';
 // import { mainRoutes } from './main';
-// import { dashboardRoutes } from './dashboard';
+import { dashboardRoutes } from './dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export default function Router() {
     ...authRoutes,
 
     // Dashboard routes
-    // ...dashboardRoutes,
+    ...dashboardRoutes,
 
     // Main routes
     // ...mainRoutes,

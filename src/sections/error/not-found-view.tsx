@@ -7,7 +7,7 @@ import { RouterLink } from 'src/routes/components';
 // components
 import { MotionContainer, varBounce } from 'src/components/animate';
 // assets
-import { PageNotFoundIllustration } from 'src/assets/illustrations';
+// import { PageNotFoundIllustration } from 'src/assets/illustrations';
 
 // ----------------------------------------------------------------------
 
@@ -28,12 +28,12 @@ export default function NotFoundView() {
       </m.div>
 
       <m.div variants={varBounce().in}>
-        <PageNotFoundIllustration
-          sx={{
-            height: 260,
-            my: { xs: 5, sm: 10 },
-          }}
-        />
+        {/*<PageNotFoundIllustration*/}
+        {/*  sx={{*/}
+        {/*    height: 260,*/}
+        {/*    my: { xs: 5, sm: 10 },*/}
+        {/*  }}*/}
+        {/*/>*/}
       </m.div>
 
       <Button component={RouterLink} href="/" size="large" variant="contained">

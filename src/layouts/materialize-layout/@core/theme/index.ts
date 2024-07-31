@@ -54,7 +54,7 @@ const theme = (settings: Settings, mode: SystemMode, direction: Theme['direction
       surface4: '#68686B',
       surface5: '#141414',
     },
-  } as Theme;
+  } as unknown as Theme;
 };
 
 export default theme;

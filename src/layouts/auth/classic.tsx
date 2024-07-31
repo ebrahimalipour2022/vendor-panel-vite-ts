@@ -20,9 +20,6 @@ type Props = {
 };
 
 function AuthClassicLayout({ children, image, title }: Props) {
-  const theme = useTheme();
-  const { t } = useTranslation();
-
   const systemMode = getSystemMode();
   return (
     <BlankLayout systemMode={systemMode}>

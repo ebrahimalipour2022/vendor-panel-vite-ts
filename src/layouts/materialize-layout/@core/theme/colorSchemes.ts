@@ -4,7 +4,7 @@ import type { Theme } from '@mui/material/styles';
 // Type Imports
 import type { Skin } from '@/layouts/materialize-layout/@core/types';
 
-const colorSchemes = (skin: Skin): Theme['colorSchemes'] => {
+const colorSchemes = (skin: Skin) => {
   return {
     light: {
       palette: {
@@ -345,7 +345,7 @@ const colorSchemes = (skin: Skin): Theme['colorSchemes'] => {
         },
       },
     },
-  } as Theme['colorSchemes'];
+  } as unknown as Theme;
 };
 
 export default colorSchemes;
