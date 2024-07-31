@@ -1,5 +1,3 @@
-'use client';
-
 // React Imports
 import { forwardRef, useContext, useEffect, useState } from 'react';
 import type {
