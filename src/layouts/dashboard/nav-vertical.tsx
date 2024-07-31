@@ -72,6 +72,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       sx={{
         flexShrink: { lg: 0 },
         width: { lg: NAV.W_VERTICAL },
+        bgcolor: 'primary.main',
+        borderRadius: '1rme',
+        border: '1px solid transparent',
       }}
     >
       <NavToggleButton />

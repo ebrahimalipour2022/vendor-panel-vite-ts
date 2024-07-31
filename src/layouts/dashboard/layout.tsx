@@ -74,6 +74,7 @@ export default function DashboardLayout({ children }: Props) {
         sx={{
           display: { lg: 'flex' },
           minHeight: { lg: 1 },
+          p: 2,
         }}
       >
         {renderNavVertical}
