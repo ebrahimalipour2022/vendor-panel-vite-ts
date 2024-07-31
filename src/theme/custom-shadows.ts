@@ -64,6 +64,12 @@ function createShadow(color: string) {
     success: `0 8px 16px 0 ${alpha(palette.success.main, 0.24)}`,
     warning: `0 8px 16px 0 ${alpha(palette.warning.main, 0.24)}`,
     error: `0 8px 16px 0 ${alpha(palette.error.main, 0.24)}`,
+
+    xs: `0px 2px 6px ${transparent}`,
+    sm: `0px 2px 10px ${transparent}`,
+    md: `0px 4px 14px ${transparent}`,
+    lg: `0px 6px 20px ${transparent}`,
+    xl: `0px 8px 26px ${transparent}`,
   };
 }
 

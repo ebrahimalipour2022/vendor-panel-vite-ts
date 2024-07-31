@@ -1,9 +1,6 @@
-/** @type {import('tailwindcss').Config} */
-// const tailwindcssLogical = require('tailwindcss-logical');
-const tailwindcssPlugin = require('./src/theme/tailwind/plugin');
+import plugin from 'tailwindcss/plugin';
 
-module.exports = {
-  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+export default plugin(function () {}, {
   theme: {
     borderColor: ({ theme }) => ({
       ...theme('colors'),
@@ -39,16 +36,16 @@ module.exports = {
         xl: 'var(--mui-customShadows-xl)',
       },
       colors: {
-        primary: 'var(--mui-palette-primary-main)',
-        primaryLight: 'var(--mui-palette-primary-light)',
+        primary: 'var(--primary-color)',
+        primaryLight: 'var(--mui-palette-primary-lightOpacity)',
         primaryDark: 'var(--mui-palette-primary-dark)',
         secondary: 'var(--mui-palette-secondary-main)',
         error: 'var(--mui-palette-error-main)',
-        errorLight: 'var(--mui-palette-error-light)',
+        errorLight: 'var(--mui-palette-error-lightOpacity)',
         warning: 'var(--mui-palette-warning-main)',
         info: 'var(--mui-palette-info-main)',
         success: 'var(--mui-palette-success-main)',
-        successLight: 'var(--mui-palette-success-light)',
+        successLight: 'var(--mui-palette-success-lightOpacity)',
         textPrimary: 'var(--mui-palette-text-primary)',
         textSecondary: 'var(--mui-palette-text-secondary)',
         textDisabled: 'var(--mui-palette-text-disabled)',
@@ -73,5 +70,4 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-logical')],
-};
+});
