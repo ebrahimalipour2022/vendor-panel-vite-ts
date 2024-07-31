@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 
 import { getCounterTime } from '@/utils/timer';
-import Stack from '@mui/material/Stack';
 
 interface Props {
   timer: number;
@@ -20,8 +19,10 @@ const CountDown = (props: Props) => {
     const timeout = setTimeout(() => {
       if (time > 0) {
         setTime(time - 1);
-      } else if (doneHandler) {
-        doneHandler();
+      } else {
+        if (doneHandler) {
+          doneHandler();
+        }
       }
     }, 1000);
 
@@ -31,12 +32,12 @@ const CountDown = (props: Props) => {
   }, [doneHandler, time]);
 
   return (
-    <Stack flexDirection={'row'} justifyContent={'center'} alignItems={'center'} width={'80px'}>
+    <div className={'flex flex-row items-center justify-center w-[80px]'}>
       <Typography component={'span'} variant={'body1'}>
         {getCounterTime(time)}
       </Typography>
       <i className="ri-time-line text-[24px] text-gray-600 mr-1" />
-    </Stack>
+    </div>
   );
 };
 

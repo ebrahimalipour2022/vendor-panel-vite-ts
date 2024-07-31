@@ -1,18 +1,15 @@
 // @mui
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 // components
-import { useSettingsContext } from 'src/components/settings';
 
 // ----------------------------------------------------------------------
 
 export default function OneView() {
-  const settings = useSettingsContext();
-
   return (
-    <Container maxWidth={settings.themeStretch ? false : 'xl'}>
+    <Stack>
       <Typography variant="h4"> Page One </Typography>
 
       <Box
@@ -25,6 +22,6 @@ export default function OneView() {
           border: (theme) => `dashed 1px ${theme.palette.divider}`,
         }}
       />
-    </Container>
+    </Stack>
   );
 }

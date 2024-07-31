@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 // routes
-import { paths } from 'src/routes/paths';
+import { paths } from '@/routes/paths';
 // components
-import SvgColor from 'src/components/svg-color';
+import SvgColor from '@/components/svg-color';
 
 // ----------------------------------------------------------------------
 

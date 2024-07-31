@@ -12,7 +12,7 @@ function PlanPremiumIcon({ ...other }: BoxProps) {
 
   const PRIMARY_DARK = theme.palette.primary.dark;
 
-  const PRIMARY_DARKER = theme.palette.primary.darker;
+  const PRIMARY_DARKER = theme.palette.primary.darkerOpacity;
 
   return (
     <Box

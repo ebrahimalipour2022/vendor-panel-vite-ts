@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 // utils
 import { localStorageGetItem } from '@/utils/storage-available';
 // components
-import { useSettingsContext } from '@/components/settings';
+// import { useSettingsContext } from '@/components/settings';
 //
 import { allLangs, defaultLang } from './config-lang';
 
@@ -12,7 +12,7 @@ import { allLangs, defaultLang } from './config-lang';
 export default function useLocales() {
   const { i18n, t } = useTranslation();
 
-  const settings = useSettingsContext();
+  // const settings = useSettingsContext();
 
   const langStorage = localStorageGetItem('i18nextLng');
 
@@ -20,10 +20,10 @@ export default function useLocales() {
 
   const onChangeLang = useCallback(
     (newlang: string) => {
-      i18n.changeLanguage(newlang);
-      settings.onChangeDirectionByLang(newlang);
+      i18n.changeLanguage('fa');
+      // settings.onChangeDirectionByLang(newlang);
     },
-    [i18n, settings]
+    [i18n]
   );
 
   return {

@@ -18,11 +18,8 @@ import { Controller, useForm } from 'react-hook-form';
 // Util Imports
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
 import { useTranslation } from 'react-i18next';
-
-// import { YupValidators } from '@/utils/forms-validation'
-// import RHFPasswordField from '@core/components/hook-form/RHFPasswordInput'
+import RHFPasswordField from '@/layouts/materialize-layout/@core/components/hook-form/RHFPasswordInput';
 
 interface FormData {
   username: string;

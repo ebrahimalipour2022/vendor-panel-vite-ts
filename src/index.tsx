@@ -5,7 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 //
 import App from './App';
 
-import './index.css'; // Import Tailwind CSS here
+import 'src/globals.css'; // Import Tailwind CSS here
 
 // ----------------------------------------------------------------------
 

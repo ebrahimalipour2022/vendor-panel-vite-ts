@@ -1,44 +1,49 @@
 // scroll bar
-import 'simplebar-react/dist/simplebar.min.css';
+// import 'simplebar-react/dist/simplebar.min.css';
 
 // lazy image
-import 'react-lazy-load-image-component/src/effects/blur.css';
+// import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // ----------------------------------------------------------------------
 // routes
 import Router from 'src/routes/sections';
 // theme
-import ThemeProvider from 'src/theme';
 // hooks
 import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 // components
-import ProgressBar from 'src/components/progress-bar';
-import MotionLazy from 'src/components/animate/motion-lazy';
-import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
+// import ProgressBar from 'src/components/progress-bar';
+// import MotionLazy from 'src/components/animate/motion-lazy';
 // auth
-import { AuthConsumer, AuthProvider } from 'src/auth/context/jwt';
+import { AuthConsumer, AuthProvider } from '@/auth/context/jwt';
 import ReduxProvider from '@/redux/redux-provider';
 import { LocalizationProvider } from '@/locales/localization-provider';
 import { I18nProvider } from '@/locales/i18n';
-
+import { VerticalNavProvider } from '@/layouts/materialize-layout/@menu/contexts/verticalNavContext';
+import { SettingsProvider } from '@/layouts/materialize-layout/@core/contexts/settingsContext';
+import ThemeProvider from '@/layouts/materialize-layout/components/theme';
+import AppReactToastify from '@/layouts/materialize-layout/libs/styles/AppReactToastify';
+import {
+  getDemoName,
+  getMode,
+  getSettingsFromCookie,
+  getSystemMode,
+} from '@/layouts/materialize-layout/@core/utils/serverHelpers';
 // ----------------------------------------------------------------------
 
 export default function App() {
-  console.log(`   
-      ░░░░░░░░░░          
-             ░░ 
-           ▒▒       
-         ▒▒         
-       ▓▓          
-      ▓▓████████    
-   
-                     
+  console.log(`                      
                        ░░  
        ▓          ▓     ▓  
        ▓▓▓▓▓▓▓▓▓▓▓▓     ▓      
-          ██ ██      ▓▓▓▓
+          ██ ██      ▓▓▓▓ 
             ██   
   `);
+
+  const direction = 'rtl';
+  const mode = getMode();
+  const settingsCookie = getSettingsFromCookie();
+  const demoName = getDemoName();
+  const systemMode = getSystemMode();
 
   useScrollToTop();
 
@@ -46,28 +51,18 @@ export default function App() {
     <I18nProvider>
       <LocalizationProvider>
         <AuthProvider>
-          <ReduxProvider>
-            <SettingsProvider
-              defaultSettings={{
-                themeMode: 'light', // 'light' | 'dark'
-                themeDirection: 'rtl', //  'rtl' | 'ltr'
-                themeContrast: 'default', // 'default' | 'bold'
-                themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-                themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-                themeStretch: false,
-              }}
-            >
-              <ThemeProvider>
-                <MotionLazy>
-                  <SettingsDrawer />
-                  <ProgressBar />
+          <VerticalNavProvider>
+            <SettingsProvider settingsCookie={settingsCookie} mode={mode} demoName={demoName}>
+              <ThemeProvider direction={direction} systemMode={systemMode}>
+                <ReduxProvider>
                   <AuthConsumer>
                     <Router />
+                    <AppReactToastify direction={direction} hideProgressBar />
                   </AuthConsumer>
-                </MotionLazy>
+                </ReduxProvider>
               </ThemeProvider>
             </SettingsProvider>
-          </ReduxProvider>
+          </VerticalNavProvider>
         </AuthProvider>
       </LocalizationProvider>
     </I18nProvider>
