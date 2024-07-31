@@ -14,7 +14,7 @@ import themeConfig from '@/layouts/materialize-layout/configs/themeConfig';
 type LayoutWrapperProps = {
   systemMode: SystemMode;
   verticalLayout: ReactElement;
-  horizontalLayout: ReactElement;
+  horizontalLayout?: ReactElement;
 };
 
 const LayoutWrapper = (props: LayoutWrapperProps) => {

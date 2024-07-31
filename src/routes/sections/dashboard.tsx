@@ -3,9 +3,9 @@ import { Outlet } from 'react-router-dom';
 // auth
 import { AuthGuard } from 'src/auth/guard';
 // layouts
-// import DashboardLayout from 'src/layouts/dashboard';
 // components
 import { LoadingScreen } from 'src/components/loading-screen';
+import DashboardLayout from '@/layouts/dashboard/dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -23,11 +23,11 @@ export const dashboardRoutes = [
     path: 'dashboard',
     element: (
       <AuthGuard>
-        {/*<DashboardLayout>*/}
-        <Suspense fallback={<LoadingScreen />}>
-          <Outlet />
-        </Suspense>
-        {/*</DashboardLayout>*/}
+        <DashboardLayout>
+          <Suspense fallback={<LoadingScreen />}>
+            <Outlet />
+          </Suspense>
+        </DashboardLayout>
       </AuthGuard>
     ),
     children: [
