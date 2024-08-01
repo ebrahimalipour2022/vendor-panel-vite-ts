@@ -1,24 +1,16 @@
 {
-  "name": "@minimal-kit/simple-cra-ts",
-  "author": "Minimals",
-  "version": "5.0.0",
-  "description": "Simple Cra & TypeScript",
+  "name": "zap-vendor-panel",
+  "author": "Ebrahim Alipour",
+  "version": "2.0.0",
+  "description": "zap-vendor-panel",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .ts,.tsx .",
-    "lint:fix": "eslint --fix --ext .ts,.tsx .",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
-    "clear-all": "rm -rf build node_modules",
-    "re-start": "rm -rf build node_modules && yarn install && yarn start",
-    "re-build": "rm -rf build node_modules && yarn install && yarn build"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "start": "vite",
+    "build": "tsc && vite build",
+    "build:dev": "tsc && vite build --mode dev",
+    "build:release": "tsc && vite build --mode release",
+    "build:master": "tsc && vite build --mode master",
+    "preview": "vite preview"
   },
   "browserslist": {
     "production": [
@@ -45,9 +37,11 @@
     "@mui/material": "^5.13.3",
     "@mui/x-date-pickers": "^7.11.1",
     "@reduxjs/toolkit": "^2.2.7",
+    "async-mutex": "^0.5.0",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.4.0",
     "classnames": "^2.5.1",
+    "crypto-js": "^4.2.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.12",
     "framer-motion": "^10.12.16",
@@ -79,6 +73,7 @@
     "stylis-plugin-rtl": "^2.0.2",
     "swr": "^2.2.5",
     "tailwindcss-logical": "^3.0.1",
+    "universal-cookie": "^7.2.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
@@ -86,6 +81,8 @@
     "@babel/plugin-syntax-flow": "^7.21.4",
     "@babel/plugin-transform-react-jsx": "^7.22.3",
     "@types/autosuggest-highlight": "^3.2.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.14.195",
     "@types/moment-jalaali": "^0.7.9",
     "@types/node": "^20.2.5",

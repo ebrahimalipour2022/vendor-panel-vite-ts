@@ -15,7 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import type { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInput';
 
-import type { StateOption } from '@/types/SelectField';
+import type { StateOption } from '@/types/select-field';
 
 // const { colors } = defaultTheme
 

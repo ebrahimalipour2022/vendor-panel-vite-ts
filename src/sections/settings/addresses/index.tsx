@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import useSWR from 'swr';
 
-import type { StateOption } from '@/types/SelectField';
+import type { StateOption } from '@/types/select-field';
 import EmptyState from '@/components/empty-state';
 import { vmAPI } from '@/utils/axios/api';
 import urls from '@/utils/axios/urls';

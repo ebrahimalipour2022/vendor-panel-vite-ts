@@ -50,6 +50,7 @@
     "react/jsx-props-no-spreading": 0,
     "import/prefer-default-export": 0,
     "react/no-unused-prop-types": 0,
+    "prefer-promise-reject-errors": 0,
     "react-hooks/exhaustive-deps": 0,
     "no-else-return": 0,
     "@typescript-eslint/no-shadow": 0,
