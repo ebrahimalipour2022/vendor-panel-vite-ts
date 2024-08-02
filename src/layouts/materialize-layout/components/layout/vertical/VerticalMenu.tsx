@@ -5,7 +5,6 @@ import { useTheme } from '@mui/material/styles';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // Type Imports
-
 import type { VerticalMenuContextProps } from '@/layouts/materialize-layout/@menu/components/vertical-menu/Menu';
 
 // Component Imports
@@ -24,6 +23,9 @@ import menuItemStyles from '@/layouts/materialize-layout/@core/styles/vertical/m
 import menuSectionStyles from '@/layouts/materialize-layout/@core/styles/vertical/menuSectionStyles';
 import WalletBalance from '@/layouts/materialize-layout/components/layout/shared/WalletBalance';
 import AccountMenuItem from '@/layouts/materialize-layout/@menu/components/vertical-menu/AccountMenuItem';
+import ArrowUpIcon from '@/assets/icons/ArrowUp';
+import { ArrowRightIcon } from '@mui/x-date-pickers';
+import { ArrowForwardIosOutlined } from '@mui/icons-material';
 
 // Menu Data Imports
 // import menuData from '@/data/navigation/verticalMenuData'
@@ -39,7 +41,7 @@ type Props = {
 
 const RenderExpandIcon = ({ open, transitionDuration }: RenderExpandIconProps) => (
   <StyledVerticalNavExpandIcon open={open} transitionDuration={transitionDuration}>
-    <i className="ri-arrow-right-s-line" />
+    <ArrowForwardIosOutlined className={'w-4 h-4'} />
   </StyledVerticalNavExpandIcon>
 );
 

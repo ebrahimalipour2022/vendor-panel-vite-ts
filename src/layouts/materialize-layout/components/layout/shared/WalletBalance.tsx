@@ -8,6 +8,7 @@ import { numberWithCommas } from '@/utils/number';
 import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
 import EditWalletBalance from '@/components/dialogs/wallet-dialogs/wallet-balance';
 import { useTranslation } from 'react-i18next';
+import { PlusIcon } from '@/assets/icons';
 
 const WalletBalance = () => {
   // hooks
@@ -15,7 +16,8 @@ const WalletBalance = () => {
 
   // Vars
   const addAmountButtonProps: ButtonProps = {
-    children: <i className={'ri-add-line'} />,
+    // children: <i className={'ri-add-line'} />,
+    children: <PlusIcon />,
     variant: 'contained',
     color: 'primary',
     size: 'small',

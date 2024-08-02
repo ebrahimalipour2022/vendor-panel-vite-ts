@@ -22,6 +22,7 @@ import NavAccountBrief from '@/layouts/materialize-layout/@menu/components/verti
 import ProfileMenuItems from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MenuItems';
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 import MobileAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MobileAccountBrief';
+import { ArrowBackIosNewOutlined } from '@mui/icons-material';
 
 type ModalType = 'avatar' | 'password' | null;
 
@@ -83,7 +84,8 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
         onMouseLeave={onMouseLeave}
         onClick={onToggleMenu}
         icon={<CustomAvatar src={''} alt={userInfo?.name} size={40} />}
-        suffix={<i className="ri-arrow-left-s-line text-xl" />}
+        // suffix={<i className="ri-arrow-left-s-line text-xl" />}
+        suffix={<ArrowBackIosNewOutlined fontSize={'inherit'} />}
       >
         {Setting.layout === 'vertical' && (
           <NavAccountBrief userInfo={userInfo} isLoading={isLoading} />

@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
 import WalletBalance from '@/layouts/materialize-layout/components/layout/shared/WalletBalance';
 import NewOrder from '@/components/dialogs/orders-dialogs/new-order';
+import CirclePlusIcon from '@/assets/icons/CirclePlusIcon';
 import NavToggle from './NavToggle';
 
 const notifications: NotificationsType[] = [
@@ -73,7 +74,7 @@ const NavbarContent = () => {
   const newOrderButtonProps: ButtonProps = {
     variant: 'contained',
     children: t('orders.newOrder'),
-    startIcon: <i className={'ri-add-circle-line'} />,
+    startIcon: <CirclePlusIcon />,
   };
 
   return (
@@ -97,7 +98,7 @@ const NavbarContent = () => {
         {/*<LanguageDropdown />*/}
         {/*<ShortcutsDropdown shortcuts={shortcuts} />*/}
         {/*<UserDropdown />*/}
-        <ModeDropdown />
+        {/*<ModeDropdown />*/}
         <NotificationsDropdown notifications={notifications} />
         <NavToggle />
       </div>

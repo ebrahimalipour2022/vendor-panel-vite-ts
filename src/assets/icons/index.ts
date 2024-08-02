@@ -16,3 +16,5 @@ export { default as ArrowLeftIcon } from './ArrowLeft';
 export { default as ExitIcon } from './ExitIcon';
 export { default as EditIcon } from './EditIcon';
 export { default as RemoveIcon } from './RemoveIcon';
+export { default as PlusIcon } from './PlusIcon';
+export { default as ArrowUp } from './ArrowUp';
