@@ -1,6 +1,4 @@
 import { useRef, useState } from 'react';
-
-import useSWR from 'swr';
 import Paper from '@mui/material/Paper';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Popper from '@mui/material/Popper';
@@ -18,21 +16,23 @@ import CustomDialog from '@/components/dialogs/custom-dialog';
 import ChangePasswordForm from '@/components/dialogs/profile/change-password';
 import ChangeAvatarForm from '@/components/dialogs/profile/change-image';
 import { useTranslation } from 'react-i18next';
-import { UserEditIcon, KeyIcon } from '@/assets/icons';
+import { KeyIcon, UserEditIcon } from '@/assets/icons';
 import CustomAvatar from '@/layouts/materialize-layout/@core/components/mui/Avatar';
 import NavAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/NavAccountBrief';
 import ProfileMenuItems from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MenuItems';
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 import MobileAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MobileAccountBrief';
-import urls from '@/utils/axios/urls';
-import { umAPI } from '@/utils/axios/api';
 
 type ModalType = 'avatar' | 'password' | null;
 
 function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
+  const userInfo = {
+    name: 'name',
+  };
+  const isLoading = false;
   const { t } = useTranslation();
   // fetch data
-  const { data: userInfo, isLoading } = useSWR(urls.userInfo(), () => umAPI.userInfoAxios());
+  // const { data: userInfo, isLoading } = useSWR(urls.userInfo(), () => umAPI.userInfoAxios());
   // Hooks
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);

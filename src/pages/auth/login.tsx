@@ -1,16 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import { JwtLoginView } from 'src/sections/auth/jwt';
+import { JwtLoginView } from '@/sections/auth/jwt';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   return (
     <>
       <Helmet>
-        <title> Jwt: Login</title>
+        <title> {t('pagesTitle.login')}</title>
       </Helmet>
-
       <JwtLoginView />
     </>
   );

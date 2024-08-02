@@ -4,11 +4,9 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 
-// import { signOut } from 'next-auth/react';
-
-import { UserEditIcon, KeyIcon, ExitIcon, ArrowLeftIcon } from '@/assets/icons';
+import { ArrowLeftIcon, ExitIcon, KeyIcon, UserEditIcon } from '@/assets/icons';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/auth/hooks';
 
 const ProfileMenuItems = ({
   userInfo,
@@ -22,21 +20,9 @@ const ProfileMenuItems = ({
   element?: ComponentType<any>;
 }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
+  const { signOut } = useAuthContext();
   const handleUserLogout = async () => {
-    // try {
-    //   // Sign out from the app
-    //   await signOut({ redirect: false });
-    //
-    //   // Redirect to login page
-    //   router.push('/login');
-    // } catch (error) {
-    //   console.error(error);
-    //
-    //   // Show above error in a toast like following
-    //   // toastService.error((err as Error).message)
-    // }
+    await signOut();
   };
 
   return (

@@ -57,11 +57,12 @@ export type Config = {
   footer: Footer;
   disableRipple: boolean;
   toastPosition: ToastPosition;
+  fontFamily: string;
 };
 
 const themeConfig: Config = {
-  templateName: 'زَپ اکسپرس',
-  settingsCookieName: 'materialize-mui-next-demo-1',
+  templateName: 'پنل تامین کنندگان زَپ اکسپرس',
+  settingsCookieName: 'vendor-panel-client-demo-1',
   mode: 'system', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
   semiDark: false, // true, false
@@ -84,6 +85,7 @@ const themeConfig: Config = {
   },
   disableRipple: false, // true, false
   toastPosition: 'top-left', // 'top-right', 'top-center', 'top-left', 'bottom-right', 'bottom-center', 'bottom-left'
+  fontFamily: 'YekanBakhFaNum',
 };
 
 export default themeConfig;

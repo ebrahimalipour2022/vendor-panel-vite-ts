@@ -1,9 +1,5 @@
 // MUI Imports
-import Stack from '@mui/material/Stack';
-import FormLabel from '@mui/material/FormLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormHelperText from '@mui/material/FormHelperText';
 
 // Third-party Imports
 import type { SubmitHandler } from 'react-hook-form';
@@ -14,6 +10,9 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
 import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
+import RHFOutlinedInput from '@/components/hook-form/RHFOutlinedInput';
+import { YupValidators } from '@/utils/forms-validation';
+import { useAuthContext } from '@/auth/hooks';
 
 interface FormData {
   username: string;
@@ -23,46 +22,29 @@ interface FormData {
 const LoginWithUserPass = () => {
   // Hooks
   const { t } = useTranslation();
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
+  const { login } = useAuthContext();
 
   const resolver = yupResolver(
     Yup.object().shape({
-      // username: YupValidators(t).mobile,
-      // password: YupValidators(t).password
+      username: YupValidators().mobile,
+      password: YupValidators().password,
     })
   );
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<FormData>({
     resolver,
     defaultValues: {
-      username: '',
-      password: '',
+      username: '09384152797',
+      password: 'uKt@849M',
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    // const res = await signIn('credentials', {
-    //   email: data.username,
-    //   password: data.password,
-    //   method: 'user-pass',
-    //   redirect: false
-    // })
-    //
-    // if (res && res.ok && res.error === null) {
-    //   // Vars
-    //   const redirectURL = searchParams.get('redirectTo') ?? '/'
-    //
-    //   router.replace(redirectURL)
-    // } else {
-    //   if (res?.error) {
-    //     toast.error(t('toast.unauthorized'))
-    //   }
-    // }
+  const onSubmit: SubmitHandler<FormData> = async (values: FormData) => {
+    await login(values);
   };
 
   return (
@@ -77,33 +59,18 @@ const LoginWithUserPass = () => {
         name="username"
         control={control}
         rules={{ required: true }}
-        render={({ field }) => (
-          <Stack spacing={1.7}>
-            <FormLabel required error={!!errors.username} disabled={isSubmitting}>
-              {t('authLogin.username')}
-            </FormLabel>
-            <OutlinedInput
-              {...field}
-              fullWidth
-              autoFocus
-              disabled={isSubmitting}
-              type="text"
-              placeholder={t('authLogin.username_placeholder')}
-              onChange={(e) => {
-                field.onChange(e.target.value);
-                // errorState !== null && setErrorState(null)
-              }}
-              inputProps={{
-                maxLength: 11,
-              }}
-              {...(errors.username && {
-                error: true,
-              })}
-            />
-            {errors?.username?.message && (
-              <FormHelperText error>{errors.username.message}</FormHelperText>
-            )}
-          </Stack>
+        render={({ field, fieldState: { error } }) => (
+          <RHFOutlinedInput
+            label={t('authLogin.username')}
+            placeholder={t('authLogin.username_placeholder')}
+            error={!!error?.message}
+            helperText={error?.message}
+            required={true}
+            inputProps={{
+              maxLength: 20,
+            }}
+            {...field}
+          />
         )}
       />
       <Controller

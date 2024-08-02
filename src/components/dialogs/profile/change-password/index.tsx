@@ -9,11 +9,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { toast } from 'react-toastify';
-
 import { YupValidators } from '@/utils/forms-validation';
 import { useTranslation } from 'react-i18next';
-import { authAPI } from '@/utils/axios/api';
 import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
 
 type FormValues = {
@@ -51,16 +48,16 @@ const ChangePasswordForm = ({ handleClose }: { handleClose: () => void }) => {
   });
 
   const onSubmit = async (values: FormValues) => {
-    await authAPI
-      .changePasswordApi(values)
-      .then(() => {
-        toast.success(t('toast.passwordChanged'), { toastId: 'change-pass-success-toast' });
-        // reset({})
-        handleClose();
-      })
-      .catch(() => {
-        // toast.error(t('toast.passwordChangeError'), { toastId: 'change-pass-error-toast' })
-      });
+    // await authAPI
+    //   .changePasswordApi(values)
+    //   .then(() => {
+    //     toast.success(t('toast.passwordChanged'), { toastId: 'change-pass-success-toast' });
+    //     // reset({})
+    //     handleClose();
+    //   })
+    //   .catch(() => {
+    //     // toast.error(t('toast.passwordChangeError'), { toastId: 'change-pass-error-toast' })
+    //   });
   };
 
   return (

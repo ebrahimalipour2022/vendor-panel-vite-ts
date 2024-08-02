@@ -4,12 +4,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-import useSWR from 'swr';
-
 import type { StateOption } from '@/types/select-field';
 import EmptyState from '@/components/empty-state';
-import { vmAPI } from '@/utils/axios/api';
-import urls from '@/utils/axios/urls';
 import AddressCard from '@/components/order-address/address-card';
 import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
@@ -29,9 +25,10 @@ const defaultOptions: StateOption[] = [
 
 const AddressesView = () => {
   const id = '100'; // store id
-  const { data: addresses, isLoading } = useSWR(urls.orderAddress(), () =>
-    vmAPI.getStoreAddress({ id })
-  );
+  const addresses: any[] = [];
+  // const { data: addresses, isLoading } = useSWR(urls.orderAddress(), () =>
+  //   vmAPI.getStoreAddress({ id })
+  // );
   const [selectedOption, setSelectedOption] = useState(defaultOptions);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState(true);
 

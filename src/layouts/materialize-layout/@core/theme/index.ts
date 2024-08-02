@@ -10,6 +10,7 @@ import type { Settings } from '@/layouts/materialize-layout/@core/contexts/setti
 import type { Skin, SystemMode } from '@/layouts/materialize-layout/@core/types';
 
 // Theme Options Imports
+import themeConfig from '@/layouts/materialize-layout/configs/themeConfig';
 import overrides from './overrides';
 import colorSchemes from './colorSchemes';
 import spacing from './spacing';
@@ -36,7 +37,7 @@ const theme = (settings: Settings, mode: SystemMode, direction: Theme['direction
       },
     },
     shadows: shadows(mode),
-    typography: typography('YekanBakhFaNum'),
+    typography: typography(themeConfig.fontFamily),
     customShadows: customShadows(mode),
     mainColorChannels: {
       // light: '38 43 67',

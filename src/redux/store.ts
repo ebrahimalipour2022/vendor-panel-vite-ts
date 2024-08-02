@@ -14,7 +14,7 @@ import {
   // PURGE,
   // REGISTER,
 } from 'redux-persist';
-import { idpApi, umApi, vendorApi } from '@/redux/api';
+import { umApi, vendorApi } from '@/redux/api';
 import { rootReducer, rootPersistConfig } from './root-reducer';
 
 // ----------------------------------------------------------------------
@@ -35,12 +35,14 @@ const store = configureStore({
       // }
     })
       .concat(vendorApi.middleware)
-      .concat(idpApi.middleware)
+      // .concat(idpApi.middleware)
       .concat(umApi.middleware),
 });
 
-export const persistor = persistStore(store);
+const persistor = persistStore(store);
 
-export const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
+const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
+const { dispatch } = store;
 
-export const useDispatch = () => useAppDispatch<AppDispatch>();
+const useDispatch = () => useAppDispatch<AppDispatch>();
+export { store, dispatch, persistor, useSelector, useDispatch };

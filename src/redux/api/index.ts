@@ -8,27 +8,17 @@ import { getNormalizedErrorMessage } from '@/utils/error';
 
 const mutex = new Mutex();
 
-type ENDPOINT_TYPE = 'VENDOR_ENDPOINT' | 'UM_ENDPOINT' | 'IDP_ENDPOINT';
+type ENDPOINT_TYPE = 'IDP_ENDPOINT' | 'UM_ENDPOINT' | 'VENDOR_ENDPOINT';
 
-const VENDOR_ENDPOINT = process.env.VITE_VENDOR_PANEL_ENDPOINT;
-const IDP_ENDPOINT = process.env.VITE_IDP_ENDPOINT;
-const UM_ENDPOINT = process.env.VITE_UM_ENDPOINT;
+const IDP_ENDPOINT = import.meta.env.VITE_IDP_API_URL;
+const UM_ENDPOINT = import.meta.env.VITE_UM_API_URL;
+const VENDOR_ENDPOINT = import.meta.env.VITE_VM_API_URL;
 
 // vendor panel axios instances
 const vendorAxiosInstance = axios.create({
   baseURL: VENDOR_ENDPOINT,
   headers: {
-    Authorization: 'Bearer ' + getTokens()?.access_token,
-  },
-  validateStatus(status) {
-    return status >= 200 && status < 300;
-  },
-});
-// login user-pass and  refresh token
-const idpAxiosInstance = axios.create({
-  baseURL: IDP_ENDPOINT,
-  headers: {
-    Authorization: 'Bearer ' + getTokens()?.access_token,
+    // Authorization: 'Bearer ' + getTokens()?.access_token,
   },
   validateStatus(status) {
     return status >= 200 && status < 300;
@@ -39,7 +29,7 @@ const idpAxiosInstance = axios.create({
 const umAxiosInstance = axios.create({
   baseURL: UM_ENDPOINT,
   headers: {
-    Authorization: 'Bearer ' + getTokens()?.access_token,
+    // Authorization: 'Bearer ' + getTokens()?.access_token,
   },
   validateStatus(status) {
     return status >= 200 && status < 300;
@@ -51,8 +41,8 @@ function refreshTokenPromise(): Promise<AxiosResponse<any, any>> {
   if (!refresh_token) {
     return Promise.reject('no refresh token');
   }
-  return idpAxiosInstance.post(
-    `connect/token`,
+  return axios.post(
+    `${IDP_ENDPOINT}/connect/token`,
     {
       refresh_token,
       grant_type: 'refresh_token',
@@ -66,7 +56,6 @@ function refreshTokenPromise(): Promise<AxiosResponse<any, any>> {
     }
   );
 }
-const excludeErrorUrls = ['connect/token'];
 const axiosBaseQuery = (
   endpoint_type: ENDPOINT_TYPE
 ): BaseQueryFn<AxiosRequestConfig, unknown, FetchBaseQueryError> =>
@@ -75,10 +64,7 @@ const axiosBaseQuery = (
       await mutex.waitForUnlock();
       let result;
       try {
-        if (endpoint_type === 'IDP_ENDPOINT') {
-          const { data } = await idpAxiosInstance(args);
-          result = { data };
-        } else if (endpoint_type === 'UM_ENDPOINT') {
+        if (endpoint_type === 'UM_ENDPOINT') {
           const { data } = await umAxiosInstance(args);
           result = { data };
         } else {
@@ -89,13 +75,9 @@ const axiosBaseQuery = (
         //TODO: change to new error object and download file if listFiles[]
         //TODO: error 603 related to reset-password um services
         if (e?.response?.status === 400 || e?.response?.status === 603) {
-          const url = e?.response?.config?.url;
-          const isExcludeUrls = excludeErrorUrls.some((path) => url?.includes(path));
-          if (!isExcludeUrls) {
-            const message = getNormalizedErrorMessage(e?.response?.data);
-            if (message) {
-              toast.error(message, { toastId: 'TOAST_ID_ERROR_400' });
-            }
+          const message = getNormalizedErrorMessage(e?.response?.data);
+          if (message) {
+            toast.error(message, { toastId: 'TOAST_ID_ERROR_400' });
           }
         }
         // if (e?.response?.status === 500 || e?.response?.status > 500) {
@@ -113,6 +95,8 @@ const axiosBaseQuery = (
                   setTokens({
                     access_token: data.access_token,
                     refresh_token: data?.refresh_token,
+                    expires_in: data?.expires_in,
+                    token_type: data?.token_type,
                   });
                   result = axiosBaseQuery(endpoint_type)(args, api, extraOptions);
                 }
@@ -138,7 +122,7 @@ const axiosBaseQuery = (
       return result;
     },
     {
-      maxRetries: 1,
+      maxRetries: 3,
     }
   );
 
@@ -148,16 +132,10 @@ const vendorApi = createApi({
   tagTypes: [],
   endpoints: () => ({}),
 });
-const idpApi = createApi({
-  baseQuery: axiosBaseQuery('IDP_ENDPOINT'),
-  reducerPath: 'IDP_ENDPOINT',
-  tagTypes: [],
-  endpoints: () => ({}),
-});
 const umApi = createApi({
   baseQuery: axiosBaseQuery('UM_ENDPOINT'),
   reducerPath: 'UM_ENDPOINT',
   tagTypes: ['UserProfilePhoto'],
   endpoints: () => ({}),
 });
-export { vendorApi, idpApi, umApi };
+export { vendorApi, umApi, vendorAxiosInstance, umAxiosInstance };

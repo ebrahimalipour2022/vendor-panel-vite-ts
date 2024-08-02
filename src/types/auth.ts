@@ -3,8 +3,8 @@ import type { AxiosError } from 'axios';
 export interface ITokenData {
   access_token: string;
   refresh_token: string;
-  expires_in?: number;
-  token_type?: string;
+  expires_in: number;
+  token_type: string;
 }
 
 export type OTPFormType = 'login-form' | 'otp-form';

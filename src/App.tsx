@@ -28,16 +28,18 @@ import {
   getSettingsFromCookie,
   getSystemMode,
 } from '@/layouts/materialize-layout/@core/utils/serverHelpers';
+import { SplashScreen } from '@/components/loading-screen';
+import MotionLazy from '@/components/animate/motion-lazy';
 // ----------------------------------------------------------------------
 
 export default function App() {
-  console.log(`                      
-                       ░░  
-       ▓          ▓     ▓  
-       ▓▓▓▓▓▓▓▓▓▓▓▓     ▓      
-          ██ ██      ▓▓▓▓ 
-            ██   
-  `);
+  // console.log(`
+  //                      ░░
+  //      ▓          ▓     ▓
+  //      ▓▓▓▓▓▓▓▓▓▓▓▓     ▓
+  //         ██ ██      ▓▓▓▓
+  //           ██
+  // `);
 
   const direction = 'rtl';
   const mode = getMode();
@@ -48,23 +50,55 @@ export default function App() {
   useScrollToTop();
 
   return (
-    <I18nProvider>
-      <LocalizationProvider>
-        <AuthProvider>
-          <VerticalNavProvider>
-            <SettingsProvider settingsCookie={settingsCookie} mode={mode} demoName={demoName}>
-              <ThemeProvider direction={direction} systemMode={systemMode}>
-                <ReduxProvider>
-                  <AuthConsumer>
-                    <Router />
-                    <AppReactToastify direction={direction} hideProgressBar />
-                  </AuthConsumer>
-                </ReduxProvider>
-              </ThemeProvider>
-            </SettingsProvider>
-          </VerticalNavProvider>
-        </AuthProvider>
-      </LocalizationProvider>
-    </I18nProvider>
+    <AuthProvider>
+      <ReduxProvider>
+        <I18nProvider>
+          <LocalizationProvider>
+            <VerticalNavProvider>
+              <SettingsProvider settingsCookie={settingsCookie} mode={mode} demoName={demoName}>
+                <ThemeProvider direction={direction} systemMode={systemMode}>
+                  <MotionLazy>
+                    <AuthConsumer>
+                      <Router />
+                      <AppReactToastify direction={direction} hideProgressBar />
+                      <SplashScreen />
+                    </AuthConsumer>
+                  </MotionLazy>
+                </ThemeProvider>
+              </SettingsProvider>
+            </VerticalNavProvider>
+          </LocalizationProvider>
+        </I18nProvider>
+      </ReduxProvider>
+    </AuthProvider>
   );
 }
+
+// <AuthProvider>
+//   <ReduxProvider>
+//     <LocalizationProvider dateAdapter={AdapterDateFns}>
+//       <SettingsProvider
+//         defaultSettings={{
+//           themeMode: 'light', // 'light' | 'dark'
+//           themeDirection: 'ltr', //  'rtl' | 'ltr'
+//           themeContrast: 'default', // 'default' | 'bold'
+//           themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+//           themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+//           themeStretch: false,
+//         }}
+//       >
+//         <ThemeProvider>
+//           <MotionLazy>
+//             <SnackbarProvider>
+//               <SettingsDrawer />
+//               <ProgressBar />
+//               <AuthConsumer>
+//                 <Router />
+//               </AuthConsumer>
+//             </SnackbarProvider>
+//           </MotionLazy>
+//         </ThemeProvider>
+//       </SettingsProvider>
+//     </LocalizationProvider>
+//   </ReduxProvider>
+// </AuthProvider>

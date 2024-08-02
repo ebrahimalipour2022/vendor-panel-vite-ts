@@ -83,6 +83,7 @@ const ToastifyWrapper = styled(Box)<BoxProps>(({ theme }) => {
       margin: 0,
       lineHeight: 1.467,
       fontSize: theme.typography.body1.fontSize,
+      fontFamily: themeConfig.fontFamily,
     },
     '& .Toastify__toast-icon': {
       marginRight: theme.spacing(3),
