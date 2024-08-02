@@ -23,14 +23,12 @@ import ProfileMenuItems from '@/layouts/materialize-layout/@menu/components/vert
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 import MobileAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MobileAccountBrief';
 import { ArrowBackIosNewOutlined } from '@mui/icons-material';
+import { useAuthContext } from '@/auth/hooks';
 
 type ModalType = 'avatar' | 'password' | null;
 
 function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
-  const userInfo = {
-    name: 'name',
-  };
-  const isLoading = false;
+  const { user: userInfo, loading: isLoading } = useAuthContext();
   const { t } = useTranslation();
   // fetch data
   // const { data: userInfo, isLoading } = useSWR(urls.userInfo(), () => umAPI.userInfoAxios());
