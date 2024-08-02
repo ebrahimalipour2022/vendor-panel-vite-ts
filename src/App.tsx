@@ -61,7 +61,7 @@ export default function App() {
                     <AuthConsumer>
                       <Router />
                       <AppReactToastify direction={direction} hideProgressBar />
-                      <SplashScreen />
+                      {/*<SplashScreen />*/}
                     </AuthConsumer>
                   </MotionLazy>
                 </ThemeProvider>

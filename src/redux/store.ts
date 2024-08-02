@@ -15,7 +15,7 @@ import {
   // REGISTER,
 } from 'redux-persist';
 import { umApi, vendorApi } from '@/redux/api';
-import { rootReducer, rootPersistConfig } from './root-reducer';
+import { rootReducer } from './root-reducer';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +24,8 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 
 const store = configureStore({
-  reducer: persistReducer(rootPersistConfig, rootReducer),
+  // reducer: persistReducer(rootPersistConfig, rootReducer),
+  reducer: rootReducer,
   // @ts-ignore
   middleware: (getDefaultMiddleware) =>
     // @ts-ignore
@@ -35,8 +36,8 @@ const store = configureStore({
       // }
     })
       .concat(vendorApi.middleware)
-      // .concat(idpApi.middleware)
       .concat(umApi.middleware),
+  // .concat(idpApi.middleware)
 });
 
 const persistor = persistStore(store);

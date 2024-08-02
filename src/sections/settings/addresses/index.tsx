@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -9,6 +9,7 @@ import EmptyState from '@/components/empty-state';
 import AddressCard from '@/components/order-address/address-card';
 import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
+import { useLazyGetOrderAddressesQuery } from '@/redux/api/order-address/order-address';
 import SearchField from './SearchField';
 import CSelectField from './ReactSelectField';
 
@@ -25,12 +26,34 @@ const defaultOptions: StateOption[] = [
 
 const AddressesView = () => {
   const id = '100'; // store id
-  const addresses: any[] = [];
-  // const { data: addresses, isLoading } = useSWR(urls.orderAddress(), () =>
-  //   vmAPI.getStoreAddress({ id })
-  // );
+  const [getList, { currentData: addresses, isLoading, isFetching }] =
+    useLazyGetOrderAddressesQuery();
   const [selectedOption, setSelectedOption] = useState(defaultOptions);
-  const [addEditAddressDialog, setAddEditAddressDialog] = useState(true);
+  const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
+
+  const getAddressList = async () => {
+    // console.log('isLoading list', isLoading);
+    try {
+      // let _queryValues = {
+      //   ...queryValues,
+      //   ToRegistrationCreateDate: queryValues?.ToRegistrationCreateDate
+      //     ? jMoment(queryValues.ToRegistrationCreateDate).format('YYYYMMDDHHmmssSSS')
+      //     : '',
+      //   FromRegistrationCreateDate: queryValues?.FromRegistrationCreateDate
+      //     ? jMoment(queryValues.FromRegistrationCreateDate).format('YYYYMMDDHHmmssSSS')
+      //     : '',
+      // };
+      await getList({ id, query: '' }).unwrap();
+    } catch (e) {
+      /* empty */
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getAddressList();
+    }
+  }, [id]);
 
   const handleChange = (newOptions: any) => {
     setSelectedOption(newOptions);

@@ -128,13 +128,13 @@ const axiosBaseQuery = (
 
 const vendorApi = createApi({
   baseQuery: axiosBaseQuery('VENDOR_ENDPOINT'),
-  reducerPath: 'VENDOR_ENDPOINT',
+  reducerPath: 'apiVendor',
   tagTypes: [],
   endpoints: () => ({}),
 });
 const umApi = createApi({
   baseQuery: axiosBaseQuery('UM_ENDPOINT'),
-  reducerPath: 'UM_ENDPOINT',
+  reducerPath: 'apiUm',
   tagTypes: ['UserProfilePhoto'],
   endpoints: () => ({}),
 });
