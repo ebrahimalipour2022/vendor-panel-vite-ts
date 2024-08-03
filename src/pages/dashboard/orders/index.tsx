@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
+import MapComponent from '@/components/neshan-map/neshan-map';
 // sections
 
 // ----------------------------------------------------------------------
@@ -12,7 +13,10 @@ export default function Page() {
       <Helmet>
         <title> {t('pagesTitle.orders')}</title>
       </Helmet>
-      <Box className={'w-full h-full'}>{/*<MapComponent />*/}</Box>
+      <Box className={'p-4 relative'}>
+        <MapComponent />
+      </Box>
+      {/*<MapComponent />*/}
     </>
   );
 }
