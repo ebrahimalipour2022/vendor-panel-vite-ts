@@ -12,6 +12,7 @@ import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add
 import { useLazyGetOrderAddressesQuery } from '@/redux/api/order-address/order-address';
 import SearchField from './SearchField';
 import CSelectField from './ReactSelectField';
+import LoadingScreen from '../../../components/loading-screen/loading-screen';
 
 const options: StateOption[] = [
   { value: 'option1', label: 'تهرانپارس شرقی' },
@@ -60,17 +61,25 @@ const AddressesView = () => {
   };
 
   const renderAddresses = () => {
-    if (addresses?.length) {
-      return addresses.map((item, index) => <AddressCard key={item.id} address={item} />);
-    } else {
+    if (isLoading || isFetching || !addresses) {
       return (
-        <EmptyState
-          title={'آدرسی در این لیست نیست'}
-          subTitle={
-            'هیچ آدرسی در این صفحه ثبت نشده، با زدن دکمه زیر، آدرس جدید به لیست آدرس‌های منتخب اضافه کنید'
-          }
-        />
+        <div className={'absolute inset-0'}>
+          <LoadingScreen />
+        </div>
       );
+    } else {
+      if (addresses?.length) {
+        return addresses.map((item, index) => <AddressCard key={item.id} address={item} />);
+      } else {
+        return (
+          <EmptyState
+            title={'آدرسی در این لیست نیست'}
+            subTitle={
+              'هیچ آدرسی در این صفحه ثبت نشده، با زدن دکمه زیر، آدرس جدید به لیست آدرس‌های منتخب اضافه کنید'
+            }
+          />
+        );
+      }
     }
   };
 
@@ -108,6 +117,7 @@ const AddressesView = () => {
             </Button>
           </div>
         </div>
+
         {renderAddresses()}
       </Stack>
       <AddEditAddressDialog open={addEditAddressDialog} setOpen={handleNewAddress} />

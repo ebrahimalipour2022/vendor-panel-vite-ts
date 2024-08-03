@@ -48,7 +48,7 @@ const DashboardLayout = ({ children }: ChildrenType) => {
           <i className="ri-arrow-up-line" />
         </Button>
       </ScrollToTop>
-      <Customizer dir={direction} disableDirection />
+      {/*<Customizer dir={direction} disableDirection />*/}
     </div>
   );
 };

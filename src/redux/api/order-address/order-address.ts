@@ -14,7 +14,7 @@ export const orderAddress = vendorApi.injectEndpoints({
           url: `${controller}OrderAddress/store/${id}?query=${query}`,
         };
       },
-      transformResponse: (response: any) => {
+      transformResponse: (response: { orderAddress: IOrderAddress[] }) => {
         return response?.orderAddress || [];
       },
     }),
