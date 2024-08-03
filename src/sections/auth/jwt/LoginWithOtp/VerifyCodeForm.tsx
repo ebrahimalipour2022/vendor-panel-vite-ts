@@ -9,20 +9,17 @@ import FormHelperText from '@mui/material/FormHelperText';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
-// Hook Imports
-// import { useTranslations } from 'next-intl';
 // Util Imports
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { YupValidators } from '@/utils/forms-validation';
-// import CountDown from '@components/time-count-down';
 import Box from '@mui/material/Box';
 import { OtpFormValue } from '@/types';
 import { useTranslation } from 'react-i18next';
 import CountDown from '@/components/time-count-down';
-
-// import type { OtpFormValue } from '@/types/auth/auth';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuthContext } from '@/auth/hooks';
 
 interface FormData {
   verificationCode: string;
@@ -41,8 +38,9 @@ const OTP_TIMER = 120;
 const VerifyCodeForm = ({ onSendCode, otpFormState, timerDone, setTimerDone }: Props) => {
   const { t } = useTranslation();
   // Hooks
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { login } = useAuthContext();
 
   const resolver = yupResolver(
     Yup.object().shape({
@@ -69,22 +67,12 @@ const VerifyCodeForm = ({ onSendCode, otpFormState, timerDone, setTimerDone }: P
     }
   };
 
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    // const res = await signIn('credentials', {
-    //   email: otpFormState?.mobile,
-    //   verificationCode: data.verificationCode,
-    //   method: 'otp',
-    //   redirect: false,
-    // });
-    //
-    // if (res && res.ok && res.error === null) {
-    //   // Vars
-    //   const redirectURL = searchParams.get('redirectTo') ?? '/';
-    //
-    //   router.replace(redirectURL);
-    // } else if (res?.error) {
-    //   toast.error(t('toast.unauthorized'));
-    // }
+  const onSubmit: SubmitHandler<FormData> = async (values: FormData) => {
+    await login({
+      username: otpFormState?.mobile!,
+      verificationCode: values?.verificationCode,
+      method: 'otp',
+    });
   };
 
   return (

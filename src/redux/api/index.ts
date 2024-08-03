@@ -74,10 +74,10 @@ const axiosBaseQuery = (
       } catch (e: any) {
         //TODO: change to new error object and download file if listFiles[]
         //TODO: error 603 related to reset-password um services
-        if (e?.response?.status === 400 || e?.response?.status === 603) {
+        if (e?.response?.status === 400 || e?.response?.status >= 600) {
           const message = getNormalizedErrorMessage(e?.response?.data);
           if (message) {
-            toast.error(message, { toastId: 'TOAST_ID_ERROR_400' });
+            toast.error(message, { toastId: 'TOAST_ID_ERROR_400_600' });
           }
         }
         // if (e?.response?.status === 500 || e?.response?.status > 500) {

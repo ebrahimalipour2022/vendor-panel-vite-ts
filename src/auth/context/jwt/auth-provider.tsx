@@ -81,18 +81,20 @@ export function AuthProvider({ children }: Props) {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  console.log('VITE_UM_API_URL', VITE_UM_API_URL);
+  console.log('VITE_UM_API_VERSION', VITE_UM_API_VERSION);
   // INITIALIZE
   const initialize = useCallback(async () => {
     try {
-      const { access_token } = getTokens();
-
-      if (access_token) {
+      const tokenObj = getTokens();
+      // console.log('access_token', access_token);
+      if (tokenObj?.access_token) {
+        setTokens(tokenObj);
         const response = await axios({
           method: 'GET',
           url: `${VITE_UM_API_URL}${VITE_UM_API_VERSION}/Customer/CustomerGeneralInfo`,
           headers: {
-            Authorization: 'Bearer ' + access_token,
+            Authorization: 'Bearer ' + tokenObj?.access_token,
           },
         });
 
@@ -102,8 +104,8 @@ export function AuthProvider({ children }: Props) {
             user: { ...response.data },
           },
         });
-        const redirectURL = searchParams.get('redirectTo') ?? PATH_AFTER_LOGIN;
-        navigate(redirectURL);
+        // const redirectURL = searchParams.get('redirectTo') ?? PATH_AFTER_LOGIN;
+        // navigate(redirectURL);
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -129,36 +131,50 @@ export function AuthProvider({ children }: Props) {
 
   // LOGIN
   const login = useCallback(async (values: LoginData) => {
-    try {
-      const res = await axios({
-        method: 'POST',
-        url: `${VITE_IDP_API_URL}/connect/token`,
-        data: {
-          username: values?.username,
-          password: values?.password,
-          // captcha_code: body?.captcha?.captcha_code,
-          grant_type: 'password',
-          client_id: 'angular',
-          scope: 'hasti_api offline_access profile',
-        },
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
+    await axios({
+      method: 'POST',
+      url: `${VITE_IDP_API_URL}/connect/token`,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      },
+      data:
+        values.method === 'user-pass'
+          ? {
+              username: values?.username,
+              password: values?.password,
+              grant_type: 'password',
+              client_id: 'angular',
+              scope: 'hasti_api offline_access profile',
+              captcha_code: null,
+            }
+          : {
+              username: values?.username,
+              otp_code: values?.verificationCode,
+              grant_type: 'otp',
+              client_id: 'otp.client',
+              scope: 'hasti_api openid profile',
+            },
+    })
+      .then(({ data }) => {
+        console.log('data login ::', data);
+        if (data) {
+          setTokens(data);
+          dispatch({
+            type: Types.LOGIN,
+            payload: {
+              user: {
+                username: values?.username,
+              },
+            },
+          });
+          navigate(PATH_AFTER_LOGIN, { replace: true });
+        }
+        // const redirectURL = searchParams.get('redirectTo') ?? PATH_AFTER_LOGIN;
+      })
+      .catch((err) => {
+        console.log('err ::', err);
+        toast.error(t('toast.unauthorized'));
       });
-      setTokens({ ...res.data });
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user: {
-            username: values?.username,
-          },
-        },
-      });
-      // const redirectURL = searchParams.get('redirectTo') ?? PATH_AFTER_LOGIN;
-      navigate(PATH_AFTER_LOGIN, { replace: true });
-    } catch (err) {
-      toast.error(t('toast.unauthorized'));
-    }
   }, []);
 
   // LOGOUT

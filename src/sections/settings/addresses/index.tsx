@@ -61,7 +61,7 @@ const AddressesView = () => {
   };
 
   const renderAddresses = () => {
-    if (isLoading || isFetching || !addresses) {
+    if (isLoading || isFetching) {
       return (
         <div className={'absolute inset-0'}>
           <LoadingScreen />

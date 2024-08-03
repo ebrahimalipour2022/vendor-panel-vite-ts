@@ -20,7 +20,7 @@ const LoginWithOtp = () => {
 
   const onSendCode = async (data: { username: string }) => {
     if (data?.username) {
-      await axios(`${process.env.VITE_IDP_API_URL}/api/OneTimePassword/Send/${data.username}`, {
+      await axios(`${import.meta.env.VITE_IDP_API_URL}/api/OneTimePassword/Send/${data.username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',

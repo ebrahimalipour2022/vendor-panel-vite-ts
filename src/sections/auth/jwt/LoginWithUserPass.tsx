@@ -38,13 +38,13 @@ const LoginWithUserPass = () => {
   } = useForm<FormData>({
     resolver,
     defaultValues: {
-      username: '09384152797',
-      password: 'uKt@849M',
+      username: '',
+      password: '',
     },
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values: FormData) => {
-    await login(values);
+    await login({ ...values, method: 'user-pass' });
   };
 
   return (

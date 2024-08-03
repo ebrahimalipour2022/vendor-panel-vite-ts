@@ -3,7 +3,9 @@ import { LogoutOptions, RedirectLoginOptions, PopupLoginOptions } from '@auth0/a
 // ----------------------------------------------------------------------
 export interface LoginData {
   username: string;
-  password: string;
+  password?: string;
+  verificationCode?: string;
+  method: 'user-pass' | 'otp';
 }
 
 export type ActionMapType<M extends { [index: string]: any }> = {

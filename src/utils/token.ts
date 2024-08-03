@@ -5,8 +5,8 @@ import { umAxiosInstance, vendorAxiosInstance } from '@/redux/api';
 import axios from 'axios';
 
 const chunkSize = 4000; // Adjust chunk size as needed
-const VITE_COOKIES_SECRET_KEY = process.env.VITE_COOKIES_SECRET_KEY;
-const VITE_COOKIES_EXPIRES = process.env.VITE_COOKIES_EXPIRES;
+const VITE_COOKIES_SECRET_KEY = import.meta.env.VITE_COOKIES_SECRET_KEY;
+const VITE_COOKIES_EXPIRES = import.meta.env.VITE_COOKIES_EXPIRES;
 
 const encryptTokens = (tokenData: ITokenData): string | null => {
   if (tokenData) {
@@ -59,12 +59,16 @@ const getEncryptedTokens = (): string | null => {
 };
 
 const setTokens = (tokenObj: ITokenData) => {
+  console.log('set token 1', tokenObj);
   if (tokenObj?.access_token) {
+    console.log('set token 2', tokenObj?.access_token.slice(0, 10));
     axios.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     vendorAxiosInstance.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     umAxiosInstance.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     const encryptedData = encryptTokens(tokenObj);
+    console.log('set token 3', encryptedData?.slice(0, 10));
     if (encryptedData) {
+      console.log('set token 4');
       storeEncryptedTokens(encryptedData);
     } else {
       logout();
