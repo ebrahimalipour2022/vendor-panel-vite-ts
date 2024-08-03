@@ -53,6 +53,7 @@
     "prefer-promise-reject-errors": 0,
     "react-hooks/exhaustive-deps": 0,
     "no-else-return": 0,
+    "react/jsx-no-bind": 0,
     "@typescript-eslint/no-shadow": 0,
     "no-nested-ternary": 0,
     "prefer-object-spread": 0,
