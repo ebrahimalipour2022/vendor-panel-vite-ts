@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { LocationIcon } from '@/assets/icons';
 import RHFOutlinedInput from '@/components/hook-form/RHFOutlinedInput';
 import IRMapComponent from '@/components/IRMapComponent';
+import { useState } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 type AddOrderProps = {
   open: boolean;
@@ -23,6 +25,10 @@ type AddOrderProps = {
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
+  // const [center, setCenter] = useState({
+  //   lat: 35.75753482568149,
+  //   lng: 51.40995708465471,
+  // });
 
   const resolver = yupResolver(
     Yup.object().shape({
@@ -49,6 +55,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { isSubmitting },
   } = useForm<IOrderAddress>({
     defaultValues: {
@@ -60,13 +67,17 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
       unit: '',
       floor: '',
       location: {
-        latitude: '',
-        longitude: '',
+        latitude: 0,
+        longitude: 0,
       },
       mobile: '',
     },
     resolver,
   });
+
+  const watchLocation = watch('location');
+
+  const setCenter = () => {};
 
   const onSubmit = async (values: IOrderAddress) => {
     // await authAPI
@@ -98,8 +109,13 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     >
       <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
         <div className={'flex gap-4'}>
-          <div className={'w-full max-w-[348px]'}>
+          <div className={'w-full md:max-w-[348px] overflow-y-auto'}>
             <Grid container spacing={3}>
+              <Grid item xs={12} className={'block md:hidden'}>
+                <div className={'grow flex flex-col p-0 relative h-[200px] '}>
+                  <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />
+                </div>
+              </Grid>
               <Grid item xs={12}>
                 <Controller
                   name="title"
@@ -204,17 +220,15 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   )}
                 />
               </Grid>
+              <Grid item xs={12}>
+                <LoadingButton type={'submit'} variant={'contained'} fullWidth>
+                  تایید و ثبت آدرس
+                </LoadingButton>
+              </Grid>
             </Grid>
           </div>
-          {/*[&>.mapboxgl-map]:!h-[75vh]*/}
-          <div className={'grow flex flex-col overflow-y-auto h-[700px]'}>
-            <div className={'grow flex flex-col p-0'}>
-              <div className={'h-full flex flex-col'}>
-                <div className={'h-full grow relative'}>
-                  <IRMapComponent />
-                </div>
-              </div>
-            </div>
+          <div className={'grow hidden md:flex flex-col p-0 relative overflow-y-auto h-[700px] '}>
+            <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />
           </div>
         </div>
       </form>
