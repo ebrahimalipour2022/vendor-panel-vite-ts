@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { ILocation, MapIRRes } from '@/types';
 import classnames from 'classnames';
+import axios from 'axios';
 
 const VITE_IR_MAP_API_KEY = import.meta.env.VITE_IR_MAP_API_KEY;
 const Map = Mapir.setToken({
@@ -30,6 +31,7 @@ type Props = {
 // میدان آزادی
 // latitude=35.69978885094379&longitude=51.33797040739728
 //==========================================================
+
 // میدان ونک
 //latitude=35.75753482568149&longitude=51.40995708465471
 //==========================================================
@@ -37,6 +39,7 @@ type Props = {
 // default location => آزادی
 // useLocation mobile gps
 // web default location
+
 const IRMapComponent = ({ center = null, setCenter, onlyView = false }: Props) => {
   const [fetching, setFetching] = useState(false);
   const [innerState, setInnerState] = useState<ILocation>({
@@ -49,12 +52,27 @@ const IRMapComponent = ({ center = null, setCenter, onlyView = false }: Props) =
       setInnerState(center);
     }
   }, [center]);
-  const reverseFunction = async ({ lat, lng }: { lat: number; lng: number }) => {
+
+  // with fetch
+  const _reverseFunction = async ({ lat, lng }: { lat: number; lng: number }) => {
     const url = `https://map.ir/reverse/no?lat=${lat}&lon=${lng}`;
     return await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': VITE_IR_MAP_API_KEY,
+      },
+    });
+  };
+  // with axios
+  const reverseFunction = async ({ lat, lng }: { lat: number; lng: number }) => {
+    const url = `https://map.ir/reverse/no?lat=${lat}&lon=${lng}`;
+    return axios({
+      url,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': VITE_IR_MAP_API_KEY,
+        Authorization: null,
       },
     });
   };
@@ -71,11 +89,10 @@ const IRMapComponent = ({ center = null, setCenter, onlyView = false }: Props) =
           longitude,
         });
         await reverseFunction({ lat: latitude, lng: longitude })
-          .then(async (response) => {
-            if (response) {
-              const res = await response.json();
-              setCenter(res);
-              console.log('address res:', res);
+          .then(({ data }: { data: MapIRRes }) => {
+            if (data) {
+              console.log('address data:', data);
+              setCenter(data);
             }
           })
           .catch((err) => {

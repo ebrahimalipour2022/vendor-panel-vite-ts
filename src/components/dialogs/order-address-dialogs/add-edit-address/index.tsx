@@ -109,7 +109,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     >
       <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
         <div className={'flex gap-4'}>
-          <div className={'w-full md:max-w-[348px] overflow-y-auto'}>
+          <div className={'w-full md:max-w-[348px] relative pb-12 overflow-y-auto'}>
             <Grid container spacing={3}>
               <Grid item xs={12} className={'block md:hidden'}>
                 <div className={'grow flex flex-col p-0 relative h-[200px] '}>
@@ -220,14 +220,22 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   )}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <LoadingButton type={'submit'} variant={'contained'} fullWidth>
-                  تایید و ثبت آدرس
-                </LoadingButton>
-              </Grid>
+              <Grid item xs={12} />
             </Grid>
+            <LoadingButton
+              type={'submit'}
+              variant={'contained'}
+              fullWidth
+              className={'absolute bottom-0'}
+            >
+              تایید و ثبت آدرس
+            </LoadingButton>
           </div>
-          <div className={'grow hidden md:flex flex-col p-0 relative overflow-y-auto h-[700px] '}>
+          <div
+            className={
+              'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto h-[700px] bg-[var(--mui-palette-background-default)]'
+            }
+          >
             <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />
           </div>
         </div>
