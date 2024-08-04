@@ -17,7 +17,7 @@ export const ModalHeader = ({ title, icon: Icon, setOpen }: ModalHeaderProps) =>
       variant="body1"
       fontWeight={'bold'}
       color={'primary'}
-      className="flex gap-2 bg-[var(--mui-palette-action-disabledBackground)] m-2 rounded-md px-2"
+      className="modal-header-class flex gap-2 bg-[var(--mui-palette-action-disabledBackground)] m-2 rounded-md px-2"
     >
       <div className={'flex flex-row items-center justify-center gap-1'}>
         {Icon ? (

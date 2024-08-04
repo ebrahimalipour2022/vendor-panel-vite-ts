@@ -1,7 +1,7 @@
 import type { ReactElement, ReactNode, Ref } from 'react';
 import { forwardRef } from 'react';
 
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogClasses } from '@mui/material/Dialog';
 
 import type { Breakpoint } from '@mui/system';
 
@@ -38,7 +38,7 @@ type Props = {
   fullWidth?: boolean;
   children: ReactNode;
   transition?: 'left' | 'right' | 'up' | 'down';
-  classes?: string;
+  classes?: Partial<DialogClasses> | undefined;
 };
 
 const StyledBox = styled('div')(({ theme }) => ({
@@ -83,7 +83,7 @@ const MobileDialog = ({
         setOpen(false);
       }}
       classes={{
-        root: classes,
+        root: classes?.root,
         paper:
           '!mx-auto !my-0 fixed bottom-2 left-2 right-2 !w-[calc(100%_-_1rem)] overflow-auto max-h-[90dvh] min-h-[20dvh]',
       }}

@@ -145,14 +145,18 @@
   },
   "address": {
     "pageTitle": "آدرس منتخب",
+    "address_title": "آدرس",
+    "address_placeholder": "آدرس پستی مشتری را بنویسید...",
     "store": "شعبه",
     "title": "عنوان",
     "fullName": "ناو و نام خانوادگی",
+    "fullName_placeholder": "نام و نام خانوادگی مشتری را بنویسید...",
     "clientAddress": "ادرس",
     "plaque": "پلاک",
     "unit": "واحد",
     "floor": "طبقه",
-    "mobile": "موبایل"
+    "mobile": "شماره همراه",
+    "mobile_placeholder": "شماره تماس مشتری را بنویسید..."
   },
   "wallet": {
     "walletBalance": "موجودی کیف پول",

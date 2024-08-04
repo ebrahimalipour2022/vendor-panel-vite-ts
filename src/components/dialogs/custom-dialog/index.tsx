@@ -1,22 +1,37 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from 'react';
 
-import type { Breakpoint } from '@mui/system'
-
-import MobileDialog from './MobileDialog/MobileDialog'
-import DesktopDialog from './DesktopDialog/DesktopDialog'
+import type { Breakpoint } from '@mui/system';
+import { DialogClasses } from '@mui/material/Dialog';
+import { PaperProps } from '@mui/material';
+import MobileDialog from './MobileDialog/MobileDialog';
+import DesktopDialog from './DesktopDialog/DesktopDialog';
 
 type Props = {
-  title: string
-  icon?: ReactNode | string
-  open: boolean
-  setOpen: (open: boolean) => void
-  maxWidth?: Breakpoint
-  fullWidth?: boolean
-  children: ReactNode
-  transition?: 'left' | 'right' | 'up' | 'down'
-}
+  title: string;
+  icon?: ReactNode | string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  maxWidth?: Breakpoint;
+  maxHeight?: string;
+  fullWidth?: boolean;
+  children: ReactNode;
+  transition?: 'left' | 'right' | 'up' | 'down';
+  PaperProps?: Partial<PaperProps<React.ElementType>>;
+  classes?: Partial<DialogClasses> | undefined;
+};
 
-const CDialog = ({ open, setOpen, title, icon, maxWidth = 'sm', fullWidth = true, children }: Props) => {
+const CDialog = ({
+  open,
+  setOpen,
+  title,
+  icon,
+  maxWidth = 'sm',
+  fullWidth = true,
+  classes,
+  children,
+  PaperProps,
+  ...rest
+}: Props) => {
   return (
     <>
       <DesktopDialog
@@ -26,7 +41,11 @@ const CDialog = ({ open, setOpen, title, icon, maxWidth = 'sm', fullWidth = true
         open={open}
         maxWidth={maxWidth}
         fullWidth={fullWidth}
-        classes='hidden md:block'
+        PaperProps={PaperProps}
+        classes={{
+          root: 'hidden md:block',
+        }}
+        {...rest}
       >
         {children}
       </DesktopDialog>
@@ -37,12 +56,15 @@ const CDialog = ({ open, setOpen, title, icon, maxWidth = 'sm', fullWidth = true
         open={open}
         maxWidth={maxWidth}
         fullWidth={fullWidth}
-        classes={'block md:hidden'}
+        classes={{
+          root: 'block md:hidden',
+        }}
+        {...rest}
       >
         {children}
       </MobileDialog>
     </>
-  )
-}
+  );
+};
 
-export default CDialog
+export default CDialog;

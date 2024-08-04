@@ -13,6 +13,7 @@ import { isEmpty } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { LocationIcon } from '@/assets/icons';
 import RHFOutlinedInput from '@/components/hook-form/RHFOutlinedInput';
+import IRMapComponent from '@/components/IRMapComponent';
 
 type AddOrderProps = {
   open: boolean;
@@ -88,40 +89,134 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
       maxWidth={'lg'}
       fullWidth={true}
       icon={<LocationIcon />}
+      PaperProps={{
+        sx: {
+          maxHeight: '90vh',
+          // minHeight: '90vh',
+        },
+      }}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
-          <Grid item container md={4} xs={12}>
-            <Grid item xs={12} />
-            <Grid item xs={12}>
-              <Controller
-                name="title"
-                control={control}
-                rules={{ required: true }}
-                render={({ field, fieldState: { error } }) => (
-                  <RHFOutlinedInput
-                    label={t('authLogin.password')}
-                    placeholder={t('authLogin.password_placeholder')}
-                    error={!!error?.message}
-                    helperText={error?.message}
-                    required={true}
-                    {...field}
+      <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
+        <div className={'flex gap-4'}>
+          <div className={'w-full max-w-[348px]'}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Controller
+                  name="title"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field, fieldState: { error } }) => (
+                    <RHFOutlinedInput
+                      label={t('address.address_title')}
+                      placeholder={t('address.address_placeholder')}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      required={true}
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item container spacing={3} xs={12}>
+                <Grid item xs={4}>
+                  <Controller
+                    name="plaque"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => (
+                      <RHFOutlinedInput
+                        label={t('address.plaque')}
+                        placeholder={'-'}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        required={true}
+                        {...field}
+                      />
+                    )}
                   />
-                )}
-              />
+                </Grid>
+                <Grid item xs={4}>
+                  <Controller
+                    name="floor"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => (
+                      <RHFOutlinedInput
+                        label={t('address.floor')}
+                        placeholder={'-'}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        required={true}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Controller
+                    name="unit"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => (
+                      <RHFOutlinedInput
+                        label={t('address.unit')}
+                        placeholder={'-'}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        required={true}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="fullName"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field, fieldState: { error } }) => (
+                    <RHFOutlinedInput
+                      label={t('address.fullName')}
+                      placeholder={t('address.fullName_placeholder')}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      required={true}
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="mobile"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field, fieldState: { error } }) => (
+                    <RHFOutlinedInput
+                      label={t('address.mobile')}
+                      placeholder={t('address.mobile_placeholder')}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      required={true}
+                      {...field}
+                    />
+                  )}
+                />
+              </Grid>
             </Grid>
-            <Grid item container xs={12}>
-              <Grid item xs={4} />
-              <Grid item xs={4} />
-              <Grid item xs={4} />
-            </Grid>
-            <Grid item xs={12} />
-            <Grid item xs={12} />
-            <Grid item xs={12} />
-            <Grid item xs={12} />
-          </Grid>
-          <Grid item md={8} xs={12} />
-        </Grid>
+          </div>
+          {/*[&>.mapboxgl-map]:!h-[75vh]*/}
+          <div className={'grow flex flex-col overflow-y-auto h-[700px]'}>
+            <div className={'grow flex flex-col p-0'}>
+              <div className={'h-full flex flex-col'}>
+                <div className={'h-full grow relative'}>
+                  <IRMapComponent />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </CustomDialog>
   );

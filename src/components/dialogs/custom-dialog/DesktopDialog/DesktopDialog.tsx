@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react';
 
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogClasses } from '@mui/material/Dialog';
 
 import type { Breakpoint } from '@mui/system';
 
 import Box from '@mui/material/Box';
 
 import { ModalHeader } from '@/components/dialogs/custom-dialog/ModalHeader';
+import { PaperProps } from '@mui/material';
 
 type Props = {
   title: string;
@@ -16,7 +17,8 @@ type Props = {
   maxWidth?: Breakpoint;
   fullWidth?: boolean;
   children: ReactNode;
-  classes?: string;
+  classes?: Partial<DialogClasses> | undefined;
+  PaperProps?: Partial<PaperProps<React.ElementType>>;
 };
 
 const DesktopDialog = ({
@@ -28,6 +30,8 @@ const DesktopDialog = ({
   fullWidth = true,
   children,
   classes,
+  PaperProps,
+  ...rest
 }: Props) => {
   return (
     <Dialog
@@ -38,9 +42,9 @@ const DesktopDialog = ({
       onClose={() => {
         setOpen(false);
       }}
-      classes={{
-        root: classes,
-      }}
+      classes={classes}
+      PaperProps={PaperProps}
+      {...rest}
     >
       <ModalHeader title={title} icon={icon} setOpen={setOpen} />
       <Box className={'p-5'}>{children}</Box>

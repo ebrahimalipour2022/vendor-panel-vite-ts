@@ -30,7 +30,7 @@ const AddressesView = () => {
   const [getList, { currentData: addresses, isLoading, isFetching }] =
     useLazyGetOrderAddressesQuery();
   const [selectedOption, setSelectedOption] = useState(defaultOptions);
-  const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
+  const [addEditAddressDialog, setAddEditAddressDialog] = useState(true);
 
   const getAddressList = async () => {
     // console.log('isLoading list', isLoading);
