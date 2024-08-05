@@ -1,13 +1,9 @@
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-
 import { Controller, useForm } from 'react-hook-form';
-
 import { YupValidators } from '@/utils/forms-validation';
-
 import CustomDialog from '@/components/dialogs/custom-dialog';
 import type { IOrderAddress } from '@/types/address';
 import { isEmpty } from '@/utils/common';
@@ -17,6 +13,7 @@ import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
 import IRMapComponent from '@/components/IRMapComponent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
+import NeshanMap from '@/components/NeshanMapComponent';
 
 type AddOrderProps = {
   open: boolean;
@@ -29,7 +26,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
 
   const resolver = yupResolver(
     Yup.object().shape({
-      store: Yup.object()
+      storeBranch: Yup.object()
         .shape({
           label: YupValidators().stringRequired,
           value: YupValidators().stringRequired,
@@ -59,10 +56,10 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     handleSubmit,
     reset,
     watch,
-    formState: { isSubmitting },
-  } = useForm({
+    formState: { isSubmitting, errors },
+  } = useForm<IOrderAddress>({
     defaultValues: {
-      store: {
+      storeBranch: {
         value: '',
         label: '',
       },
@@ -80,7 +77,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     },
     resolver,
   });
-
+  console.log('errors', errors);
   const watchLocation = watch('location');
 
   const setCenter = () => {};
@@ -108,13 +105,13 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
       icon={<LocationIcon />}
       PaperProps={{
         sx: {
-          maxHeight: '90vh',
+          // maxHeight: '90vh',
           // minHeight: '90vh',
         },
       }}
     >
       <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
-        <div className={'flex gap-4'}>
+        <div className={'flex gap-4  h-[75vh]'}>
           <div className={'w-full md:max-w-[348px] relative pb-12 overflow-y-auto'}>
             <Grid container spacing={3}>
               <Grid item xs={12} className={'block md:hidden'}>
@@ -133,33 +130,40 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   </div>
                 </div>
               </Grid>
-
               <Grid item xs={12}>
                 <Controller
-                  name="store"
+                  name="storeBranch"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => (
-                    <RHFReactSelectField
-                      label={t('address.store_title')}
-                      placeholder={t('address.store_placeholder')}
-                      options={[
-                        { label: 'شعبه ونک', value: '1' },
-                        { label: 'شعبه انقلاب اسلامی', value: '2' },
-                      ]}
-                      value={field.value}
-                      handleChange={field.onChange}
-                      isMulti={false}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      required={true}
-                    />
-                  )}
+                  render={({ field, fieldState: { error } }) => {
+                    return (
+                      <RHFReactSelectField
+                        label={t('address.store_title')}
+                        placeholder={t('address.store_placeholder')}
+                        options={[
+                          { label: 'شعبه ونک', value: '1' },
+                          { label: 'شعبه انقلاب اسلامی', value: '2' },
+                        ]}
+                        value={field.value}
+                        handleChange={field.onChange}
+                        isMulti={false}
+                        error={
+                          // @ts-ignore
+                          !!(error && 'value' in error && error?.value?.message) || !!error?.message
+                        }
+                        helperText={
+                          // @ts-ignore
+                          (error && 'value' in error && error?.value?.message) || error?.message
+                        }
+                        required={true}
+                      />
+                    );
+                  }}
                 />
               </Grid>
               <Grid item xs={12}>
                 <Controller
-                  name="title"
+                  name="clientAddress"
                   control={control}
                   rules={{ required: true }}
                   render={({ field, fieldState: { error } }) => (
@@ -274,10 +278,11 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
           </div>
           <div
             className={
-              'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto h-[700px] bg-[var(--mui-palette-background-default)]'
+              'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto bg-[var(--mui-palette-background-default)]'
             }
           >
-            <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />
+            <NeshanMap />
+            {/*<IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />*/}
           </div>
         </div>
       </form>

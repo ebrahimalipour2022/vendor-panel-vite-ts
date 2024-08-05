@@ -4,7 +4,7 @@ export interface ILocation {
 }
 export interface IOrderAddress {
   id?: string;
-  store: {
+  storeBranch: {
     label: string;
     value: string;
   };
