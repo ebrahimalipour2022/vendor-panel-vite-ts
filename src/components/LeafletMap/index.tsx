@@ -1,5 +1,5 @@
 // MapComponent.js
-import React from 'react';
+import { Suspense } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { LatLngExpression } from 'leaflet';
@@ -7,8 +7,8 @@ import classnames from 'classnames';
 import { ILocation, MapIRRes } from '@/types';
 import MapLocation from '@/assets/icons/MapLocation';
 import './style.css';
-import { LogoZapBlue } from '@/assets/icons';
 import ZapLogo from '@/assets/icons/Logo';
+import { LoadingScreen } from '@/components/loading-screen';
 //==========================================================
 // میدان آزادی
 // latitude=35.69978885094379&longitude=51.33797040739728
@@ -54,19 +54,27 @@ const LeafletMapComponent = ({ center = null, setCenter, onlyView = false }: Pro
         ' user-select-none pointer-events-none overflow-hidden': onlyView,
       })}
     >
-      <MapContainer center={position} zoom={zoom} style={{ height: '100%', width: '100%' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <GetMapCenterOnDrag />
-      </MapContainer>
-      <div className={'location-icon'}>
-        <MapLocation />
-      </div>
-      <div className={'logo-icon'}>
-        <ZapLogo />
-      </div>
+      <Suspense
+        fallback={
+          <div className={'absolute inset-0 z-1'}>
+            <LoadingScreen />
+          </div>
+        }
+      >
+        <MapContainer center={position} zoom={zoom} style={{ height: '100%', width: '100%' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <GetMapCenterOnDrag />
+        </MapContainer>
+        <div className={'location-icon'}>
+          <MapLocation />
+        </div>
+        <div className={'logo-icon'}>
+          <ZapLogo />
+        </div>
+      </Suspense>
     </div>
   );
 };

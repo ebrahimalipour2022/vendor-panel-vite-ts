@@ -13,41 +13,42 @@ import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
 import LoadingButton from '@mui/lab/LoadingButton';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LeafletMapComponent from '@/components/LeafletMap';
+import { i18n } from '@/locales/i18n';
+import { useEffect } from 'react';
 
 type AddOrderProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   data?: IOrderAddress | null;
 };
+const resolver = yupResolver(
+  Yup.object().shape({
+    storeBranch: Yup.object()
+      .shape({
+        label: YupValidators().stringRequired,
+        value: YupValidators().stringRequired,
+      })
+      .required(i18n.t('formCommonErrors.isRequired'))
+      .nullable(i18n.t('formCommonErrors.isRequired')),
+    title: YupValidators().stringRequired,
+    fullName: YupValidators().stringRequired,
+    clientAddress: YupValidators().stringRequired,
+    plaque: YupValidators().stringRequired,
+    unit: YupValidators().stringRequired,
+    floor: YupValidators().stringRequired,
+    location: Yup.object()
+      .shape({
+        latitude: YupValidators().stringRequired,
+        longitude: YupValidators().stringRequired,
+      })
+      .required(i18n.t('formCommonErrors.isRequired'))
+      .nullable(i18n.t('formCommonErrors.isRequired')),
+    mobile: YupValidators().mobile,
+  })
+);
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
-
-  const resolver = yupResolver(
-    Yup.object().shape({
-      storeBranch: Yup.object()
-        .shape({
-          label: YupValidators().stringRequired,
-          value: YupValidators().stringRequired,
-        })
-        .required(t('formCommonErrors.isRequired'))
-        .nullable(t('formCommonErrors.isRequired')),
-      title: YupValidators().stringRequired,
-      fullName: YupValidators().stringRequired,
-      clientAddress: YupValidators().stringRequired,
-      plaque: YupValidators().stringRequired,
-      unit: YupValidators().stringRequired,
-      floor: YupValidators().stringRequired,
-      location: Yup.object()
-        .shape({
-          latitude: YupValidators().stringRequired,
-          longitude: YupValidators().stringRequired,
-        })
-        .required(t('formCommonErrors.isRequired'))
-        .nullable(t('formCommonErrors.isRequired')),
-      mobile: YupValidators().mobile,
-    })
-  );
 
   // Hooks
   const {
@@ -76,6 +77,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     },
     resolver,
   });
+
   console.log('errors', errors);
   const watchLocation = watch('location');
 

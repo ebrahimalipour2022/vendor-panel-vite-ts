@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -122,7 +122,9 @@ const AddressesView = () => {
 
         {renderAddresses()}
       </Stack>
-      <AddEditAddressDialog open={addEditAddressDialog} setOpen={handleNewAddress} />
+      <Fragment key={`${addEditAddressDialog}-addEditAddressDialog`}>
+        <AddEditAddressDialog open={addEditAddressDialog} setOpen={handleNewAddress} />
+      </Fragment>
     </>
   );
 };
