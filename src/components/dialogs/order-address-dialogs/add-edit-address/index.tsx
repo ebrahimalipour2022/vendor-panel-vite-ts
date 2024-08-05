@@ -10,10 +10,9 @@ import { isEmpty } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { EditIcon, LocationIcon } from '@/assets/icons';
 import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
-import IRMapComponent from '@/components/IRMapComponent';
 import LoadingButton from '@mui/lab/LoadingButton';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
-import NeshanMap from '@/components/NeshanMapComponent';
+import LeafletMapComponent from '@/components/LeafletMap';
 
 type AddOrderProps = {
   open: boolean;
@@ -281,8 +280,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
               'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto bg-[var(--mui-palette-background-default)]'
             }
           >
-            <NeshanMap />
-            {/*<IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />*/}
+            <LeafletMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />
           </div>
         </div>
       </form>
