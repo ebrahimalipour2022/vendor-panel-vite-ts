@@ -4,7 +4,10 @@ export interface ILocation {
 }
 export interface IOrderAddress {
   id?: string;
-  storeId: string;
+  store: {
+    label: string;
+    value: string;
+  };
   title: string;
   fullName: string;
   clientAddress: string;

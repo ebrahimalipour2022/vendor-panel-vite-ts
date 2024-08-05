@@ -11,7 +11,7 @@ import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
 import { useLazyGetOrderAddressesQuery } from '@/redux/api/order-address/order-address';
 import SearchField from './SearchField';
-import CSelectField from './ReactSelectField';
+import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LoadingScreen from '../../../components/loading-screen/loading-screen';
 
 const options: StateOption[] = [
@@ -30,7 +30,7 @@ const AddressesView = () => {
   const [getList, { currentData: addresses, isLoading, isFetching }] =
     useLazyGetOrderAddressesQuery();
   const [selectedOption, setSelectedOption] = useState(defaultOptions);
-  const [addEditAddressDialog, setAddEditAddressDialog] = useState(true);
+  const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
 
   const getAddressList = async () => {
     // console.log('isLoading list', isLoading);
@@ -98,12 +98,14 @@ const AddressesView = () => {
           </div>
           <div id={'page-actions'} className={'flex flex-row gap-2'}>
             <SearchField placeholder={'در لیست جستجو کنید...'} sx={{ width: 250 }} />
-            <CSelectField
+            <RHFReactSelectField
               value={selectedOption}
-              allOption={'همه شعب'}
+              allOptionText={'همه شعب'}
               placeholder={'انتخاب شعبه'}
               options={options}
               handleChange={handleChange}
+              name={'branches-field'}
+              isMulti={true}
             />
             <Button
               variant={'outlined'}

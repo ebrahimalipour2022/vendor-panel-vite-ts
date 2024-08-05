@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 
 import { YupValidators } from '@/utils/forms-validation';
 import { useTranslation } from 'react-i18next';
-import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
+import RHFPasswordField from '@/components/hook-form-fields/RHFPasswordInput';
 
 type FormValues = {
   oldPassword: string;

@@ -9,8 +9,8 @@ import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useTranslation } from 'react-i18next';
-import RHFPasswordField from '@/components/hook-form/RHFPasswordInput';
-import RHFOutlinedInput from '@/components/hook-form/RHFOutlinedInput';
+import RHFPasswordField from '@/components/hook-form-fields/RHFPasswordInput';
+import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
 import { YupValidators } from '@/utils/forms-validation';
 import { useAuthContext } from '@/auth/hooks';
 

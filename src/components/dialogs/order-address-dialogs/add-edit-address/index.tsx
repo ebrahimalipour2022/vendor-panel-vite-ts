@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,11 +12,11 @@ import CustomDialog from '@/components/dialogs/custom-dialog';
 import type { IOrderAddress } from '@/types/address';
 import { isEmpty } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
-import { LocationIcon } from '@/assets/icons';
-import RHFOutlinedInput from '@/components/hook-form/RHFOutlinedInput';
+import { EditIcon, LocationIcon } from '@/assets/icons';
+import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
 import IRMapComponent from '@/components/IRMapComponent';
-import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
+import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
 
 type AddOrderProps = {
   open: boolean;
@@ -25,14 +26,16 @@ type AddOrderProps = {
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
-  // const [center, setCenter] = useState({
-  //   lat: 35.75753482568149,
-  //   lng: 51.40995708465471,
-  // });
 
   const resolver = yupResolver(
     Yup.object().shape({
-      storeId: YupValidators().stringRequired,
+      store: Yup.object()
+        .shape({
+          label: YupValidators().stringRequired,
+          value: YupValidators().stringRequired,
+        })
+        .required(t('formCommonErrors.isRequired'))
+        .nullable(t('formCommonErrors.isRequired')),
       title: YupValidators().stringRequired,
       fullName: YupValidators().stringRequired,
       clientAddress: YupValidators().stringRequired,
@@ -57,9 +60,12 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     reset,
     watch,
     formState: { isSubmitting },
-  } = useForm<IOrderAddress>({
+  } = useForm({
     defaultValues: {
-      storeId: '',
+      store: {
+        value: '',
+        label: '',
+      },
       title: '',
       fullName: '',
       clientAddress: '',
@@ -94,9 +100,9 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     <CustomDialog
       open={open}
       setOpen={setOpen}
-      title={`${isEmpty(data?.storeId) ? t('common.add') : t('common.edit')} ${t(
-        'address.title'
-      )} ${isEmpty(data?.storeId) && t('common.new')}`}
+      title={`${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t('address.title')} ${
+        isEmpty(data?.id) && t('common.new')
+      }`}
       maxWidth={'lg'}
       fullWidth={true}
       icon={<LocationIcon />}
@@ -112,9 +118,44 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
           <div className={'w-full md:max-w-[348px] relative pb-12 overflow-y-auto'}>
             <Grid container spacing={3}>
               <Grid item xs={12} className={'block md:hidden'}>
-                <div className={'grow flex flex-col p-0 relative h-[200px] '}>
-                  <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />
+                <div className={'relative'}>
+                  <Button
+                    variant={'outlined'}
+                    startIcon={
+                      <EditIcon className={'[&>*]:fill-[var(--mui-palette-primary-main)]'} />
+                    }
+                    className={'absolute bottom-2 right-2 font-bold z-10'}
+                  >
+                    تغییر آدرس
+                  </Button>
+                  <div className={'grow flex flex-col p-0 relative h-[200px]'}>
+                    <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />
+                  </div>
                 </div>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name="store"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field, fieldState: { error } }) => (
+                    <RHFReactSelectField
+                      label={t('address.store_title')}
+                      placeholder={t('address.store_placeholder')}
+                      options={[
+                        { label: 'شعبه ونک', value: '1' },
+                        { label: 'شعبه انقلاب اسلامی', value: '2' },
+                      ]}
+                      value={field.value}
+                      handleChange={field.onChange}
+                      isMulti={false}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      required={true}
+                    />
+                  )}
+                />
               </Grid>
               <Grid item xs={12}>
                 <Controller
