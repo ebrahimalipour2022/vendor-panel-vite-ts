@@ -29,24 +29,20 @@ export interface IrMapCoordinates {
   lat: number;
   lng: number;
 }
-export interface MapIRRes {
-  address: string;
-  address_compact: string;
-  city: string;
-  country: string;
-  county: string;
-  district: string;
-  geom: { type: string; coordinates: string[] };
-  last: string;
-  name: string;
+export interface MapReverseAddressRes {
+  status: string;
   neighbourhood: string;
-  plaque: string;
-  poi: string;
-  postal_address: string;
-  postal_code: string;
-  primary: string;
-  province: string;
-  region: string;
-  rural_district: string;
-  village: string;
+  municipality_zone: string;
+  state: string;
+  city: string;
+  in_traffic_zone: boolean;
+  in_odd_even_zone: boolean;
+  route_name: string;
+  route_type: string;
+  place: null;
+  district: string;
+  formatted_address: string;
+  village: null;
+  county: string;
+  location?: ILocation;
 }

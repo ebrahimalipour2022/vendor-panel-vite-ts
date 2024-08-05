@@ -15,6 +15,7 @@ import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/Re
 import LeafletMapComponent from '@/components/LeafletMap';
 import { i18n } from '@/locales/i18n';
 import { useEffect } from 'react';
+import { MapReverseAddressRes } from '@/types/address';
 
 type AddOrderProps = {
   open: boolean;
@@ -81,7 +82,9 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   console.log('errors', errors);
   const watchLocation = watch('location');
 
-  const setCenter = () => {};
+  const setAddress = (address: MapReverseAddressRes) => {
+    console.log('MapReverseAddressRes', address);
+  };
 
   const onSubmit = async (values: IOrderAddress) => {
     // await authAPI
@@ -282,7 +285,11 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
               'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto bg-[var(--mui-palette-background-default)]'
             }
           >
-            <LeafletMapComponent center={watchLocation} setCenter={setCenter} onlyView={false} />
+            <LeafletMapComponent
+              position={watchLocation}
+              setAddress={setAddress}
+              onlyView={false}
+            />
           </div>
         </div>
       </form>
