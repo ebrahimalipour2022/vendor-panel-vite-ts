@@ -126,7 +126,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                     تغییر آدرس
                   </Button>
                   <div className={'grow flex flex-col p-0 relative h-[200px]'}>
-                    <IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />
+                    {/*<IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />*/}
                   </div>
                 </div>
               </Grid>
