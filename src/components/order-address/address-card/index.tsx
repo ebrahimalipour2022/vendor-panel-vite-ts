@@ -98,16 +98,17 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
         //   fontSize: '14px'
         // }}
       />
-      <CardContent className={'px-3 py-6'}>
+      <CardContent className={'px-1 !py-6'}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-          <div className="w-full md:min-w-[100px] md:max-w-[200px] py-4 md:py-2 md:px-6 border-b md:border-b-0 md:border-l md:border-gray-300">
+          <div className="relative  md:min-w-[100px] md:max-w-[200px] md:px-2 border-b md:border-b-0 ">
             <AddressItem
               icon={ICONS.fullName}
               label={'گیرنده'}
               value={address?.fullName || '-----'}
             />
+            <div className={'absolute left-0 top-1/4 h-1/2 border-l-2'} />
           </div>
-          <div className="w-full md:min-w-[100px] md:max-w-[200px] py-4 md:py-2 md:px-6">
+          <div className="w-full md:min-w-[100px] md:max-w-[200px] mt-3  md:px-2">
             <AddressItem
               icon={ICONS.phoneNumber}
               label={'شماره تلفن'}

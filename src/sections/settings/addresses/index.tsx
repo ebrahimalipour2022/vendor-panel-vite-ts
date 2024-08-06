@@ -103,14 +103,14 @@ const AddressesView = () => {
   return (
     <>
       <Stack gap={4}>
-        <div className={'flex flex-row items-center justify-between'}>
+        <div className={'flex flex-row items-center justify-between flex-wrap gap-2'}>
           <div id={'page-title'} className={'hidden md:block'}>
             <Typography component={'h2'} variant={'body1'} fontWeight={'bold'}>
               آدرس های منتخب
             </Typography>
           </div>
-          <div id={'page-actions'} className={'flex flex-row gap-2'}>
-            <SearchField placeholder={'در لیست جستجو کنید...'} sx={{ width: 250 }} />
+          <div id={'page-actions'} className={'flex flex-row align-center flex-wrap gap-2'}>
+            <SearchField placeholder={'در لیست جستجو کنید...'} sx={{ maxWidth: 250 }} />
             <RHFReactSelectField
               value={selectedOption}
               allOptionText={'همه شعب'}
