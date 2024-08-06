@@ -5,11 +5,8 @@ import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import type { Theme } from '@mui/material/styles';
-
 import classnames from 'classnames';
-
 import { MenuItem as VMenuItem } from '@/layouts/materialize-layout/@menu/vertical-menu';
-
 import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSettings';
 import type { Settings } from '@/layouts/materialize-layout/@core/contexts/settingsContext';
 import CustomDialog from '@/components/dialogs/custom-dialog';
@@ -23,15 +20,16 @@ import ProfileMenuItems from '@/layouts/materialize-layout/@menu/components/vert
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 import MobileAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MobileAccountBrief';
 import { ArrowBackIosNewOutlined } from '@mui/icons-material';
-import { useAuthContext } from '@/auth/hooks';
+import { useGetActiveStoreQuery } from '@/redux/api/vendor/vendor';
+import { useCustomerGeneralInfoQuery } from '@/redux/api/user-management/customer';
 
 type ModalType = 'avatar' | 'password' | null;
 
 function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
-  const { user: userInfo, loading: isLoading } = useAuthContext();
   const { t } = useTranslation();
-  // fetch data
-  // const { data: userInfo, isLoading } = useSWR(urls.userInfo(), () => umAPI.userInfoAxios());
+  // Fetch data
+  const { data: userInfo, isLoading: isFetchingUserInfo } = useCustomerGeneralInfoQuery();
+  const { data: activeStore, isLoading: isFetchingActiveStore } = useGetActiveStoreQuery();
   // Hooks
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -69,6 +67,7 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
     setModal(null);
   };
 
+  const isLoading = isFetchingUserInfo || isFetchingActiveStore;
   return (
     <>
       <VMenuItem
@@ -86,7 +85,7 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
         suffix={<ArrowBackIosNewOutlined fontSize={'inherit'} />}
       >
         {Setting.layout === 'vertical' && (
-          <NavAccountBrief userInfo={userInfo} isLoading={isLoading} />
+          <NavAccountBrief userInfo={userInfo} store={activeStore} isLoading={isLoading} />
         )}
         {!isSmallScreen && (
           <Popper
@@ -111,6 +110,7 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
                   <ClickAwayListener onClickAway={handleClose}>
                     <ProfileMenuItems
                       userInfo={userInfo}
+                      store={activeStore}
                       isLoading={isLoading}
                       setOpen={handleOpenFormModal}
                     />
@@ -126,6 +126,7 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
         <MobileDialog open={open} setOpen={handleClose} puller={true}>
           <ProfileMenuItems
             userInfo={userInfo}
+            store={activeStore}
             isLoading={isLoading}
             element={MobileAccountBrief}
             setOpen={handleOpenFormModal}

@@ -7,14 +7,17 @@ import Typography from '@mui/material/Typography';
 import { ArrowLeftIcon, ExitIcon, KeyIcon, UserEditIcon } from '@/assets/icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '@/auth/hooks';
+import { ICustomerGeneralInfo, IStore } from '@/types';
 
 const ProfileMenuItems = ({
   userInfo,
   isLoading,
+  store,
   element: Element,
   setOpen,
 }: {
-  userInfo: any;
+  userInfo: ICustomerGeneralInfo | undefined;
+  store: IStore | undefined;
   isLoading: boolean;
   setOpen: (value: 'avatar' | 'password' | null) => void;
   element?: ComponentType<any>;
@@ -39,7 +42,7 @@ const ProfileMenuItems = ({
                 className="gap-2 pli-5 plb-4"
                 // onClick={e => handleDropdownClose(e, '')}
               >
-                <Element userInfo={userInfo} isLoading={isLoading} />
+                <Element userInfo={userInfo} store={store} isLoading={isLoading} />
               </MenuItem>
             )}
             <MenuItem disabled tabIndex={-1} className="gap-2 pli-5 plb-4 ">

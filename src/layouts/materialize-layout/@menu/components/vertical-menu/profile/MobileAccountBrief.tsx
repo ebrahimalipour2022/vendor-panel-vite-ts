@@ -3,8 +3,14 @@ import Stack from '@mui/material/Stack';
 import { Skeleton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CustomAvatar from '@/layouts/materialize-layout/@core/components/mui/Avatar';
+import { ICustomerGeneralInfo, IStore } from '@/types';
 
-const MobileAccountBrief = ({ userInfo, isLoading }: { userInfo: any; isLoading: boolean }) => {
+type Props = {
+  store: IStore | undefined;
+  userInfo: ICustomerGeneralInfo | undefined;
+  isLoading: boolean;
+};
+const MobileAccountBrief = ({ userInfo, store, isLoading }: Props) => {
   return (
     <Stack className={'w-full flex flex-col items-center gap-2'}>
       <CustomAvatar src={''} alt={userInfo?.name} size={80} />
@@ -28,7 +34,7 @@ const MobileAccountBrief = ({ userInfo, isLoading }: { userInfo: any; isLoading:
               component={'p'}
               className="overflow-hidden whitespace-nowrap text-ellipsis  text-[0.75rem] text-[var(--mui-palette-text-secondary)]"
             >
-              فروشگاه اکالا پونک پونک پونک پونک پونک
+              {store?.title || '-----'}
             </Typography>
           </>
         )}
