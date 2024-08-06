@@ -1,8 +1,8 @@
 // MapComponent.js
 import { Suspense, useEffect, useState } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { FeatureGroup, MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { LatLngExpression } from 'leaflet';
+import L, { LatLngExpression } from 'leaflet';
 import classnames from 'classnames';
 import { ILocation, MapReverseAddressRes } from '@/types';
 import MapLocation from '@/assets/icons/MapLocation';
@@ -10,6 +10,7 @@ import './style.css';
 import ZapLogo from '@/assets/icons/Logo';
 import { LoadingScreen } from '@/components/loading-screen';
 import axios from 'axios';
+import MarkersRandom from '@/components/LeafletMap/MarkerCurve';
 //==========================================================
 // میدان آزادی
 // latitude=35.69978885094379&longitude=51.33797040739728
@@ -96,35 +97,44 @@ const LeafletMapComponent = ({
     return null; // This component does not render anything
   };
 
+  // latitude=35.69978885094379&longitude=51.33797040739728
+  //latitude=35.75753482568149&longitude=51.40995708465471
+
+  // Define the coordinates for the two points
+  const point1: LatLngExpression = [51.40995708465471, 35.75753482568149]; // Example coordinates (latitude, longitude)
+  const point2: LatLngExpression = [51.41423155947801, 35.762504043673815]; // Another set of coordinates
+
+  const positions: LatLngExpression[] = [point1, point2];
+
   return (
     <div
       className={classnames(' h-full w-full relative', {
-        ' user-select-none pointer-events-none overflow-hidden': onlyView,
+        'user-select-none pointer-events-none overflow-hidden': onlyView,
       })}
     >
-      <Suspense
-        fallback={
-          <div className={'absolute inset-0 z-1'}>
-            <LoadingScreen />
-          </div>
-        }
-      >
-        <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <GetMapCenterOnDrag />
-        </MapContainer>
-        <div className={'location-icon'}>
-          <MapLocation />
-        </div>
-        <div className={'logo-icon'}>
-          <ZapLogo />
-        </div>
-      </Suspense>
+      <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
+        <MarkersRandom />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <GetMapCenterOnDrag />
+      </MapContainer>
+      <div className={'location-icon'}>
+        <MapLocation />
+      </div>
+      <div className={'logo-icon'}>
+        <ZapLogo />
+      </div>
     </div>
   );
 };
 
 export default LeafletMapComponent;
+
+export const customMarkerUserPos = new L.Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.5.1/dist/images/marker-icon.png',
+  iconSize: [15, 20],
+  iconAnchor: [5, 20],
+  popupAnchor: [2, -40],
+});
