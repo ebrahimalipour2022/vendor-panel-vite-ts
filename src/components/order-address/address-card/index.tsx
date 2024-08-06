@@ -46,6 +46,15 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
     setAnchorEl(null);
   };
 
+  const onDelete = ({ id }: { id: string }) => {
+    handleRemove({ id });
+    handleClose();
+  };
+  const onEdit = (address: IOrderAddress) => {
+    handleEdit(address);
+    handleClose();
+  };
+
   return (
     <Card className="relative bs-full" variant={'outlined'}>
       <CardHeader
@@ -60,14 +69,14 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
               <SubMenuThreeDotIcon />
             </IconButton>
             <Menu open={open} anchorEl={anchorEl} onClose={handleClose} id="address-list">
-              <MenuItem onClick={() => handleEdit(address)} divider>
+              <MenuItem onClick={() => onEdit(address)} divider>
                 <div className={'w-6 h-6'}>
                   <EditIcon />
                 </div>
                 {t('common.edit')}
               </MenuItem>
               <MenuItem
-                onClick={() => handleRemove({ id: address?.id! })}
+                onClick={() => onDelete({ id: address?.id! })}
                 sx={{
                   color: 'var(--mui-palette-error-main)',
                 }}
