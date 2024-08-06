@@ -1,16 +1,14 @@
 // MapComponent.js
-import { Suspense, useEffect, useState } from 'react';
-import { FeatureGroup, MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L, { LatLngExpression } from 'leaflet';
 import classnames from 'classnames';
-import { ILocation, MapReverseAddressRes } from '@/types';
+import { ILocation, IrMapCoordinates, MapReverseAddressRes } from '@/types';
 import MapLocation from '@/assets/icons/MapLocation';
 import './style.css';
 import ZapLogo from '@/assets/icons/Logo';
-import { LoadingScreen } from '@/components/loading-screen';
 import axios from 'axios';
-import MarkersRandom from '@/components/LeafletMap/MarkerCurve';
 //==========================================================
 // میدان آزادی
 // latitude=35.69978885094379&longitude=51.33797040739728
@@ -67,34 +65,27 @@ const LeafletMapComponent = ({
       setCenter([position.latitude, position.longitude]);
     }
   }, [position]);
-  const GetMapCenterOnDrag = () => {
-    const map = useMap();
-    const handleDragEnd = async () => {
-      const center = map.getCenter();
-      console.log('Center after drag:', center.lat, center.lng);
-      if (center) {
-        setCenter([center.lat, center.lng]);
-        await getAddressByLatLng({ lat: center.lat, lng: center.lng })
-          .then((res) => {
-            if (res?.data) {
-              console.log('address res :', res.data);
-              if (setAddress) {
-                setAddress({
-                  ...res.data,
-                  location: { latitude: center.lat, longitude: center.lng },
-                });
-              }
+
+  const handleDragEnd = async ({ lat, lng }: IrMapCoordinates) => {
+    // console.log('Center after drag:', lat, lng);
+    if (lat && lng) {
+      setCenter([lat, lng]);
+      await getAddressByLatLng({ lat, lng })
+        .then((res) => {
+          if (res?.data) {
+            // console.log('address res :', res.data);
+            if (setAddress) {
+              setAddress({
+                ...res.data,
+                location: { latitude: lat, longitude: lng },
+              });
             }
-          })
-          .catch((err) => {
-            console.log('address err :', err);
-          });
-      }
-    };
-
-    map.on('dragend', handleDragEnd);
-
-    return null; // This component does not render anything
+          }
+        })
+        .catch((err) => {
+          // console.log('address err :', err);
+        });
+    }
   };
 
   // latitude=35.69978885094379&longitude=51.33797040739728
@@ -103,9 +94,18 @@ const LeafletMapComponent = ({
   // Define the coordinates for the two points
   const point1: LatLngExpression = [51.40995708465471, 35.75753482568149]; // Example coordinates (latitude, longitude)
   const point2: LatLngExpression = [51.41423155947801, 35.762504043673815]; // Another set of coordinates
-
   const positions: LatLngExpression[] = [point1, point2];
 
+  function GetMapCenterOnDrag() {
+    const map = useMapEvents({
+      dragend() {
+        const center = map.getCenter();
+        handleDragEnd(center);
+        // console.log('Center after drag:', center.lat, center.lng);
+      },
+    });
+    return null;
+  }
   return (
     <div
       className={classnames(' h-full w-full relative', {
@@ -113,12 +113,12 @@ const LeafletMapComponent = ({
       })}
     >
       <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
-        <MarkersRandom />
+        <GetMapCenterOnDrag />
+        {/*<MarkersRandom />*/}
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        <GetMapCenterOnDrag />
       </MapContainer>
       <div className={'location-icon'}>
         <MapLocation />

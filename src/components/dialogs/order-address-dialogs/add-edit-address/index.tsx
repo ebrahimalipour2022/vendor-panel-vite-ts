@@ -57,6 +57,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { isSubmitting, errors },
   } = useForm<IOrderAddress>({
     defaultValues: {
@@ -84,6 +85,14 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
 
   const setAddress = (address: MapReverseAddressRes) => {
     console.log('MapReverseAddressRes', address);
+    if (address) {
+      if ('formatted_address' in address && address?.formatted_address) {
+        setValue('clientAddress', address.formatted_address);
+      }
+      if ('location' in address && address?.location) {
+        setValue('location', address.location);
+      }
+    }
   };
 
   const onSubmit = async (values: IOrderAddress) => {
@@ -178,6 +187,8 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                       helperText={error?.message}
                       required={true}
                       {...field}
+                      multiline={true}
+                      maxRows={4}
                     />
                   )}
                 />
