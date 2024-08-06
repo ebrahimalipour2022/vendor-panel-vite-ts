@@ -1,8 +1,6 @@
 import { vendorApi } from '@/store/api';
 import { IOrderAddress, IOrderAddressListReq } from '@/types';
-// import { convertBase64ToFile } from '@/services/driver-files';
 
-//https://dev-vm.zap-express.com/api/v1/OrderAddress/store/100?query=
 const VITE_VM_API_VERSION = import.meta.env.VITE_VM_API_VERSION;
 const controller = `${VITE_VM_API_VERSION}/`;
 export const orderAddress = vendorApi.injectEndpoints({
@@ -18,7 +16,38 @@ export const orderAddress = vendorApi.injectEndpoints({
         return response?.orderAddress || [];
       },
     }),
+    postOrderAddresses: builder.mutation<void, IOrderAddress>({
+      query(data) {
+        return {
+          method: 'POST',
+          url: `${controller}OrderAddress`,
+          data,
+        };
+      },
+    }),
+    putOrderAddresses: builder.mutation<void, { id: string; data: IOrderAddress }>({
+      query({ id, data }) {
+        return {
+          method: 'PUT',
+          url: `${controller}OrderAddress/${id}`,
+          data,
+        };
+      },
+    }),
+    deleteOrderAddresses: builder.mutation<void, { id: string }>({
+      query({ id }) {
+        return {
+          method: 'DELETE',
+          url: `${controller}OrderAddress/${id}`,
+        };
+      },
+    }),
   }),
 });
 
-export const { useLazyGetOrderAddressesQuery } = orderAddress;
+export const {
+  useLazyGetOrderAddressesQuery,
+  usePostOrderAddressesMutation,
+  usePutOrderAddressesMutation,
+  useDeleteOrderAddressesMutation,
+} = orderAddress;
