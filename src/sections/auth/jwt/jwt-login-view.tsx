@@ -9,7 +9,7 @@ import LoginWithUserPass from '@/sections/auth/jwt/LoginWithUserPass';
 
 const Login = () => {
   const { t } = useTranslation();
-  const [loginMethod, setLoginMethod] = useState('otp');
+  const [loginMethod, setLoginMethod] = useState('user-pass');
 
   const handleChangeForm = () => {
     if (loginMethod === 'user-pass') {
