@@ -1,4 +1,4 @@
-import { vendorApi } from '@/redux/api';
+import { vendorApi } from '@/store/api';
 import { IOrderAddress, IOrderAddressListReq } from '@/types';
 // import { convertBase64ToFile } from '@/services/driver-files';
 

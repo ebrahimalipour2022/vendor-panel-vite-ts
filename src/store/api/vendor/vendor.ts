@@ -1,4 +1,4 @@
-import { vendorApi } from '@/redux/api';
+import { vendorApi } from '@/store/api';
 import { IStore } from '@/types';
 
 const VITE_VM_API_VERSION = import.meta.env.VITE_VM_API_VERSION;

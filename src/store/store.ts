@@ -14,7 +14,7 @@ import {
   // PURGE,
   // REGISTER,
 } from 'redux-persist';
-import { umApi, vendorApi } from '@/redux/api';
+import { umApi, vendorApi } from '@/store/api';
 import { rootReducer } from './root-reducer';
 
 // ----------------------------------------------------------------------

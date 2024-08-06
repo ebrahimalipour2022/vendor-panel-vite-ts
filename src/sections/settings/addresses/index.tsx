@@ -9,7 +9,7 @@ import EmptyState from '@/components/empty-state';
 import AddressCard from '@/components/order-address/address-card';
 import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
-import { useLazyGetOrderAddressesQuery } from '@/redux/api/order-address/order-address';
+import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
 import SearchField from './SearchField';
 import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LoadingScreen from '../../../components/loading-screen/loading-screen';

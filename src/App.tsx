@@ -15,7 +15,7 @@ import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 // import MotionLazy from 'src/components/animate/motion-lazy';
 // auth
 import { AuthConsumer, AuthProvider } from '@/auth/context/jwt';
-import ReduxProvider from '@/redux/redux-provider';
+import ReduxProvider from '@/store/redux-provider';
 import { LocalizationProvider } from '@/locales/localization-provider';
 import { I18nProvider } from '@/locales/i18n';
 import { VerticalNavProvider } from '@/layouts/materialize-layout/@menu/contexts/verticalNavContext';

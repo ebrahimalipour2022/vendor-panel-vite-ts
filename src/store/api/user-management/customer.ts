@@ -1,4 +1,4 @@
-import { umApi } from '@/redux/api';
+import { umApi } from '@/store/api';
 import { ICustomerGeneralInfo } from '@/types';
 // import { convertBase64ToFile } from '@/services/driver-files';
 

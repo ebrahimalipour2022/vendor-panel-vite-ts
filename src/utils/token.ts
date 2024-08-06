@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import { ITokenData } from '@/types';
-import { umAxiosInstance, vendorAxiosInstance } from '@/redux/api';
+import { umAxiosInstance, vendorAxiosInstance } from '@/store/api';
 import axios from 'axios';
 
 const chunkSize = 4000; // Adjust chunk size as needed

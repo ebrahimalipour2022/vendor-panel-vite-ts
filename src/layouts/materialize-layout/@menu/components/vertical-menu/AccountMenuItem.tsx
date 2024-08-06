@@ -20,8 +20,8 @@ import ProfileMenuItems from '@/layouts/materialize-layout/@menu/components/vert
 import MobileDialog from '@/components/dialogs/custom-dialog/MobileDialog/MobileDialog';
 import MobileAccountBrief from '@/layouts/materialize-layout/@menu/components/vertical-menu/profile/MobileAccountBrief';
 import { ArrowBackIosNewOutlined } from '@mui/icons-material';
-import { useGetActiveStoreQuery } from '@/redux/api/vendor/vendor';
-import { useCustomerGeneralInfoQuery } from '@/redux/api/user-management/customer';
+import { useGetActiveStoreQuery } from '@/store/api/vendor/vendor';
+import { useCustomerGeneralInfoQuery } from '@/store/api/user-management/customer';
 
 type ModalType = 'avatar' | 'password' | null;
 
