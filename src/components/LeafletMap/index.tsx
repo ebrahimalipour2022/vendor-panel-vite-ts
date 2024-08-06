@@ -58,22 +58,22 @@ const LeafletMapComponent = ({
 }: Props) => {
   //latitude=35.75753482568149&longitude=51.40995708465471
 
-  const [center, setCenter] = useState<LatLngExpression>(DEFAULT_POSITION); // Default center position
+  const [center, setCenter] = useState<LatLngExpression>(
+    ([position?.latitude, position?.longitude] as LatLngExpression) || DEFAULT_POSITION
+  ); // Default center position
 
-  useEffect(() => {
-    if (position) {
-      setCenter([position.latitude, position.longitude]);
-    }
-  }, [position]);
+  // useEffect(() => {
+  //   if (position) {
+  //     setCenter([position.latitude, position.longitude]);
+  //   }
+  // }, [position]);
 
   const handleDragEnd = async ({ lat, lng }: IrMapCoordinates) => {
-    // console.log('Center after drag:', lat, lng);
     if (lat && lng) {
       setCenter([lat, lng]);
       await getAddressByLatLng({ lat, lng })
         .then((res) => {
           if (res?.data) {
-            // console.log('address res :', res.data);
             if (setAddress) {
               setAddress({
                 ...res.data,
@@ -82,9 +82,7 @@ const LeafletMapComponent = ({
             }
           }
         })
-        .catch((err) => {
-          // console.log('address err :', err);
-        });
+        .catch((err) => {});
     }
   };
 
@@ -101,7 +99,6 @@ const LeafletMapComponent = ({
       dragend() {
         const center = map.getCenter();
         handleDragEnd(center);
-        // console.log('Center after drag:', center.lat, center.lng);
       },
     });
     return null;

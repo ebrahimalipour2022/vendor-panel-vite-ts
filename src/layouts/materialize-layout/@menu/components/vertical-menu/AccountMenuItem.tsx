@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import Paper from '@mui/material/Paper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -107,14 +106,12 @@ function AccountMenuItem({ settings: Setting }: { settings: Settings }) {
                     modal ? 'hidden' : ''
                   )}
                 >
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <ProfileMenuItems
-                      userInfo={userInfo}
-                      store={activeStore}
-                      isLoading={isLoading}
-                      setOpen={handleOpenFormModal}
-                    />
-                  </ClickAwayListener>
+                  <ProfileMenuItems
+                    userInfo={userInfo}
+                    store={activeStore}
+                    isLoading={isLoading}
+                    setOpen={handleOpenFormModal}
+                  />
                 </Paper>
               </Fade>
             )}

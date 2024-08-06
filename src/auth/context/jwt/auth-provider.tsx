@@ -81,13 +81,10 @@ export function AuthProvider({ children }: Props) {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log('VITE_UM_API_URL', VITE_UM_API_URL);
-  console.log('VITE_UM_API_VERSION', VITE_UM_API_VERSION);
   // INITIALIZE
   const initialize = useCallback(async () => {
     try {
       const tokenObj = getTokens();
-      // console.log('access_token', access_token);
       if (tokenObj?.access_token) {
         setTokens(tokenObj);
         const response = await axios({
@@ -156,7 +153,6 @@ export function AuthProvider({ children }: Props) {
             },
     })
       .then(({ data }) => {
-        console.log('data login ::', data);
         if (data) {
           setTokens(data);
           dispatch({
@@ -172,7 +168,6 @@ export function AuthProvider({ children }: Props) {
         // const redirectURL = searchParams.get('redirectTo') ?? PATH_AFTER_LOGIN;
       })
       .catch((err) => {
-        console.log('err ::', err);
         toast.error(t('toast.unauthorized'));
       });
   }, []);
@@ -185,14 +180,13 @@ export function AuthProvider({ children }: Props) {
       //   type: Types.LOGOUT,
       // });
     } catch (error) {
-      console.log('Error logout', error);
+      /* empty */
     }
   }, []);
 
   // ----------------------------------------------------------------------
 
   const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
-  console.log('checkAuthenticated', checkAuthenticated);
   const status = state.loading ? 'loading' : checkAuthenticated;
 
   const memoizedValue = useMemo(

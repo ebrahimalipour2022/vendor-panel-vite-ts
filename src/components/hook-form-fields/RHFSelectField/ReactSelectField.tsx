@@ -57,7 +57,6 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
     outlinedProps,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
-  console.log('value', value);
   return (
     <Dropdown
       isOpen={isOpen}

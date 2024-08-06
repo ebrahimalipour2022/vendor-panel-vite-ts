@@ -1,6 +1,6 @@
 // React Imports
-import { useRef, useState } from 'react';
 import type { ReactNode, SyntheticEvent } from 'react';
+import { useRef, useState } from 'react';
 
 // Next Imports
 import { Link } from 'react-router-dom';
@@ -10,7 +10,6 @@ import Box from '@mui/material/Box';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +20,7 @@ import classnames from 'classnames';
 
 // Type Imports
 import { useSettings } from '@/layouts/materialize-layout/@core/hooks/useSettings';
-import type { OptionsMenuType, OptionType, OptionMenuItemType } from './types';
+import type { OptionMenuItemType, OptionsMenuType, OptionType } from './types';
 
 // Hook Imports
 
@@ -90,7 +89,7 @@ const OptionMenu = (props: OptionsMenuType) => {
         {({ TransitionProps }) => (
           <Fade {...TransitionProps}>
             <Paper className={settings.skin === 'bordered' ? 'border shadow-none' : 'shadow-lg'}>
-              <ClickAwayListener onClickAway={handleClose}>
+              <>
                 <MenuList autoFocusItem={open}>
                   {options.map((option: OptionType, index: number) => {
                     if (typeof option === 'string') {
@@ -128,7 +127,7 @@ const OptionMenu = (props: OptionsMenuType) => {
                     }
                   })}
                 </MenuList>
-              </ClickAwayListener>
+              </>
             </Paper>
           </Fade>
         )}

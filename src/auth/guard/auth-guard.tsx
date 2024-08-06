@@ -22,8 +22,6 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
 
   const { authenticated, method } = useAuthContext();
-  // console.log('auth method :', method);
-  // console.log('authenticated :', authenticated);
   const [checked, setChecked] = useState(false);
 
   const check = useCallback(() => {

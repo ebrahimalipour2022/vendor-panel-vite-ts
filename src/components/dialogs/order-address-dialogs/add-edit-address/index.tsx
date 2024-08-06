@@ -16,6 +16,10 @@ import LeafletMapComponent from '@/components/LeafletMap';
 import { i18n } from '@/locales/i18n';
 import { useEffect } from 'react';
 import { MapReverseAddressRes } from '@/types/address';
+import {
+  usePostOrderAddressesMutation,
+  usePutOrderAddressesMutation,
+} from '@/store/api/order-address/order-address';
 
 type AddOrderProps = {
   open: boolean;
@@ -50,6 +54,8 @@ const resolver = yupResolver(
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
+  const [postAddress] = usePostOrderAddressesMutation();
+  const [putAddress] = usePutOrderAddressesMutation();
 
   // Hooks
   const {
@@ -80,11 +86,15 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     resolver,
   });
 
-  console.log('errors', errors);
   const watchLocation = watch('location');
 
+  useEffect(() => {
+    if (data) {
+      reset({ ...data });
+    }
+  }, [data]);
+
   const setAddress = (address: MapReverseAddressRes) => {
-    console.log('MapReverseAddressRes', address);
     if (address) {
       if ('formatted_address' in address && address?.formatted_address) {
         setValue('clientAddress', address.formatted_address);

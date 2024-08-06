@@ -26,7 +26,12 @@ const ICONS = {
   postalCode: <PostalCodeIcon />,
 };
 
-const AddressCard = ({ address }: { address: IOrderAddress }) => {
+type Props = {
+  address: IOrderAddress;
+  handleRemove: ({ id }: { id: string }) => void;
+  handleEdit: (address: IOrderAddress) => void;
+};
+const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
   const { t } = useTranslation();
   // States
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -55,14 +60,14 @@ const AddressCard = ({ address }: { address: IOrderAddress }) => {
               <SubMenuThreeDotIcon />
             </IconButton>
             <Menu open={open} anchorEl={anchorEl} onClose={handleClose} id="address-list">
-              <MenuItem onClick={handleClose} divider>
+              <MenuItem onClick={() => handleEdit(address)} divider>
                 <div className={'w-6 h-6'}>
                   <EditIcon />
                 </div>
                 {t('common.edit')}
               </MenuItem>
               <MenuItem
-                onClick={handleClose}
+                onClick={() => handleRemove({ id: address?.id! })}
                 sx={{
                   color: 'var(--mui-palette-error-main)',
                 }}

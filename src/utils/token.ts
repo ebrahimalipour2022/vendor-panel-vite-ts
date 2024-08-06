@@ -59,16 +59,12 @@ const getEncryptedTokens = (): string | null => {
 };
 
 const setTokens = (tokenObj: ITokenData) => {
-  console.log('set token 1', tokenObj);
   if (tokenObj?.access_token) {
-    console.log('set token 2', tokenObj?.access_token.slice(0, 10));
     axios.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     vendorAxiosInstance.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     umAxiosInstance.defaults.headers.Authorization = 'Bearer ' + tokenObj.access_token;
     const encryptedData = encryptTokens(tokenObj);
-    console.log('set token 3', encryptedData?.slice(0, 10));
     if (encryptedData) {
-      console.log('set token 4');
       storeEncryptedTokens(encryptedData);
     } else {
       logout();

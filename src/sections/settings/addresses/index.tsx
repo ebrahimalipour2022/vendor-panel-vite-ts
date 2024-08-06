@@ -10,6 +10,7 @@ import AddressCard from '@/components/order-address/address-card';
 import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
 import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
+import { IOrderAddress } from '@/types';
 import SearchField from './SearchField';
 import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LoadingScreen from '../../../components/loading-screen/loading-screen';
@@ -31,9 +32,8 @@ const AddressesView = () => {
     useLazyGetOrderAddressesQuery();
   const [selectedOption, setSelectedOption] = useState(defaultOptions);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
-
+  const [address, setAddress] = useState<IOrderAddress>();
   const getAddressList = async () => {
-    // console.log('isLoading list', isLoading);
     try {
       // let _queryValues = {
       //   ...queryValues,
@@ -60,6 +60,12 @@ const AddressesView = () => {
     setSelectedOption(newOptions);
   };
 
+  const handleRemove = ({ id }: { id: string }) => {};
+  const handleEdit = (address: IOrderAddress) => {
+    setAddress(address);
+    setAddEditAddressDialog(true);
+  };
+
   const renderAddresses = () => {
     if (isLoading || isFetching) {
       return (
@@ -69,7 +75,14 @@ const AddressesView = () => {
       );
     } else {
       if (addresses?.length) {
-        return addresses.map((item, index) => <AddressCard key={item.id} address={item} />);
+        return addresses.map((item, index) => (
+          <AddressCard
+            key={item.id}
+            address={item}
+            handleEdit={handleEdit}
+            handleRemove={handleRemove}
+          />
+        ));
       } else {
         return (
           <EmptyState
@@ -123,7 +136,11 @@ const AddressesView = () => {
         {renderAddresses()}
       </Stack>
       <Fragment key={`${addEditAddressDialog}-addEditAddressDialog`}>
-        <AddEditAddressDialog open={addEditAddressDialog} setOpen={handleNewAddress} />
+        <AddEditAddressDialog
+          open={addEditAddressDialog}
+          setOpen={handleNewAddress}
+          data={address}
+        />
       </Fragment>
     </>
   );
