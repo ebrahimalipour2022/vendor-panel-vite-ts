@@ -17,7 +17,7 @@ export const ModalHeader = ({ title, icon: Icon, setOpen }: ModalHeaderProps) =>
       variant="body1"
       fontWeight={'bold'}
       color={'primary'}
-      className="modal-header-class flex gap-2 bg-[var(--mui-palette-action-disabledBackground)] m-2 rounded-md px-2"
+      className="modal-header-class flex gap-2 bg-[var(--mui-palette-action-disabledBackground)] m-2 rounded-md px-3 py-[0.87rem]"
     >
       <div className={'flex flex-row items-center justify-center gap-1'}>
         {Icon ? (
@@ -41,7 +41,7 @@ export const ModalHeader = ({ title, icon: Icon, setOpen }: ModalHeaderProps) =>
       </div>
       <IconButton
         onClick={() => setOpen(false)}
-        className="absolute block-start-4 inline-end-4 mt-1 -ml-1"
+        className="absolute block-start-4 inline-end-4 -ml-1"
       >
         {/*<i className='ri-close-line text-textSecondary' />*/}
         <CloseOutlined color={'primary'} />
