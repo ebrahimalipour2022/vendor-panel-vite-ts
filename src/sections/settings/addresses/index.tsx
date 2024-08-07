@@ -127,6 +127,7 @@ const AddressesView = () => {
               name={'branches-field'}
               isMulti={true}
               isLoading={isActiveStoresLoading}
+              isDisable={isActiveStoresLoading}
             />
             <Button
               variant={'outlined'}

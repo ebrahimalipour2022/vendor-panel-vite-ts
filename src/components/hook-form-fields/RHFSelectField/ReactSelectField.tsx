@@ -13,6 +13,7 @@ import type { StateOption } from '@/types/select-field';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
 import { CircularProgress } from '@mui/material';
+import { SearchIcon } from '@/assets/icons';
 
 const selectStyles: StylesConfig<StateOption, false> = {
   // @ts-ignore
@@ -21,6 +22,7 @@ const selectStyles: StylesConfig<StateOption, false> = {
     // minWidth: 240,
     // minWidth: '100%',
     margin: 8,
+    flexDirection: 'row-reverse',
   }),
   menu: () => ({ boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.1)' }),
 };
@@ -62,6 +64,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
     outlinedProps,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const disabled = isDisable || isLoading;
   return (
     <Dropdown
       isOpen={isOpen}
@@ -69,14 +72,14 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
       target={
         <Stack spacing={1.7}>
           {label && (
-            <FormLabel required={required} error={error}>
+            <FormLabel required={required} error={error} disabled={disabled}>
               {label}
             </FormLabel>
           )}
           <OutlinedInput
             ref={ref}
             name={name}
-            disabled={isLoading || isDisable}
+            disabled={disabled}
             endAdornment={
               isOpen ? (
                 <InputAdornment position="end">
@@ -88,7 +91,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
                 </InputAdornment>
               )
             }
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={() => !disabled && setIsOpen((prev) => !prev)}
             value={
               isMulti
                 ? getJoinedOptions({ value, options, allOptionText })
@@ -116,6 +119,8 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
         // @ts-ignore
         isMulti={isMulti}
         autoFocus
+        isLoading={isLoading}
+        isDisabled={disabled}
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
         backspaceRemovesValue={false}
@@ -156,6 +161,7 @@ const Menu = (props: BoxProps) => {
         marginTop: 0,
         marginLeft: '0.04rem',
         position: 'absolute',
+        minWidth: '100%',
         zIndex: 2,
       }}
       {...props}
@@ -186,14 +192,8 @@ const Svg = (p: JSX.IntrinsicElements['svg']) => (
   <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" role="presentation" {...p} />
 );
 const DropdownIndicator = () => (
-  <div className={'h-[24px] w-[32px] text-textPrimary'}>
-    <Svg>
-      <path
-        d="M16.436 15.085l3.94 4.01a1 1 0 0 1-1.425 1.402l-3.938-4.006a7.5 7.5 0 1 1 1.423-1.406zM10.5 16a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
-    </Svg>
+  <div className={'h-[1.5rem] w-[1.5rem] px-1 text-textPrimary'}>
+    <SearchIcon width={'1.5rem'} height={'1.5ren'} />
   </div>
 );
 const ChevronDown = () => (
