@@ -73,7 +73,6 @@ const LeafletMapComponent = ({
   useEffect(() => {
     // Check if we're on the first render and the position is defined
     if (isFirstRender && position && mapRef.current) {
-      console.log('mapRef.current', mapRef.current);
       //@ts-ignore
       mapRef.current.setView([position.latitude, position.longitude], 16);
       setIsFirstRender(false); // Set to false so it doesn't run again
@@ -102,7 +101,7 @@ const LeafletMapComponent = ({
       <div className={'location-icon'}>
         <MapLocation />
       </div>
-      <div className={'logo-icon'}>
+      <div className={'logo-icon hidden md:block'}>
         <ZapLogo />
       </div>
     </div>

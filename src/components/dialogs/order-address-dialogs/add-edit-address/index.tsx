@@ -90,6 +90,8 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     resolver,
   });
 
+  console.log('errors', errors);
+
   const watchLocation = watch('location');
 
   useEffect(() => {
@@ -110,6 +112,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   };
 
   const onSubmit = async (values: IOrderAddress) => {
+    console.log('on submit :', values);
     // await authAPI
     //   .changePasswordApi(values)
     //   .then(res => {
@@ -153,7 +156,11 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                     تغییر آدرس
                   </Button>
                   <div className={'grow flex flex-col p-0 relative h-[200px]'}>
-                    {/*<IRMapComponent center={watchLocation} setCenter={setCenter} onlyView={true} />*/}
+                    <LeafletMapComponent
+                      position={watchLocation}
+                      setAddress={setAddress}
+                      onlyView={true}
+                    />
                   </div>
                 </div>
               </Grid>
@@ -192,13 +199,32 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
               </Grid>
               <Grid item xs={12}>
                 <Controller
-                  name="clientAddress"
+                  name="title"
                   control={control}
                   rules={{ required: true }}
                   render={({ field, fieldState: { error } }) => (
                     <RHFOutlinedInput
                       label={t('address.address_title')}
-                      placeholder={t('address.address_placeholder')}
+                      placeholder={t('address.address_title_placeholder')}
+                      error={!!error?.message}
+                      helperText={error?.message}
+                      required={true}
+                      {...field}
+                      multiline={true}
+                      maxRows={4}
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  name="clientAddress"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field, fieldState: { error } }) => (
+                    <RHFOutlinedInput
+                      label={t('address.full_address_title')}
+                      placeholder={t('address.full_address_placeholder')}
                       error={!!error?.message}
                       helperText={error?.message}
                       required={true}
@@ -304,7 +330,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   type={'submit'}
                   variant={'contained'}
                   fullWidth
-                  className={'md:absolute md:bottom-0'}
+                  // className={'absolute bottom-0'}
                 >
                   تایید و ثبت آدرس
                 </LoadingButton>

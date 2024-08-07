@@ -208,7 +208,7 @@ const Svg = (p: JSX.IntrinsicElements['svg']) => (
 );
 const DropdownIndicator = () => (
   <div className={'h-[1.5rem] w-[1.5rem] px-1 text-textPrimary'}>
-    <SearchIcon width={'1.5rem'} height={'1.5ren'} />
+    <SearchIcon width={'1.5rem'} height={'1.5rem'} />
   </div>
 );
 const ChevronDown = () => (

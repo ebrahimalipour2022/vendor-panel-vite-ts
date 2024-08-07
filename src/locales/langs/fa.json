@@ -145,8 +145,10 @@
   },
   "address": {
     "pageTitle": "آدرس منتخب",
-    "address_title": "آدرس",
-    "address_placeholder": "آدرس پستی مشتری را بنویسید...",
+    "address_title": "عنوان آدرس",
+    "address_title_placeholder": "عنوان آدرس را بنویسید...",
+    "full_address_title": "آدرس",
+    "full_address_placeholder": "آدرس پستی مشتری را بنویسید...",
     "store_title": "شعبه",
     "store_placeholder": "انتخاب شعبه",
     "title": "عنوان",
