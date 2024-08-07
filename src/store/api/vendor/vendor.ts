@@ -21,7 +21,6 @@ export const orderAddress = vendorApi.injectEndpoints({
         };
       },
       transformResponse: (response: IStore[]) => {
-        console.log('res is', response);
         if (response?.length && Array.isArray(response)) {
           return response.map((item) => ({
             value: (item?.storeId && item?.storeId.toString()) || '',

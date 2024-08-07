@@ -13,6 +13,7 @@ type Props = {
   title: string;
   icon?: ReactNode | string;
   open: boolean;
+  scroll?: boolean;
   setOpen: (open: boolean) => void;
   maxWidth?: Breakpoint;
   fullWidth?: boolean;
@@ -26,6 +27,7 @@ const DesktopDialog = ({
   setOpen,
   title,
   icon,
+  scroll = true,
   maxWidth = 'sm',
   fullWidth = true,
   children,
@@ -38,7 +40,7 @@ const DesktopDialog = ({
       open={open}
       maxWidth={maxWidth}
       fullWidth={fullWidth}
-      scroll="body"
+      scroll={scroll ? 'body' : undefined}
       onClose={() => {
         setOpen(false);
       }}

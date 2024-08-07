@@ -10,6 +10,7 @@ type Props = {
   title: string;
   icon?: ReactNode | string;
   open: boolean;
+  scroll?: boolean;
   setOpen: (open: boolean) => void;
   maxWidth?: Breakpoint;
   maxHeight?: string;
@@ -27,6 +28,7 @@ const CDialog = ({
   icon,
   maxWidth = 'sm',
   fullWidth = true,
+  scroll = true,
   classes,
   children,
   PaperProps,
@@ -39,6 +41,7 @@ const CDialog = ({
         icon={icon}
         setOpen={setOpen}
         open={open}
+        scroll={scroll}
         maxWidth={maxWidth}
         fullWidth={fullWidth}
         PaperProps={PaperProps}
@@ -54,6 +57,7 @@ const CDialog = ({
         icon={icon}
         setOpen={setOpen}
         open={open}
+        scroll={scroll}
         maxWidth={maxWidth}
         fullWidth={fullWidth}
         classes={{

@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -6,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { YupValidators } from '@/utils/forms-validation';
 import CustomDialog from '@/components/dialogs/custom-dialog';
 import type { IOrderAddress } from '@/types/address';
+import { MapReverseAddressRes } from '@/types/address';
 import { isEmpty } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
 import { EditIcon, LocationIcon } from '@/assets/icons';
@@ -14,8 +14,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LeafletMapComponent from '@/components/LeafletMap';
 import { i18n } from '@/locales/i18n';
-import { useEffect } from 'react';
-import { MapReverseAddressRes } from '@/types/address';
+import { useEffect, useState } from 'react';
 import {
   usePostOrderAddressesMutation,
   usePutOrderAddressesMutation,
@@ -23,6 +22,9 @@ import {
 import { useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
 import Divider from '@mui/material/Divider';
 import { DEFAULT_POSITION } from '@/config-global';
+import MapDialog from '@/components/dialogs/map-dialog';
+import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
+import Button from '@mui/material/Button';
 
 type AddOrderProps = {
   open: boolean;
@@ -57,6 +59,8 @@ const resolver = yupResolver(
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
+  const [openMapDialog, setOpenMapDialog] = useState(false);
+
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
   const [postAddress] = usePostOrderAddressesMutation();
   const [putAddress] = usePutOrderAddressesMutation();
@@ -123,128 +127,182 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     //   })
   };
 
+  const title = `${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t(
+    'address.pageTitle'
+  )} ${isEmpty(data?.id) ? t('common.new') : ''}`;
+
   return (
-    <CustomDialog
-      open={open}
-      setOpen={setOpen}
-      title={`${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t('address.pageTitle')} ${
-        isEmpty(data?.id) ? t('common.new') : ''
-      }`}
-      maxWidth={'lg'}
-      fullWidth={true}
-      icon={<LocationIcon />}
-      PaperProps={{
-        sx: {
-          // maxHeight: '90vh',
-          // minHeight: '90vh',
-        },
-      }}
-    >
-      <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
-        <div className={'flex gap-4  h-[75vh]'}>
-          <div className={'w-full md:max-w-[348px] relative pb-12 overflow-y-auto'}>
-            <Grid container spacing={5}>
-              <Grid item xs={12} className={'block md:hidden'}>
-                <div className={'relative'}>
-                  <Button
-                    variant={'outlined'}
-                    startIcon={
-                      <EditIcon className={'[&>*]:fill-[var(--mui-palette-primary-main)]'} />
-                    }
-                    className={'absolute bottom-2 right-2 font-bold z-10'}
-                  >
-                    تغییر آدرس
-                  </Button>
-                  <div className={'grow flex flex-col p-0 relative h-[200px]'}>
-                    <LeafletMapComponent
-                      position={watchLocation}
-                      setAddress={setAddress}
-                      onlyView={true}
-                    />
+    <>
+      <CustomDialog
+        open={open}
+        setOpen={setOpen}
+        title={title}
+        maxWidth={'lg'}
+        fullWidth={true}
+        icon={<LocationIcon />}
+      >
+        <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
+          <div className={'flex gap-4 h-[100%]  md:h-[75vh]'}>
+            <div className={'w-full md:max-w-[348px] relative pb-6  md:overflow-y-auto'}>
+              <Grid container spacing={5}>
+                <Grid item xs={12} className={'block md:hidden'}>
+                  <div className={'relative'}>
+                    <Button
+                      variant={'outlined'}
+                      onClick={() => setOpenMapDialog(true)}
+                      startIcon={
+                        <EditIcon className={'[&>*]:fill-[var(--mui-palette-primary-main)]'} />
+                      }
+                      className={'absolute bottom-2 right-2 font-bold z-10'}
+                    >
+                      تغییر آدرس
+                    </Button>
+                    <div className={'grow flex flex-col p-0 relative h-[200px]'}>
+                      <LeafletMapComponent
+                        position={watchLocation}
+                        setAddress={setAddress}
+                        onlyView={true}
+                      />
+                    </div>
                   </div>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="storeBranch"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => {
-                    return (
-                      <RHFReactSelectField
-                        label={t('address.store_title')}
-                        placeholder={t('address.store_placeholder')}
-                        value={field.value}
-                        handleChange={field.onChange}
-                        isMulti={false}
-                        error={
-                          // @ts-ignore
-                          !!(error && 'value' in error && error?.value?.message) || !!error?.message
-                        }
-                        helperText={
-                          // @ts-ignore
-                          (error && 'value' in error && error?.value?.message) || error?.message
-                        }
-                        required={true}
-                        options={activeStores || []}
-                        isLoading={isActiveStoresLoading}
-                        isDisable={isActiveStoresLoading}
-                      />
-                    );
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="title"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => (
-                    <RHFOutlinedInput
-                      label={t('address.address_title')}
-                      placeholder={t('address.address_title_placeholder')}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      required={true}
-                      {...field}
-                      multiline={true}
-                      maxRows={4}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="clientAddress"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => (
-                    <RHFOutlinedInput
-                      label={t('address.full_address_title')}
-                      placeholder={t('address.full_address_placeholder')}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      required={true}
-                      {...field}
-                      multiline={true}
-                      maxRows={4}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item container spacing={5} xs={12}>
-                <Grid item xs={4}>
+                </Grid>
+                <Grid item xs={12}>
                   <Controller
-                    name="plaque"
+                    name="storeBranch"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => {
+                      return (
+                        <RHFReactSelectField
+                          label={t('address.store_title')}
+                          placeholder={t('address.store_placeholder')}
+                          value={field.value}
+                          handleChange={field.onChange}
+                          isMulti={false}
+                          error={
+                            // @ts-ignore
+                            !!(error && 'value' in error && error?.value?.message) ||
+                            !!error?.message
+                          }
+                          helperText={
+                            // @ts-ignore
+                            (error && 'value' in error && error?.value?.message) || error?.message
+                          }
+                          required={true}
+                          options={activeStores || []}
+                          isLoading={isActiveStoresLoading}
+                          isDisable={isActiveStoresLoading}
+                        />
+                      );
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name="title"
                     control={control}
                     rules={{ required: true }}
                     render={({ field, fieldState: { error } }) => (
                       <RHFOutlinedInput
-                        label={t('address.plaque')}
-                        placeholder={'-'}
+                        label={t('address.address_title')}
+                        placeholder={t('address.address_title_placeholder')}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        required={true}
+                        {...field}
+                        multiline={true}
+                        maxRows={4}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name="clientAddress"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => (
+                      <RHFOutlinedInput
+                        label={t('address.full_address_title')}
+                        placeholder={t('address.full_address_placeholder')}
+                        error={!!error?.message}
+                        helperText={error?.message}
+                        required={true}
+                        {...field}
+                        multiline={true}
+                        maxRows={4}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item container spacing={5} xs={12}>
+                  <Grid item xs={4}>
+                    <Controller
+                      name="plaque"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field, fieldState: { error } }) => (
+                        <RHFOutlinedInput
+                          label={t('address.plaque')}
+                          placeholder={'-'}
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          required={true}
+                          {...field}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Controller
+                      name="floor"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field, fieldState: { error } }) => (
+                        <RHFOutlinedInput
+                          label={t('address.floor')}
+                          placeholder={'-'}
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          required={true}
+                          {...field}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Controller
+                      name="unit"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field, fieldState: { error } }) => (
+                        <RHFOutlinedInput
+                          label={t('address.unit')}
+                          placeholder={'-'}
+                          error={!!error?.message}
+                          helperText={error?.message}
+                          required={true}
+                          {...field}
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name="fullName"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field, fieldState: { error } }) => (
+                      <RHFOutlinedInput
+                        label={t('address.fullName')}
+                        placeholder={t('address.fullName_placeholder')}
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
@@ -253,15 +311,15 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12}>
                   <Controller
-                    name="floor"
+                    name="mobile"
                     control={control}
                     rules={{ required: true }}
                     render={({ field, fieldState: { error } }) => (
                       <RHFOutlinedInput
-                        label={t('address.floor')}
-                        placeholder={'-'}
+                        label={t('address.mobile')}
+                        placeholder={t('address.mobile_placeholder')}
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
@@ -270,87 +328,38 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={4}>
-                  <Controller
-                    name="unit"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field, fieldState: { error } }) => (
-                      <RHFOutlinedInput
-                        label={t('address.unit')}
-                        placeholder={'-'}
-                        error={!!error?.message}
-                        helperText={error?.message}
-                        required={true}
-                        {...field}
-                      />
-                    )}
-                  />
+                <Grid item xs={12}>
+                  <LoadingButton
+                    type={'submit'}
+                    variant={'contained'}
+                    fullWidth
+                    // className={'absolute bottom-0'}
+                  >
+                    تایید و ثبت آدرس
+                  </LoadingButton>
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="fullName"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => (
-                    <RHFOutlinedInput
-                      label={t('address.fullName')}
-                      placeholder={t('address.fullName_placeholder')}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      required={true}
-                      {...field}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Controller
-                  name="mobile"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field, fieldState: { error } }) => (
-                    <RHFOutlinedInput
-                      label={t('address.mobile')}
-                      placeholder={t('address.mobile_placeholder')}
-                      error={!!error?.message}
-                      helperText={error?.message}
-                      required={true}
-                      {...field}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <LoadingButton
-                  type={'submit'}
-                  variant={'contained'}
-                  fullWidth
-                  // className={'absolute bottom-0'}
-                >
-                  تایید و ثبت آدرس
-                </LoadingButton>
-              </Grid>
-            </Grid>
+            </div>
+            <div className={'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto'}>
+              <LeafletMapComponent
+                position={watchLocation}
+                setAddress={setAddress}
+                onlyView={false}
+              />
+            </div>
           </div>
-          <div
-            className={
-              'grow rounded-sm hidden md:flex flex-col p-0 relative overflow-y-auto bg-[var(--mui-palette-background-default)]'
-            }
-          >
-            <LeafletMapComponent
-              position={watchLocation}
-              setAddress={setAddress}
-              onlyView={false}
-            />
-          </div>
-        </div>
-      </form>
-    </CustomDialog>
+        </form>
+      </CustomDialog>
+      <MapDialog
+        title={title}
+        open={openMapDialog}
+        setOpen={setOpenMapDialog}
+        setAddress={setAddress}
+        onlyView={false}
+        position={watchLocation}
+        icon={<LocationIcon />}
+      />
+    </>
   );
 };
 

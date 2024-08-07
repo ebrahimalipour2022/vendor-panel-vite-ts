@@ -32,6 +32,7 @@ type Props = {
   title?: string;
   icon?: ReactNode | string;
   open: boolean;
+  scroll?: boolean;
   setOpen: (open: boolean) => void;
   puller?: boolean;
   maxWidth?: Breakpoint;
@@ -65,6 +66,7 @@ const MobileDialog = ({
   maxWidth = 'sm',
   fullWidth = true,
   puller,
+  scroll = true,
   children,
   classes,
 }: Props) => {
@@ -78,14 +80,13 @@ const MobileDialog = ({
       TransitionProps={{
         dir: 'up',
       }}
-      // scroll='paper'
       onClose={() => {
         setOpen(false);
       }}
       classes={{
         root: classes?.root,
         paper:
-          '!mx-auto !my-0 fixed bottom-2 left-2 right-2 !w-[calc(100%_-_1rem)] overflow-auto max-h-[90dvh] min-h-[20dvh]',
+          '!mx-auto !my-0 fixed bottom-2 left-2 right-2 !w-[calc(100%_-_1rem)] overflow-hidden max-h-[95dvh] min-h-[20dvh]',
       }}
     >
       {puller && (
@@ -104,7 +105,15 @@ const MobileDialog = ({
         </StyledBox>
       )}
       {title && <ModalHeader title={title} icon={icon} setOpen={setOpen} />}
-      <Box className={classnames('p-2', 'overflow-auto', { 'pt-6': puller })}>{children}</Box>
+      <Box
+        className={classnames('p-2', {
+          'pt-6': puller,
+          'overflow-hidden': !scroll,
+          'overflow-auto': scroll,
+        })}
+      >
+        {children}
+      </Box>
     </Dialog>
   );
 };
