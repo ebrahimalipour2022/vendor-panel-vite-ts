@@ -122,10 +122,10 @@ const AddressesView = () => {
               value={selectedOption}
               allOptionText={'همه شعب'}
               placeholder={'انتخاب شعبه'}
-              options={activeStores || []}
               handleChange={handleChange}
               name={'branches-field'}
               isMulti={true}
+              options={activeStores || []}
               isLoading={isActiveStoresLoading}
               isDisable={isActiveStoresLoading}
             />

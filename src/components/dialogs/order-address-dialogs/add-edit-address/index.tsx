@@ -20,6 +20,8 @@ import {
   usePostOrderAddressesMutation,
   usePutOrderAddressesMutation,
 } from '@/store/api/order-address/order-address';
+import { useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
+import Divider from '@mui/material/Divider';
 
 type AddOrderProps = {
   open: boolean;
@@ -54,6 +56,7 @@ const resolver = yupResolver(
 
 const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
   const { t } = useTranslation();
+  const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
   const [postAddress] = usePostOrderAddressesMutation();
   const [putAddress] = usePutOrderAddressesMutation();
 
@@ -120,8 +123,8 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
     <CustomDialog
       open={open}
       setOpen={setOpen}
-      title={`${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t('address.title')} ${
-        isEmpty(data?.id) && t('common.new')
+      title={`${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t('address.pageTitle')} ${
+        isEmpty(data?.id) ? t('common.new') : ''
       }`}
       maxWidth={'lg'}
       fullWidth={true}
@@ -136,7 +139,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
       <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
         <div className={'flex gap-4  h-[75vh]'}>
           <div className={'w-full md:max-w-[348px] relative pb-12 overflow-y-auto'}>
-            <Grid container spacing={3}>
+            <Grid container spacing={5}>
               <Grid item xs={12} className={'block md:hidden'}>
                 <div className={'relative'}>
                   <Button
@@ -163,10 +166,6 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                       <RHFReactSelectField
                         label={t('address.store_title')}
                         placeholder={t('address.store_placeholder')}
-                        options={[
-                          { label: 'شعبه ونک', value: '1' },
-                          { label: 'شعبه انقلاب اسلامی', value: '2' },
-                        ]}
                         value={field.value}
                         handleChange={field.onChange}
                         isMulti={false}
@@ -179,10 +178,16 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                           (error && 'value' in error && error?.value?.message) || error?.message
                         }
                         required={true}
+                        options={activeStores || []}
+                        isLoading={isActiveStoresLoading}
+                        isDisable={isActiveStoresLoading}
                       />
                     );
                   }}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Divider />
               </Grid>
               <Grid item xs={12}>
                 <Controller
@@ -203,7 +208,7 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   )}
                 />
               </Grid>
-              <Grid item container spacing={3} xs={12}>
+              <Grid item container spacing={5} xs={12}>
                 <Grid item xs={4}>
                   <Controller
                     name="plaque"
@@ -257,6 +262,9 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                 </Grid>
               </Grid>
               <Grid item xs={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
                 <Controller
                   name="fullName"
                   control={control}
@@ -290,16 +298,17 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
                   )}
                 />
               </Grid>
-              <Grid item xs={12} />
+              <Grid item xs={12}>
+                <LoadingButton
+                  type={'submit'}
+                  variant={'contained'}
+                  fullWidth
+                  className={'md:absolute md:bottom-0'}
+                >
+                  تایید و ثبت آدرس
+                </LoadingButton>
+              </Grid>
             </Grid>
-            <LoadingButton
-              type={'submit'}
-              variant={'contained'}
-              fullWidth
-              className={'absolute bottom-0'}
-            >
-              تایید و ثبت آدرس
-            </LoadingButton>
           </div>
           <div
             className={

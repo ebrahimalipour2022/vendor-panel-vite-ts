@@ -187,10 +187,10 @@ const input: Theme['components'] = {
           padding: theme.spacing(4),
         },
         '&:has(.MuiInputAdornment-positionStart)': {
-          paddingInlineStart: theme.spacing(4),
+          paddingInlineStart: theme.spacing(2),
         },
         '&:has(.MuiInputAdornment-positionEnd)': {
-          paddingInlineEnd: theme.spacing(4),
+          paddingInlineEnd: theme.spacing(2),
         },
       }),
       input: ({ theme, ownerState }) => ({

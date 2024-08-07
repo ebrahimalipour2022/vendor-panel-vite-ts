@@ -101,7 +101,7 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
             </div>
           </div>
         }
-        className={'bg-[var(--mui-palette-action-disabled)]'}
+        className={'bg-[var(--mui-palette-action-disabled)] p-3'}
         // subheader='September 14, 2016'
         // titleTypographyProps={{
         //   fontSize: '14px'
@@ -150,7 +150,7 @@ const AddressItem = ({
 }) => {
   return (
     <div className={'w-full flex flex-row items-center justify-start  gap-2'}>
-      <div className={'w-5 h-5'}>{Icon}</div>
+      <div className={'max-w-5 max-h-5 min-w-5 min-h-5'}>{Icon}</div>
       <div className={'flex flex-col w-full'}>
         <Typography
           component={'p'}
