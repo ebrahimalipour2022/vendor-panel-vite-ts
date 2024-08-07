@@ -32,8 +32,11 @@ const LayoutContent = ({ children }: ChildrenType) => {
       })}
     >
       <Box
-        minHeight={'calc(100vh - 64px - 48px)'}
-        className={'rounded-3xl p-4 bg-[var(--mui-palette-background-paper)] relative'}
+        minHeight={'calc(100vh - 64px - 48px - 8px)'}
+        maxHeight={'calc(100vh - 64px - 48px - 8px)'}
+        className={
+          'rounded-3xl p-4 overflow-y-auto bg-[var(--mui-palette-background-paper)] relative'
+        }
       >
         {children}
       </Box>

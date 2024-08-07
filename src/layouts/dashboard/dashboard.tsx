@@ -17,6 +17,8 @@ import ScrollToTop from '@/layouts/materialize-layout/@core/components/scroll-to
 
 // Util Imports
 import { getMode, getSystemMode } from '@/layouts/materialize-layout/@core/utils/serverHelpers';
+import ArrowUpIcon from '@/assets/icons/ArrowUp';
+import { KeyboardArrowUpOutlined } from '@mui/icons-material';
 
 const DashboardLayout = ({ children }: ChildrenType) => {
   // const locale = await getLocale();
@@ -45,7 +47,7 @@ const DashboardLayout = ({ children }: ChildrenType) => {
           variant="contained"
           className="is-10 bs-10 rounded-full p-0 min-is-0 flex items-center justify-center"
         >
-          <i className="ri-arrow-up-line" />
+          <KeyboardArrowUpOutlined />
         </Button>
       </ScrollToTop>
       {/*<Customizer dir={direction} disableDirection />*/}

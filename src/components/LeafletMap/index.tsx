@@ -2,12 +2,13 @@ import { LegacyRef, useEffect, useRef, useState } from 'react';
 import L, { LatLngExpression, Map } from 'leaflet';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { ILocation, IrMapCoordinates, MapReverseAddressRes } from '@/types';
+import { ILocation, IMapPosition, MapReverseAddressRes } from '@/types';
 import classnames from 'classnames';
 import MapLocation from '@/assets/icons/MapLocation';
 import axios from 'axios';
 import ZapLogo from '@/assets/icons/Logo';
 import './style.css';
+import { DEFAULT_POSITION } from '@/config-global';
 
 type Props = {
   position?: ILocation | null;
@@ -27,7 +28,6 @@ const getAddressByLatLng = async ({ lat, lng }: { lat: number; lng: number }) =>
     },
   });
 };
-const DEFAULT_POSITION: LatLngExpression = [35.75753482568149, 51.40995708465471];
 const LeafletMapComponent = ({
   position = null,
   setAddress,
@@ -35,9 +35,12 @@ const LeafletMapComponent = ({
   zoom = 16,
 }: Props) => {
   const mapRef = useRef<LegacyRef<Map> | undefined>();
-  const [center, setCenter] = useState<LatLngExpression>(DEFAULT_POSITION); // Default center position
+  const [center, setCenter] = useState<LatLngExpression>([
+    DEFAULT_POSITION.lat,
+    DEFAULT_POSITION.lng,
+  ]); // Default center position
 
-  async function handleDragEnd({ lat, lng }: IrMapCoordinates) {
+  async function handleDragEnd({ lat, lng }: IMapPosition) {
     if (lat && lng) {
       setCenter([lat, lng]);
       await getAddressByLatLng({ lat, lng })

@@ -45,6 +45,7 @@ body{
   inline-size: 100%;
   flex-direction: column;
   flex:1 1 auto;
+  overflow: hidden;
 }
 
 a {
@@ -132,4 +133,28 @@ code {
   color: var(--mui-palette-info-main);
   background-color: rgb(var(--mui-palette-info-mainChannel) / 0.08);
   border: 0;
+}
+
+/*=====scrollbar ====== */
+/* Width */
+::-webkit-scrollbar {
+  width: 10px;
+  opacity: 1;
+  transition: opacity 0.5s ease; /* Transition for opacity */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--mui-palette-grey-200);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--mui-palette-grey-400);
+  border-radius: 100vh;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mui-palette-grey-400);
 }

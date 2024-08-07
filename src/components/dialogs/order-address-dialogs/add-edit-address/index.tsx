@@ -22,6 +22,7 @@ import {
 } from '@/store/api/order-address/order-address';
 import { useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
 import Divider from '@mui/material/Divider';
+import { DEFAULT_POSITION } from '@/config-global';
 
 type AddOrderProps = {
   open: boolean;
@@ -81,8 +82,8 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
       unit: '',
       floor: '',
       location: {
-        latitude: 0,
-        longitude: 0,
+        latitude: DEFAULT_POSITION.lat,
+        longitude: DEFAULT_POSITION.lng,
       },
       mobile: '',
     },

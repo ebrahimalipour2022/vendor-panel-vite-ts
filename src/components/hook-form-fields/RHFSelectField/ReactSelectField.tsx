@@ -2,7 +2,7 @@ import type { JSX, ReactNode } from 'react';
 import { forwardRef, useState } from 'react';
 import classnames from 'classnames';
 import type { StylesConfig } from 'react-select';
-import Select, { components } from 'react-select';
+import Select, { components, useStateManager } from 'react-select';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -24,7 +24,19 @@ const selectStyles: StylesConfig<StateOption, false> = {
     margin: 8,
     flexDirection: 'row-reverse',
   }),
+  // @ts-ignore
+  placeholder: (props) => ({
+    ...props,
+    fontSize: '0.875rem',
+  }),
+  // @ts-ignore
+  input: (props) => ({
+    ...props,
+    fontSize: '0.875rem',
+  }),
   menu: () => ({ boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.1)' }),
+  // input: (base, props) => ({
+  // }),
 };
 
 type Props = {
@@ -65,6 +77,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const disabled = isDisable || isLoading;
+  // const {} = useStateManager();
   return (
     <Dropdown
       isOpen={isOpen}
@@ -132,7 +145,9 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
         onChange={(newValue: StateOption[]) => {
           // @ts-ignore
           handleChange(newValue);
-          // setIsOpen(false)
+          if (!isMulti) {
+            setIsOpen(false);
+          }
         }}
         options={options}
         defaultValue={defaultValue}

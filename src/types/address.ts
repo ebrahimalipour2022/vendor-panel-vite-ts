@@ -24,8 +24,8 @@ export interface IOrderAddressListReq {
   query?: string;
 }
 
-//==================IR MAP===================
-export interface IrMapCoordinates {
+//================== MAP TYPES===================
+export interface IMapPosition {
   lat: number;
   lng: number;
 }
