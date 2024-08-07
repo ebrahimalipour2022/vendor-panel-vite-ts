@@ -10,6 +10,7 @@ import themeConfig from '@/layouts/materialize-layout/configs/themeConfig';
 
 // Util Imports
 import { verticalLayoutClasses } from '@/layouts/materialize-layout/@layouts/utils/layoutClasses';
+import { defaultBreakpoints } from '@/layouts/materialize-layout/@menu/defaultConfigs';
 
 type StyledHeaderProps = {
   theme: Theme;
@@ -35,6 +36,12 @@ const StyledHeader = styled.header<StyledHeaderProps>`
       max-inline-size: calc(
         ${themeConfig.compactContentWidth}px - ${2 * themeConfig.layoutPadding}px
       );
+      @media (max-width: ${defaultBreakpoints.md}) {
+        max-inline-size: unset;
+        inline-size: calc(
+          ${themeConfig.compactContentWidth}px - ${2 * themeConfig.layoutPadding}px
+        );
+      }
     }
 
     .${verticalLayoutClasses.navbar} {

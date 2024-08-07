@@ -6,6 +6,7 @@ import themeConfig from '@/layouts/materialize-layout/configs/themeConfig';
 
 // Util Imports
 import { commonLayoutClasses } from '@/layouts/materialize-layout/@layouts/utils/layoutClasses';
+import { defaultBreakpoints } from '@/layouts/materialize-layout/@menu/defaultConfigs';
 
 type StyledMainProps = {
   isContentCompact: boolean;
@@ -23,6 +24,9 @@ const StyledMain = styled.main<StyledMainProps>`
   &:has(.${commonLayoutClasses.contentHeightFixed}) {
     display: flex;
     overflow: hidden;
+  }
+  @media (max-width: ${defaultBreakpoints.md}) {
+    padding: ${themeConfig.layoutPadding}px 0;
   }
 `;
 

@@ -31,7 +31,7 @@ const WalletBalance = () => {
     >
       <Typography color={'primary'} variant={'body2'}>
         <span className={'hidden md:block'}>{t('wallet.walletBalance')}</span>
-        <span className={'block md:hidden'}>{t('wallet.yourCredit')}</span>
+        <span className={'block text-nowrap md:hidden'}>{t('wallet.yourCredit')}</span>
       </Typography>
 
       <div className={'flex flex-row items-end justify-center mr-2'}>
