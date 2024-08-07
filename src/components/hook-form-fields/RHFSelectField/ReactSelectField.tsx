@@ -12,6 +12,7 @@ import type { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInp
 import type { StateOption } from '@/types/select-field';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
+import { CircularProgress } from '@mui/material';
 
 const selectStyles: StylesConfig<StateOption, false> = {
   // @ts-ignore
@@ -32,7 +33,9 @@ type Props = {
   allOptionText?: string;
   placeholder?: string;
   searchText?: string;
+  isLoading?: boolean;
   required?: boolean;
+  isDisable?: boolean;
   isMulti?: boolean;
   error?: boolean;
   defaultValue?: StateOption[];
@@ -50,7 +53,9 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
     placeholder = 'انتخاب نمایید...',
     searchText = 'جستجو در گزینه ها...',
     isMulti,
+    isDisable,
     required,
+    isLoading = true,
     allOptionText,
     handleChange,
     defaultValue,
@@ -71,6 +76,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
           <OutlinedInput
             ref={ref}
             name={name}
+            disabled={isLoading || isDisable}
             endAdornment={
               isOpen ? (
                 <InputAdornment position="end">
@@ -78,7 +84,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
                 </InputAdornment>
               ) : (
                 <InputAdornment position="end">
-                  <ChevronUp />
+                  {isLoading ? <CircularProgress size={20} color={'secondary'} /> : <ChevronUp />}
                 </InputAdornment>
               )
             }

@@ -11,6 +11,10 @@ import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
 import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
 import { IOrderAddress } from '@/types';
+import {
+  useGetAllActiveStoresQuery,
+  useLazyGetAllActiveStoresQuery,
+} from '@/store/api/vendor/vendor';
 import SearchField from './SearchField';
 import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LoadingScreen from '../../../components/loading-screen/loading-screen';
@@ -28,9 +32,12 @@ const defaultOptions: StateOption[] = [
 
 const AddressesView = () => {
   const id = '100'; // store id
-  const [getList, { currentData: addresses, isLoading, isFetching }] =
-    useLazyGetOrderAddressesQuery();
-  const [selectedOption, setSelectedOption] = useState(defaultOptions);
+  const [
+    getList,
+    { currentData: addresses, isLoading: isAddressLoading, isFetching: isAddressFetching },
+  ] = useLazyGetOrderAddressesQuery();
+  const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
+  const [selectedOption, setSelectedOption] = useState([]);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
   const [address, setAddress] = useState<IOrderAddress>();
   const getAddressList = async () => {
@@ -67,7 +74,7 @@ const AddressesView = () => {
   };
 
   const renderAddresses = () => {
-    if (isLoading || isFetching) {
+    if (isAddressLoading || isAddressFetching) {
       return (
         <div className={'absolute inset-0'}>
           <LoadingScreen />
@@ -115,10 +122,11 @@ const AddressesView = () => {
               value={selectedOption}
               allOptionText={'همه شعب'}
               placeholder={'انتخاب شعبه'}
-              options={options}
+              options={activeStores || []}
               handleChange={handleChange}
               name={'branches-field'}
               isMulti={true}
+              isLoading={isActiveStoresLoading}
             />
             <Button
               variant={'outlined'}
