@@ -15,6 +15,7 @@ export const orderAddress = vendorApi.injectEndpoints({
       transformResponse: (response: { orderAddress: IOrderAddress[] }) => {
         return response?.orderAddress || [];
       },
+      providesTags: ['ORDER-ADDRESSES'],
     }),
     postOrderAddresses: builder.mutation<void, IOrderAddress>({
       query(data) {
@@ -24,8 +25,9 @@ export const orderAddress = vendorApi.injectEndpoints({
           data,
         };
       },
+      invalidatesTags: ['ORDER-ADDRESSES'],
     }),
-    putOrderAddresses: builder.mutation<void, { id: string; data: IOrderAddress }>({
+    putOrderAddresses: builder.mutation<void, { id?: number | string; data: IOrderAddress }>({
       query({ id, data }) {
         return {
           method: 'PUT',
@@ -33,14 +35,16 @@ export const orderAddress = vendorApi.injectEndpoints({
           data,
         };
       },
+      invalidatesTags: ['ORDER-ADDRESSES'],
     }),
-    deleteOrderAddresses: builder.mutation<void, { id: string }>({
+    deleteOrderAddresses: builder.mutation<void, { id: number }>({
       query({ id }) {
         return {
           method: 'DELETE',
           url: `${controller}OrderAddress/${id}`,
         };
       },
+      invalidatesTags: ['ORDER-ADDRESSES'],
     }),
   }),
 });

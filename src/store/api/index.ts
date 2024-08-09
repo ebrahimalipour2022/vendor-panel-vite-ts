@@ -129,7 +129,7 @@ const axiosBaseQuery = (
 const vendorApi = createApi({
   baseQuery: axiosBaseQuery('VENDOR_ENDPOINT'),
   reducerPath: 'apiVendor',
-  tagTypes: [],
+  tagTypes: ['ORDER-ADDRESSES'],
   endpoints: () => ({}),
 });
 const umApi = createApi({

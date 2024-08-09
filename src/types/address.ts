@@ -4,6 +4,7 @@ export interface ILocation {
 }
 export interface IOrderAddress {
   id?: string;
+  storeId?: string;
   storeBranch: {
     label: string;
     value: string;
@@ -20,7 +21,7 @@ export interface IOrderAddress {
 }
 
 export interface IOrderAddressListReq {
-  id: string;
+  id: number;
   query?: string;
 }
 

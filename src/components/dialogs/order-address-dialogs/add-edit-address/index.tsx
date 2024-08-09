@@ -23,13 +23,14 @@ import { useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
 import Divider from '@mui/material/Divider';
 import { DEFAULT_POSITION } from '@/config-global';
 import MapDialog from '@/components/dialogs/map-dialog';
-import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
 import Button from '@mui/material/Button';
+import { toast } from 'react-toastify';
 
 type AddOrderProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
   data?: IOrderAddress | null;
+  storeId: number;
 };
 const resolver = yupResolver(
   Yup.object().shape({
@@ -57,7 +58,7 @@ const resolver = yupResolver(
   })
 );
 
-const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
+const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) => {
   const { t } = useTranslation();
   const [openMapDialog, setOpenMapDialog] = useState(false);
 
@@ -79,17 +80,17 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
         value: '',
         label: '',
       },
-      title: '',
-      fullName: '',
+      title: 'میدان ونک',
+      fullName: 'ابراهیم علی پور',
       clientAddress: '',
-      plaque: '',
-      unit: '',
-      floor: '',
+      plaque: '3',
+      unit: '4',
+      floor: '5',
       location: {
         latitude: DEFAULT_POSITION.lat,
         longitude: DEFAULT_POSITION.lng,
       },
-      mobile: '',
+      mobile: '09115700127',
     },
     resolver,
   });
@@ -117,14 +118,17 @@ const AddEditAddressDialog = ({ open, setOpen, data }: AddOrderProps) => {
 
   const onSubmit = async (values: IOrderAddress) => {
     console.log('on submit :', values);
-    // await authAPI
-    //   .changePasswordApi(values)
-    //   .then(res => {
-    //     toast.success(t('toast.passwordChanged'), { toastId: 'change-pass-success-toast' })
-    //   })
-    //   .catch(err => {
-    //     // toast.error(t('toast.passwordChangeError'), { toastId: 'change-pass-error-toast' })
-    //   })
+    try {
+      if (data?.id) {
+        await putAddress({ id: data?.id, data: values }).unwrap();
+      } else {
+        await postAddress({ storeId: values?.storeBranch?.value, ...values }).unwrap();
+      }
+      toast.success(t('toast.successSubmit'), { toastId: 'address-success-toast' });
+      setOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const title = `${isEmpty(data?.id) ? t('common.add') : t('common.edit')} ${t(

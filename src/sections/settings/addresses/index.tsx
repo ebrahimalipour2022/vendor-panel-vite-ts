@@ -12,6 +12,7 @@ import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add
 import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
 import { IOrderAddress } from '@/types';
 import {
+  useGetActiveStoreQuery,
   useGetAllActiveStoresQuery,
   useLazyGetAllActiveStoresQuery,
 } from '@/store/api/vendor/vendor';
@@ -31,7 +32,9 @@ const defaultOptions: StateOption[] = [
 ];
 
 const AddressesView = () => {
-  const id = '100'; // store id
+  // const id = '100'; // store id
+  const { data: activeStore, isLoading: isFetchingActiveStore } = useGetActiveStoreQuery();
+
   const [
     getList,
     { currentData: addresses, isLoading: isAddressLoading, isFetching: isAddressFetching },
@@ -40,7 +43,7 @@ const AddressesView = () => {
   const [selectedOption, setSelectedOption] = useState([]);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
   const [address, setAddress] = useState<IOrderAddress>();
-  const getAddressList = async () => {
+  const getAddressList = async (id: number) => {
     try {
       // let _queryValues = {
       //   ...queryValues,
@@ -51,17 +54,17 @@ const AddressesView = () => {
       //     ? jMoment(queryValues.FromRegistrationCreateDate).format('YYYYMMDDHHmmssSSS')
       //     : '',
       // };
-      await getList({ id, query: '' }).unwrap();
+      await getList({ id: id!, query: '' }).unwrap();
     } catch (e) {
       /* empty */
     }
   };
 
   useEffect(() => {
-    if (id) {
-      getAddressList();
+    if (activeStore?.storeId) {
+      getAddressList(activeStore?.storeId);
     }
-  }, [id]);
+  }, [activeStore]);
 
   const handleChange = (newOptions: any) => {
     setSelectedOption(newOptions);
@@ -73,8 +76,10 @@ const AddressesView = () => {
     setAddEditAddressDialog(true);
   };
 
+  const loading = isFetchingActiveStore || isAddressLoading || isAddressFetching;
+
   const renderAddresses = () => {
-    if (isAddressLoading || isAddressFetching) {
+    if (loading) {
       return (
         <div className={'absolute inset-0'}>
           <LoadingScreen />
@@ -149,6 +154,7 @@ const AddressesView = () => {
           open={addEditAddressDialog}
           setOpen={handleNewAddress}
           data={address}
+          storeId={activeStore?.storeId!}
         />
       </Fragment>
     </>
