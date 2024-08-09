@@ -10,7 +10,8 @@
     "build:dev": "tsc && vite build --mode dev",
     "build:release": "tsc && vite build --mode release",
     "build:master": "tsc && vite build --mode master",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo/logo.svg"
   },
   "browserslist": {
     "production": [
