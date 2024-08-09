@@ -63,8 +63,8 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
   const [openMapDialog, setOpenMapDialog] = useState(false);
 
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
-  const [postAddress] = usePostOrderAddressesMutation();
-  const [putAddress] = usePutOrderAddressesMutation();
+  const [postAddress, { isLoading: isPostLoading }] = usePostOrderAddressesMutation();
+  const [putAddress, { isLoading: isPutLoading }] = usePutOrderAddressesMutation();
 
   // Hooks
   const {
@@ -99,8 +99,15 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
 
   const watchLocation = watch('location');
 
+  const handleClose = () => {
+    console.log('handleClose');
+    reset();
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (data) {
+      console.log('address data is:', data);
       reset({ ...data });
     }
   }, [data]);
@@ -125,7 +132,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
         await postAddress({ storeId: values?.storeBranch?.value, ...values }).unwrap();
       }
       toast.success(t('toast.successSubmit'), { toastId: 'address-success-toast' });
-      setOpen(false);
+      handleClose();
     } catch (err) {
       console.log(err);
     }
@@ -135,11 +142,13 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
     'address.pageTitle'
   )} ${isEmpty(data?.id) ? t('common.new') : ''}`;
 
+  const fullSubmitting = isSubmitting && (isPostLoading || isPutLoading);
+
   return (
     <>
       <CustomDialog
         open={open}
-        setOpen={setOpen}
+        setOpen={handleClose}
         title={title}
         maxWidth={'lg'}
         fullWidth={true}
@@ -147,12 +156,13 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
       >
         <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
           <div className={'flex gap-4 h-[100%]  md:h-[75vh]'}>
-            <div className={'w-full md:max-w-[348px] relative pb-6  md:overflow-y-auto'}>
+            <div className={'w-full md:max-w-[348px] relative pb-6 px-2  md:overflow-y-auto'}>
               <Grid container spacing={5}>
                 <Grid item xs={12} className={'block md:hidden'}>
                   <div className={'relative'}>
                     <Button
                       variant={'outlined'}
+                      disabled={fullSubmitting}
                       onClick={() => setOpenMapDialog(true)}
                       startIcon={
                         <EditIcon className={'[&>*]:fill-[var(--mui-palette-primary-main)]'} />
@@ -195,7 +205,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           required={true}
                           options={activeStores || []}
                           isLoading={isActiveStoresLoading}
-                          isDisable={isActiveStoresLoading}
+                          isDisable={isActiveStoresLoading || fullSubmitting}
                         />
                       );
                     }}
@@ -216,9 +226,8 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
+                        disabled={fullSubmitting}
                         {...field}
-                        multiline={true}
-                        maxRows={4}
                       />
                     )}
                   />
@@ -235,9 +244,10 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
-                        {...field}
                         multiline={true}
                         maxRows={4}
+                        disabled={fullSubmitting}
+                        {...field}
                       />
                     )}
                   />
@@ -255,6 +265,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           error={!!error?.message}
                           helperText={error?.message}
                           required={true}
+                          disabled={fullSubmitting}
                           {...field}
                         />
                       )}
@@ -272,6 +283,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           error={!!error?.message}
                           helperText={error?.message}
                           required={true}
+                          disabled={fullSubmitting}
                           {...field}
                         />
                       )}
@@ -289,6 +301,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           error={!!error?.message}
                           helperText={error?.message}
                           required={true}
+                          disabled={fullSubmitting}
                           {...field}
                         />
                       )}
@@ -310,6 +323,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
+                        disabled={fullSubmitting}
                         {...field}
                       />
                     )}
@@ -327,6 +341,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         error={!!error?.message}
                         helperText={error?.message}
                         required={true}
+                        disabled={fullSubmitting}
                         {...field}
                       />
                     )}
@@ -337,6 +352,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                     type={'submit'}
                     variant={'contained'}
                     fullWidth
+                    loading={fullSubmitting}
                     // className={'absolute bottom-0'}
                   >
                     تایید و ثبت آدرس
@@ -348,7 +364,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
               <LeafletMapComponent
                 position={watchLocation}
                 setAddress={setAddress}
-                onlyView={false}
+                onlyView={fullSubmitting}
               />
             </div>
           </div>

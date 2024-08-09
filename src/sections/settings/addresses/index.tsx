@@ -11,11 +11,7 @@ import { NewAddressIcon } from '@/assets/icons';
 import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
 import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
 import { IOrderAddress } from '@/types';
-import {
-  useGetActiveStoreQuery,
-  useGetAllActiveStoresQuery,
-  useLazyGetAllActiveStoresQuery,
-} from '@/store/api/vendor/vendor';
+import { useGetActiveStoreQuery, useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
 import SearchField from './SearchField';
 import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
 import LoadingScreen from '../../../components/loading-screen/loading-screen';
@@ -42,7 +38,7 @@ const AddressesView = () => {
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
   const [selectedOption, setSelectedOption] = useState([]);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
-  const [address, setAddress] = useState<IOrderAddress>();
+  const [address, setAddress] = useState<IOrderAddress | null>(null);
   const getAddressList = async (id: number) => {
     try {
       // let _queryValues = {
@@ -109,7 +105,12 @@ const AddressesView = () => {
   };
 
   const handleNewAddress = (value: boolean) => {
-    setAddEditAddressDialog(value);
+    if (!value) {
+      setAddress(null);
+      setAddEditAddressDialog(value);
+    } else {
+      setAddEditAddressDialog(value);
+    }
   };
 
   return (
@@ -146,17 +147,16 @@ const AddressesView = () => {
             </Button>
           </div>
         </div>
-
         {renderAddresses()}
       </Stack>
-      <Fragment key={`${addEditAddressDialog}-addEditAddressDialog`}>
+      {addEditAddressDialog && (
         <AddEditAddressDialog
-          open={addEditAddressDialog}
+          open={true}
           setOpen={handleNewAddress}
           data={address}
           storeId={activeStore?.storeId!}
         />
-      </Fragment>
+      )}
     </>
   );
 };
