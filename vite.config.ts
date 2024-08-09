@@ -51,11 +51,15 @@ export default defineConfig(({ mode }: { mode: string }) => {
       }),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+        includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png', 'maskable-icon-512x512.png'],
         manifest: {
-          name: 'پنل تامین کنندگان زپ',
-          short_name: 'zap vendor panel',
-          theme_color: '#ffffff',
+          name: 'ZapVendorPanel',
+          short_name: 'وندرو پنل زپ',
+          display: 'standalone',
+          start_url: '/',
+          theme_color: '#000000',
+          background_color: '#ffffff',
+
           icons: [
             {
               src: 'pwa-64x64.png',
