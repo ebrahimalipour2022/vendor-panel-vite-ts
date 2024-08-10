@@ -19,11 +19,3 @@ export interface ProgressStep {
   type: ProgressType;
   steps: Step[];
 }
-
-const StepStatusColor = {
-  todo: 'var(--mui-palette-grey-400)',
-  active: 'var(--mui-palette-primary-main)',
-  done: 'var(--mui-palette-success-main)',
-  pending: 'var(--mui-palette-warning-main)',
-  reject: 'var(--mui-palette-error-main)',
-};

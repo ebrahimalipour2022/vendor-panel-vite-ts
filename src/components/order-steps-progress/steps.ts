@@ -5,35 +5,41 @@ export const steps: { [key: string]: Step } = {
     title: {
       main: 'ثبت سفارش',
     },
+    status: 'done',
   },
   status2: {
     title: {
       main: 'در جستجوی سفیر',
       done: 'سفیر پیدا شد',
     },
+    status: 'done',
   },
   status3: {
     title: {
       main: 'سفیر در راه مبدا',
       done: 'سفیر در مبدا',
     },
+    status: 'done',
   },
   status4: {
     title: {
       main: 'در حال جمع‌آوری',
       done: 'تحویل سفیر شد',
     },
+    status: 'done',
   },
   status5: {
     title: {
       main: 'سفیر در راه مقصد',
       done: 'سفیر در مقصد',
     },
+    status: 'active',
   },
   status6: {
     title: {
       main: 'تحویل شد',
     },
+    status: 'todo',
   },
   status7: {
     title: {
@@ -41,11 +47,13 @@ export const steps: { [key: string]: Step } = {
       active: 'سفیر در حال بازگشت',
       done: 'سفیر در مبدا',
     },
+    status: 'todo',
   },
   status8: {
     title: {
       main: 'درخواست مرجوعی',
     },
+    status: 'todo',
   },
   status9: {
     title: {
@@ -53,11 +61,13 @@ export const steps: { [key: string]: Step } = {
       active: 'سفیر در راه بازگشت',
       done: 'سفیر بازگشت',
     },
+    status: 'todo',
   },
   status10: {
     title: {
       main: 'اتمام سفر',
     },
+    status: 'todo',
   },
 };
 
