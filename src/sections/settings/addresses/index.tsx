@@ -109,10 +109,8 @@ const AddressesView = () => {
       } else {
         return (
           <EmptyState
-            title={'آدرسی در این لیست نیست'}
-            subTitle={
-              'هیچ آدرسی در این صفحه ثبت نشده، با زدن دکمه زیر، آدرس جدید به لیست آدرس‌های منتخب اضافه کنید'
-            }
+            title={t('address.noAddressTitle')}
+            subTitle={t('address.noAddressSubTitle')}
           />
         );
       }
@@ -125,15 +123,15 @@ const AddressesView = () => {
         <div className={'flex flex-row items-center justify-between flex-wrap gap-2'}>
           <div id={'page-title'} className={'hidden md:block'}>
             <Typography component={'h2'} variant={'body1'} fontWeight={'bold'}>
-              آدرس های منتخب
+              {t('address.pageTitle')}
             </Typography>
           </div>
           <div id={'page-actions'} className={'flex flex-row align-center flex-wrap gap-2'}>
-            <SearchField placeholder={'در لیست جستجو کنید...'} sx={{ maxWidth: 250 }} />
+            <SearchField placeholder={t('common.searchInList')} sx={{ maxWidth: 250 }} />
             <RHFReactSelectField
               value={selectedOption}
-              allOptionText={'همه شعب'}
-              placeholder={'انتخاب شعبه'}
+              allOptionText={t('address.allBranches')}
+              placeholder={t('address.selectBranch')}
               handleChange={handleBranchOption}
               name={'branches-field'}
               isMulti={true}
@@ -149,7 +147,7 @@ const AddressesView = () => {
                 'fixed z-10 right-7 bottom-7 md:right-[initial] md:bottom-[initial] md:relative md:inline-flex'
               }
             >
-              ثبت آدرس جدید
+              {t('address.registerNewAddress')}
             </Button>
           </div>
         </div>
@@ -166,12 +164,10 @@ const AddressesView = () => {
       {openRemoveDialog.open && (
         <ConfirmDialog
           open={true}
-          title={'حذف آدرس منتخب؟'}
-          subTitle={
-            'در صورت حدف آدرس از لیست آدرس‌های منتخب، این آدرس در سفارش‌های بعدی شما نشان داده نخواهد شد.'
-          }
+          title={t('address.removeAddressTitle')}
+          subTitle={t('address.removeAddressSubTitle')}
           confirmBtnProps={{
-            children: 'حذف آدرس',
+            children: t('address.removeAddress'),
             startIcon: <RemoveIcon color={'var(--mui-palette-error-contrastText)'} />,
             loading: isDeleteLoading,
             variant: 'contained',
@@ -180,7 +176,7 @@ const AddressesView = () => {
             className: 'min-w-[calc(100%_-_80px)]',
           }}
           cancelBtnProps={{
-            children: 'بیخیال',
+            children: t('common.cancel'),
             variant: 'outlined',
             color: 'primary',
             className: 'w-full',
