@@ -400,12 +400,14 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
             children: 'ادامه ثبت آدرس',
             variant: 'contained',
             color: 'primary',
+            className: 'w-[calc(100%_-_130px)]',
           }}
           cancelBtnProps={{
             children: 'حذف آدرس',
             startIcon: <RemoveIcon color={'var(--mui-palette-error-main)'} />,
             variant: 'outlined',
             color: 'error',
+            className: 'w-[130px] text-nowrap',
           }}
           onConfirm={onConfirm}
           onCancel={handleClose}

@@ -46,23 +46,8 @@ const ConfirmDialog = (props: Props) => {
           )}
         </div>
         <div className={'flex flex-row items-center gap-2'}>
-          {onConfirm && (
-            <LoadingButton
-              fullWidth
-              size={'large'}
-              onClick={onConfirm}
-              {...confirmBtnProps}
-              // className={'w-[calc(100% - 80px)]'}
-            />
-          )}
-          {onCancel && (
-            <Button
-              size={'large'}
-              onClick={onCancel}
-              className={'text-nowrap min-w-[25%]'}
-              {...cancelBtnProps}
-            />
-          )}
+          {onConfirm && <LoadingButton size={'large'} onClick={onConfirm} {...confirmBtnProps} />}
+          {onCancel && <Button size={'large'} onClick={onCancel} {...cancelBtnProps} />}
         </div>
       </div>
     </CustomDialog>

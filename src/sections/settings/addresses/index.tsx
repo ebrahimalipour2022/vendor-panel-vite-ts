@@ -176,11 +176,14 @@ const AddressesView = () => {
             loading: isDeleteLoading,
             variant: 'contained',
             color: 'error',
+            fullWidth: true,
+            className: 'min-w-[calc(100%_-_80px)]',
           }}
           cancelBtnProps={{
             children: 'بیخیال',
             variant: 'outlined',
             color: 'primary',
+            className: 'w-full',
           }}
           onConfirm={onConfirmRemoveAddress}
           onCancel={() => setOpenRemoveDialog({ open: false, id: 0 })}

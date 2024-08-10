@@ -73,7 +73,7 @@ const button: Theme['components'] = {
                       padding: theme.spacing(2.44, 5.25),
                     }),
                     ...(ownerState.size === 'large' && {
-                      padding: theme.spacing(2.95, 6.25),
+                      padding: theme.spacing(2.75, 6.25),
                     }),
                   }
                 : {
@@ -113,7 +113,7 @@ const button: Theme['components'] = {
       sizeLarge: ({ theme }) => ({
         fontSize: theme.typography.button.fontSize,
         fontWeight: theme.typography.fontWeightMedium,
-        borderRadius: 'var(--mui-shape-customBorderRadius-xl)',
+        borderRadius: 'var(--mui-shape-customBorderRadius-lg)',
       }),
       startIcon: ({ theme, ownerState }) => ({
         ...(ownerState.size === 'small'
@@ -254,14 +254,16 @@ const button: Theme['components'] = {
       {
         props: { variant: 'outlined', color: 'error' },
         style: {
-          borderColor: 'var(--mui-palette-error-main)',
+          backgroundColor: 'var(--mui-palette-error-lightestOpacity)',
+          borderColor: 'var(--mui-palette-error-lightestOpacity)',
           '&:not(.Mui-disabled):hover, &:not(.Mui-disabled):active, &.Mui-focusVisible:not(:has(span.MuiTouchRipple-root))':
             {
+              borderColor: 'var(--mui-palette-error-lightestOpacity)',
               backgroundColor: 'var(--mui-palette-error-lighterOpacity)',
             },
           '&.Mui-disabled': {
+            opacity: 0.45,
             color: 'var(--mui-palette-error-main)',
-            borderColor: 'var(--mui-palette-error-main)',
           },
         },
       },
