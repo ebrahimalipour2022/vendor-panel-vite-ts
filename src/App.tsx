@@ -42,8 +42,6 @@ export default function App() {
   //          ██ ██      ▓▓▓▓
   //            ██
   // `);
-  const theme = useTheme();
-  const isMobileBreakpoint = useMediaQuery(theme.breakpoints.down('md'));
   const direction = 'rtl';
   const mode = getMode();
   const settingsCookie = getSettingsFromCookie();
@@ -64,7 +62,7 @@ export default function App() {
                     <AuthConsumer>
                       <Router />
                       <AppReactToastify direction={direction} hideProgressBar />
-                      {isMobileBreakpoint && <SplashScreen />}
+                      <SplashScreen />
                     </AuthConsumer>
                   </MotionLazy>
                 </ThemeProvider>

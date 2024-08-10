@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, m } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import classnames from 'classnames';
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +17,7 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowSplashScreen(false);
-    }, 1500); // 500 milliseconds (0.5 seconds)
+    }, 900); // 900 milliseconds (0.9 seconds)
 
     return () => clearTimeout(timeout);
   }, []);
@@ -25,9 +26,13 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
       <m.div
         animate={{ opacity: showSplashScreen ? 1 : 0 }}
         transition={{ duration: 0.5 }}
-        className={
-          'flex w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] md:hidden right-0 bottom-0'
-        }
+        className={classnames(
+          'w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] md:none right-0 bottom-0',
+          {
+            hidden: !showSplashScreen,
+            flex: showSplashScreen,
+          }
+        )}
       >
         <>
           <div className={'flex bs-full items-center justify-center flex-1  relative'}>
