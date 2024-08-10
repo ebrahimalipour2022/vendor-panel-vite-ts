@@ -59,3 +59,32 @@ export const getSkin = () => {
 
   return settingsCookie.skin || 'default';
 };
+
+//============= font utils =================
+export const mediaQueries = {
+  upXs: '@media (min-width:0px)',
+  upSm: '@media (min-width:600px)',
+  upMd: '@media (min-width:900px)',
+  upLg: '@media (min-width:1200px)',
+  upXl: '@media (min-width:1536px)',
+  up2Xl: '@media (min-width:1920px)',
+};
+
+/**
+ * Converts px to rem
+ */
+export function pxToRem(value: number) {
+  return `${value / 16}rem`;
+}
+
+/**
+ * Responsive font sizes
+ */
+// @ts-ignore
+export function responsiveFontSizes({ sm, md, lg }) {
+  return {
+    [mediaQueries.upSm]: { fontSize: pxToRem(sm) },
+    [mediaQueries.upMd]: { fontSize: pxToRem(md) },
+    [mediaQueries.upLg]: { fontSize: pxToRem(lg) },
+  };
+}
