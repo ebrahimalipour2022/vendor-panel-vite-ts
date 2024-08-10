@@ -73,25 +73,18 @@ export const mediaQueries = {
 /**
  * Converts px to rem
  */
-export function pxToRem(value: number, basefont: number) {
-  return `${value / basefont}rem`;
+export function pxToRem(value: number) {
+  return `${value / 16}rem`;
 }
-
-// Define your base font sizes for different breakpoints
-const baseFontSizes = {
-  mobile: 12, // For mobile devices
-  tablet: 14, // For smaller tablets and desktops
-  desktop: 16, // For larger tablets and desktops
-};
-
 /**
  * Responsive font sizes
  */
 // @ts-ignore
-export function responsiveFontSizes({ sm, md, lg }) {
+export function responsiveFontSizes({ xs, sm, md, lg }) {
   return {
-    [mediaQueries.upSm]: { fontSize: pxToRem(sm, baseFontSizes.mobile) },
-    [mediaQueries.upMd]: { fontSize: pxToRem(md, baseFontSizes.tablet) },
-    [mediaQueries.upLg]: { fontSize: pxToRem(lg, baseFontSizes.desktop) },
+    [mediaQueries.upXs]: { fontSize: pxToRem(xs) },
+    [mediaQueries.upSm]: { fontSize: pxToRem(sm) },
+    [mediaQueries.upMd]: { fontSize: pxToRem(md) },
+    [mediaQueries.upLg]: { fontSize: pxToRem(lg) },
   };
 }
