@@ -16,7 +16,7 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowSplashScreen(false);
-    }, 500); // 500 milliseconds (0.5 seconds)
+    }, 1500); // 500 milliseconds (0.5 seconds)
 
     return () => clearTimeout(timeout);
   }, []);
@@ -26,18 +26,14 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
         animate={{ opacity: showSplashScreen ? 1 : 0 }}
         transition={{ duration: 0.5 }}
         className={
-          'flex w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] sm:hidden right-0 bottom-0'
+          'flex w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] md:hidden right-0 bottom-0'
         }
       >
         <>
           <div className={'flex bs-full items-center justify-center flex-1  relative'}>
-            <div
-              className={
-                'flex flex-1 h-full bg-primary relative rounded-[2rem] overflow-hidden pt-[20dvh] px-5'
-              }
-            >
-              <div className={'flex flex-col items-start space-y-2 w-full z-[9999]'}>
-                <div className={'w-[90px] '}>
+            <div className="absolute right-1/2 top-1/2 translate-x-1/2 -translate-y-1/2">
+              <div className={'flex flex-col items-center space-y-2 w-full z-[9999]'}>
+                <div className={'w-[90px]'}>
                   <LogoZapBlue />
                 </div>
                 <Typography color={'white'} component={'h2'} variant={'body1'}>
@@ -45,7 +41,7 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
                 </Typography>
               </div>
             </div>
-            <div className={'absolute bs-full'}>{/*<SplashBgIcon />*/}</div>
+            {/*<div className={'absolute bs-full'}>{<SplashBgIcon />}</div>*/}
           </div>
         </>
       </m.div>

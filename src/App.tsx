@@ -30,17 +30,20 @@ import {
 } from '@/layouts/materialize-layout/@core/utils/serverHelpers';
 import { SplashScreen } from '@/components/loading-screen';
 import MotionLazy from '@/components/animate/motion-lazy';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 // ----------------------------------------------------------------------
 
 export default function App() {
   // console.log(`
-  //                      ░░
-  //      ▓          ▓     ▓
-  //      ▓▓▓▓▓▓▓▓▓▓▓▓     ▓
-  //         ██ ██      ▓▓▓▓
-  //           ██
+  //                       ░░
+  //      ▓           ▓     ▓
+  //      ▓▓▓▓▓▓▓▓▓▓▓▓▓     ▓
+  //          ██ ██      ▓▓▓▓
+  //            ██
   // `);
-
+  const theme = useTheme();
+  const isMobileBreakpoint = useMediaQuery(theme.breakpoints.down('md'));
   const direction = 'rtl';
   const mode = getMode();
   const settingsCookie = getSettingsFromCookie();
@@ -61,7 +64,7 @@ export default function App() {
                     <AuthConsumer>
                       <Router />
                       <AppReactToastify direction={direction} hideProgressBar />
-                      {/*<SplashScreen />*/}
+                      {isMobileBreakpoint && <SplashScreen />}
                     </AuthConsumer>
                   </MotionLazy>
                 </ThemeProvider>
