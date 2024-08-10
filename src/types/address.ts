@@ -3,8 +3,8 @@ export interface ILocation {
   longitude: number;
 }
 export interface IOrderAddress {
-  id?: string;
-  storeId?: string;
+  id?: number;
+  storeId?: number;
   storeBranch: {
     label: string;
     value: string;

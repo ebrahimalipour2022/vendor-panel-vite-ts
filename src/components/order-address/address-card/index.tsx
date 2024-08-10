@@ -28,7 +28,7 @@ const ICONS = {
 
 type Props = {
   address: IOrderAddress;
-  handleRemove: ({ id }: { id: string }) => void;
+  handleRemove: ({ id }: { id: number }) => void;
   handleEdit: (address: IOrderAddress) => void;
 };
 const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
@@ -46,7 +46,7 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
     setAnchorEl(null);
   };
 
-  const onDelete = ({ id }: { id: string }) => {
+  const onDelete = ({ id }: { id: number }) => {
     handleRemove({ id });
     handleClose();
   };

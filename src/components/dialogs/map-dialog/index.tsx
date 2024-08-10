@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import type { ILocation, MapReverseAddressRes } from '@/types';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import Box from '@mui/material/Box';
 import { OutlinedInput } from '@mui/material';
 
 type Props = {

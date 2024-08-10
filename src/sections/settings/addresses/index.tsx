@@ -1,44 +1,47 @@
-import { Fragment, useEffect, useState } from 'react';
-
+import { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import type { StateOption } from '@/types/select-field';
-import EmptyState from '@/components/empty-state';
-import AddressCard from '@/components/order-address/address-card';
-import { NewAddressIcon } from '@/assets/icons';
-import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
-import { useLazyGetOrderAddressesQuery } from '@/store/api/order-address/order-address';
+import { NewAddressIcon, RemoveIcon } from '@/assets/icons';
+import {
+  useDeleteOrderAddressesMutation,
+  useLazyGetOrderAddressesQuery,
+} from '@/store/api/order-address/order-address';
 import { IOrderAddress } from '@/types';
 import { useGetActiveStoreQuery, useGetAllActiveStoresQuery } from '@/store/api/vendor/vendor';
+import AddressCard from '@/components/order-address/address-card';
+import AddEditAddressDialog from '@/components/dialogs/order-address-dialogs/add-edit-address';
+import EmptyState from '@/components/empty-state';
+import ConfirmDialog from '@/components/dialogs/confirm-dialog';
+import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
+import LoadingScreen from '@/components/loading-screen/loading-screen';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import SearchField from './SearchField';
-import RHFReactSelectField from '../../../components/hook-form-fields/RHFSelectField/ReactSelectField';
-import LoadingScreen from '../../../components/loading-screen/loading-screen';
-
-const options: StateOption[] = [
-  { value: 'option1', label: 'تهرانپارس شرقی' },
-  { value: 'option2', label: 'تهرانپارس غربی' },
-  { value: 'option3', label: 'پاسداران' },
-];
-
-const defaultOptions: StateOption[] = [
-  { value: 'option1', label: 'تهرانپارس شرقی' },
-  { value: 'option3', label: 'پاسداران' },
-];
 
 const AddressesView = () => {
-  // const id = '100'; // store id
+  const { t } = useTranslation();
   const { data: activeStore, isLoading: isFetchingActiveStore } = useGetActiveStoreQuery();
 
   const [
     getList,
     { currentData: addresses, isLoading: isAddressLoading, isFetching: isAddressFetching },
   ] = useLazyGetOrderAddressesQuery();
+
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
+  const [deleteAddress, { isLoading: isDeleteLoading }] = useDeleteOrderAddressesMutation();
   const [selectedOption, setSelectedOption] = useState([]);
-  const [addEditAddressDialog, setAddEditAddressDialog] = useState(false);
-  const [address, setAddress] = useState<IOrderAddress | null>(null);
+
+  const [addEditAddressDialog, setAddEditAddressDialog] = useState<{
+    address: IOrderAddress | null;
+    open: boolean;
+  }>({ open: false, address: null });
+
+  const [openRemoveDialog, setOpenRemoveDialog] = useState<{ id: number; open: boolean }>({
+    id: 0,
+    open: false,
+  });
+
   const getAddressList = async (id: number) => {
     try {
       // let _queryValues = {
@@ -62,20 +65,32 @@ const AddressesView = () => {
     }
   }, [activeStore]);
 
-  const handleChange = (newOptions: any) => {
+  const handleBranchOption = (newOptions: any) => {
     setSelectedOption(newOptions);
   };
 
-  const handleRemove = ({ id }: { id: string }) => {};
   const handleEdit = (address: IOrderAddress) => {
-    setAddress(address);
-    setAddEditAddressDialog(true);
+    setAddEditAddressDialog({ open: true, address });
   };
 
-  const loading = isFetchingActiveStore || isAddressLoading || isAddressFetching;
+  const handleAddressDialog = (value: boolean) => {
+    setAddEditAddressDialog({ open: value, address: null });
+  };
+
+  const onConfirmRemoveAddress = async () => {
+    try {
+      await deleteAddress({ id: openRemoveDialog.id }).unwrap();
+      toast.success(t('toast.successSubmit'), { toastId: 'delete-address-success-toast' });
+      setOpenRemoveDialog({ open: false, id: 0 });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadingList = isFetchingActiveStore || isAddressLoading || isAddressFetching;
 
   const renderAddresses = () => {
-    if (loading) {
+    if (loadingList) {
       return (
         <div className={'absolute inset-0'}>
           <LoadingScreen />
@@ -85,10 +100,10 @@ const AddressesView = () => {
       if (addresses?.length) {
         return addresses.map((item, index) => (
           <AddressCard
-            key={item.id}
+            key={`${item.id}-${index}`}
             address={item}
             handleEdit={handleEdit}
-            handleRemove={handleRemove}
+            handleRemove={({ id }) => setOpenRemoveDialog({ open: true, id })}
           />
         ));
       } else {
@@ -101,15 +116,6 @@ const AddressesView = () => {
           />
         );
       }
-    }
-  };
-
-  const handleNewAddress = (value: boolean) => {
-    if (!value) {
-      setAddress(null);
-      setAddEditAddressDialog(value);
-    } else {
-      setAddEditAddressDialog(value);
     }
   };
 
@@ -128,7 +134,7 @@ const AddressesView = () => {
               value={selectedOption}
               allOptionText={'همه شعب'}
               placeholder={'انتخاب شعبه'}
-              handleChange={handleChange}
+              handleChange={handleBranchOption}
               name={'branches-field'}
               isMulti={true}
               options={activeStores || []}
@@ -138,7 +144,7 @@ const AddressesView = () => {
             <Button
               variant={'outlined'}
               startIcon={<NewAddressIcon width={'20px'} height={'20px'} />}
-              onClick={() => handleNewAddress(true)}
+              onClick={() => handleAddressDialog(true)}
               className={
                 'fixed z-10 right-7 bottom-7 md:right-[initial] md:bottom-[initial] md:relative md:inline-flex'
               }
@@ -149,17 +155,36 @@ const AddressesView = () => {
         </div>
         {renderAddresses()}
       </Stack>
-      {addEditAddressDialog && (
+      {addEditAddressDialog.open && (
         <AddEditAddressDialog
           open={true}
-          setOpen={handleNewAddress}
-          data={address}
+          setOpen={handleAddressDialog}
+          data={addEditAddressDialog.address}
           storeId={activeStore?.storeId!}
+        />
+      )}
+      {openRemoveDialog.open && (
+        <ConfirmDialog
+          open={true}
+          title={'حذف آدرس منتخب؟'}
+          subTitle={
+            'در صورت حدف آدرس از لیست آدرس‌های منتخب، این آدرس در سفارش‌های بعدی شما نشان داده نخواهد شد.'
+          }
+          confirmBtnProps={{
+            children: 'حذف آدرس',
+            startIcon: <RemoveIcon color={'var(--mui-palette-error-contrastText)'} />,
+            loading: isDeleteLoading,
+          }}
+          cancelBtnProps={{
+            children: 'بیخیال',
+          }}
+          onConfirm={onConfirmRemoveAddress}
+          onCancel={() => setOpenRemoveDialog({ open: false, id: 0 })}
+          setOpen={(open) => setOpenRemoveDialog({ open, id: 0 })}
         />
       )}
     </>
   );
 };
 
-// ثبت آدرس جدید
 export default AddressesView;

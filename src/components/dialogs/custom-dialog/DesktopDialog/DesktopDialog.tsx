@@ -48,8 +48,8 @@ const DesktopDialog = ({
       PaperProps={PaperProps}
       {...rest}
     >
-      <ModalHeader title={title} icon={icon} setOpen={setOpen} />
-      <Box className={'p-5'}>{children}</Box>
+      {title ? <ModalHeader title={title} icon={icon} setOpen={setOpen} /> : null}
+      <Box className={'p-4'}>{children}</Box>
     </Dialog>
   );
 };

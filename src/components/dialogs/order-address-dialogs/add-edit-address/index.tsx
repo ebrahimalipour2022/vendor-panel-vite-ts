@@ -129,7 +129,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
       if (data?.id) {
         await putAddress({ id: data?.id, data: values }).unwrap();
       } else {
-        await postAddress({ storeId: values?.storeBranch?.value, ...values }).unwrap();
+        await postAddress({ storeId: +values?.storeBranch?.value!, ...values }).unwrap();
       }
       toast.success(t('toast.successSubmit'), { toastId: 'address-success-toast' });
       handleClose();
@@ -156,7 +156,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
       >
         <form onSubmit={handleSubmit(onSubmit)} className={'w-full'}>
           <div className={'flex gap-4 h-[100%]  md:h-[75vh]'}>
-            <div className={'w-full md:max-w-[348px] relative pb-6 px-2  md:overflow-y-auto'}>
+            <div className={'w-full md:max-w-[348px] relative pb-6 md:pl-2  md:overflow-y-auto'}>
               <Grid container spacing={5}>
                 <Grid item xs={12} className={'block md:hidden'}>
                   <div className={'relative'}>
