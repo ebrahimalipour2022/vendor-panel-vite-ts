@@ -85,7 +85,12 @@
     "registerNewAddress": "ثبت آدرس جدید",
     "removeAddressTitle": "حذف آدرس منتخب؟",
     "removeAddressSubTitle": "در صورت حدف آدرس از لیست آدرس\u200Cهای منتخب، این آدرس در سفارش\u200Cهای بعدی شما نشان داده نخواهد شد.",
-    "removeAddress": "حذف آدرس"
+    "removeAddress": "حذف آدرس",
+    "receiver": "گیرنده",
+    "confirmAndSubmitAddress": "تایید و ثبت آدرس",
+    "cancelAddressTitle": "لغو ثبت آدرس؟",
+    "cancelAddressSubTitle": "در صورت بستن صفحه ثبت آدرس، هیچ اطلاعاتی از آدرس جدید در سیستم ثبت نخواهد شد.",
+    "continue": "ادامه ثبت آدرس"
   },
   "wallet": {
     "walletBalance": "موجودی کیف پول",

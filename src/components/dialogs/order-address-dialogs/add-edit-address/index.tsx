@@ -83,22 +83,22 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
         value: '',
         label: '',
       },
-      title: 'میدان ونک',
-      fullName: 'ابراهیم علی پور',
+      title: '',
+      fullName: '',
       clientAddress: '',
-      plaque: '3',
-      unit: '4',
-      floor: '5',
+      plaque: '',
+      unit: '',
+      floor: '',
       location: {
         latitude: DEFAULT_POSITION.lat,
         longitude: DEFAULT_POSITION.lng,
       },
-      mobile: '09115700127',
+      mobile: '',
     },
     resolver,
   });
 
-  console.log('errors', errors);
+  // console.log('errors', errors);
 
   const watchLocation = watch('location');
 
@@ -237,6 +237,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         helperText={error?.message}
                         required={true}
                         disabled={fullSubmitting}
+                        inputProps={{
+                          maxLength: 100,
+                        }}
                         {...field}
                       />
                     )}
@@ -257,6 +260,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         multiline={true}
                         maxRows={4}
                         disabled={fullSubmitting}
+                        inputProps={{
+                          maxLength: 1000,
+                        }}
                         {...field}
                       />
                     )}
@@ -276,6 +282,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           helperText={error?.message}
                           required={true}
                           disabled={fullSubmitting}
+                          inputProps={{
+                            maxLength: 10,
+                          }}
                           {...field}
                         />
                       )}
@@ -294,6 +303,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           helperText={error?.message}
                           required={true}
                           disabled={fullSubmitting}
+                          inputProps={{
+                            maxLength: 10,
+                          }}
                           {...field}
                         />
                       )}
@@ -312,6 +324,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                           helperText={error?.message}
                           required={true}
                           disabled={fullSubmitting}
+                          inputProps={{
+                            maxLength: 10,
+                          }}
                           {...field}
                         />
                       )}
@@ -334,6 +349,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         helperText={error?.message}
                         required={true}
                         disabled={fullSubmitting}
+                        inputProps={{
+                          maxLength: 150,
+                        }}
                         {...field}
                       />
                     )}
@@ -352,6 +370,9 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         helperText={error?.message}
                         required={true}
                         disabled={fullSubmitting}
+                        inputProps={{
+                          maxLength: 10,
+                        }}
                         {...field}
                       />
                     )}
@@ -365,7 +386,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                     loading={fullSubmitting}
                     // className={'absolute bottom-0'}
                   >
-                    تایید و ثبت آدرس
+                    {t('address.confirmAndSubmitAddress')}
                   </LoadingButton>
                 </Grid>
               </Grid>
@@ -394,16 +415,16 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
       {openAlertDialog && (
         <ConfirmDialog
           open={true}
-          title={'لغو ثبت آدرس؟'}
-          subTitle={'در صورت بستن صفحه ثبت آدرس، هیچ اطلاعاتی از آدرس جدید در سیستم ثبت نخواهد شد.'}
+          title={t('address.cancelAddressTitle')}
+          subTitle={t('address.cancelAddressSubTitle')}
           confirmBtnProps={{
-            children: 'ادامه ثبت آدرس',
+            children: t('address.continue'),
             variant: 'contained',
             color: 'primary',
             className: 'w-[calc(100%_-_130px)]',
           }}
           cancelBtnProps={{
-            children: 'حذف آدرس',
+            children: t('address.removeAddress'),
             startIcon: <RemoveIcon color={'var(--mui-palette-error-main)'} />,
             variant: 'outlined',
             color: 'error',

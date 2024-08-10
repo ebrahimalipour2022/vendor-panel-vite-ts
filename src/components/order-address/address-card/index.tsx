@@ -112,7 +112,7 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
           <div className="relative  md:min-w-[100px] md:max-w-[200px] md:px-2 border-b md:border-b-0 ">
             <AddressItem
               icon={ICONS.fullName}
-              label={'گیرنده'}
+              label={t('address.receiver')}
               value={address?.fullName || '-----'}
             />
             <div className={'absolute left-0 top-1/4 h-1/2 border-l-2'} />
@@ -120,7 +120,7 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
           <div className="w-full md:min-w-[100px] md:max-w-[200px] mt-3  md:px-2">
             <AddressItem
               icon={ICONS.phoneNumber}
-              label={'شماره تلفن'}
+              label={t('address.mobile')}
               value={address?.mobile || '-----'}
             />
           </div>
