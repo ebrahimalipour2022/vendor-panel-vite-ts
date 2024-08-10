@@ -17,26 +17,29 @@ import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/Re
 import LoadingScreen from '@/components/loading-screen/loading-screen';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import SearchField from './SearchField';
+import { useSearchParams } from 'react-router-dom';
+import AddressSearchField from './SearchField';
 
 const AddressesView = () => {
   const { t } = useTranslation();
   const { data: activeStore, isLoading: isFetchingActiveStore } = useGetActiveStoreQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryValues = {
+    query: searchParams.get('query') ?? '',
+  };
 
   const [
     getList,
     { currentData: addresses, isLoading: isAddressLoading, isFetching: isAddressFetching },
   ] = useLazyGetOrderAddressesQuery();
-
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
   const [deleteAddress, { isLoading: isDeleteLoading }] = useDeleteOrderAddressesMutation();
-  const [selectedOption, setSelectedOption] = useState([]);
 
+  const [selectedOption, setSelectedOption] = useState([]);
   const [addEditAddressDialog, setAddEditAddressDialog] = useState<{
     address: IOrderAddress | null;
     open: boolean;
   }>({ open: false, address: null });
-
   const [openRemoveDialog, setOpenRemoveDialog] = useState<{ id: number; open: boolean }>({
     id: 0,
     open: false,
@@ -44,16 +47,7 @@ const AddressesView = () => {
 
   const getAddressList = async (id: number) => {
     try {
-      // let _queryValues = {
-      //   ...queryValues,
-      //   ToRegistrationCreateDate: queryValues?.ToRegistrationCreateDate
-      //     ? jMoment(queryValues.ToRegistrationCreateDate).format('YYYYMMDDHHmmssSSS')
-      //     : '',
-      //   FromRegistrationCreateDate: queryValues?.FromRegistrationCreateDate
-      //     ? jMoment(queryValues.FromRegistrationCreateDate).format('YYYYMMDDHHmmssSSS')
-      //     : '',
-      // };
-      await getList({ id: id!, query: '' }).unwrap();
+      await getList({ id: id!, query: queryValues?.query }).unwrap();
     } catch (e) {
       /* empty */
     }
@@ -63,7 +57,7 @@ const AddressesView = () => {
     if (activeStore?.storeId) {
       getAddressList(activeStore?.storeId);
     }
-  }, [activeStore]);
+  }, [activeStore, searchParams]);
 
   const handleBranchOption = (newOptions: any) => {
     setSelectedOption(newOptions);
@@ -127,7 +121,7 @@ const AddressesView = () => {
             </Typography>
           </div>
           <div id={'page-actions'} className={'flex flex-row align-center flex-wrap gap-2'}>
-            <SearchField placeholder={t('common.searchInList')} sx={{ maxWidth: 250 }} />
+            <AddressSearchField placeholder={t('common.searchInList')} sx={{ maxWidth: 250 }} />
             <RHFReactSelectField
               value={selectedOption}
               allOptionText={t('address.allBranches')}
