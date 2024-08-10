@@ -27,7 +27,7 @@ export default function SplashScreen({ sx, ...other }: BoxProps) {
         animate={{ opacity: showSplashScreen ? 1 : 0 }}
         transition={{ duration: 0.5 }}
         className={classnames(
-          'w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] md:none right-0 bottom-0',
+          'md:hidden w-full bs-full fixed z-[9999] items-center justify-center bg-[--mui-palette-primary-main] right-0 bottom-0',
           {
             hidden: !showSplashScreen,
             flex: showSplashScreen,

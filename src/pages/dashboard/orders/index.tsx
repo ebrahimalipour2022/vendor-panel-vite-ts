@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import DeliveryProgress from '@/components/order-steps-progress';
+import CustomizedSteppers from '@/components/order-steps-progress';
+import { progressStep } from '@/components/order-steps-progress/steps';
 // sections
 // ----------------------------------------------------------------------
 
@@ -12,7 +13,18 @@ export default function Page() {
       <Helmet>
         <title> {t('pagesTitle.orders')}</title>
       </Helmet>
-      <DeliveryProgress />
+      <div className={'w-full mb-5'}>
+        <CustomizedSteppers steps={progressStep.successfully} />
+      </div>
+      <div className={'w-full mb-5'}>
+        <CustomizedSteppers steps={progressStep.returned} />
+      </div>
+      <div className={'w-full mb-5'}>
+        <CustomizedSteppers steps={progressStep.canceled} />
+      </div>
+      <div className={'w-full'}>
+        <CustomizedSteppers steps={progressStep.backAndForth} />
+      </div>
     </>
   );
 }

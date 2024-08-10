@@ -18,3 +18,7 @@ export { default as EditIcon } from './EditIcon';
 export { default as RemoveIcon } from './RemoveIcon';
 export { default as PlusIcon } from './PlusIcon';
 export { default as ArrowUp } from './ArrowUp';
+export { default as TodoIcon } from './steps/TodoIcon';
+export { default as ActiveIcon } from './steps/ActiveIcon';
+export { default as DoneIcon } from './steps/DoneIcon';
+export { default as RejectIcon } from './steps/RejectIcon';
