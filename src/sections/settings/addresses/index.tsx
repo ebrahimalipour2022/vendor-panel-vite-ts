@@ -174,9 +174,13 @@ const AddressesView = () => {
             children: 'حذف آدرس',
             startIcon: <RemoveIcon color={'var(--mui-palette-error-contrastText)'} />,
             loading: isDeleteLoading,
+            variant: 'contained',
+            color: 'error',
           }}
           cancelBtnProps={{
             children: 'بیخیال',
+            variant: 'outlined',
+            color: 'primary',
           }}
           onConfirm={onConfirmRemoveAddress}
           onCancel={() => setOpenRemoveDialog({ open: false, id: 0 })}

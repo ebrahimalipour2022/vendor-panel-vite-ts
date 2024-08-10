@@ -8,7 +8,7 @@ import type { IOrderAddress } from '@/types/address';
 import { MapReverseAddressRes } from '@/types/address';
 import { isEmpty } from '@/utils/common';
 import { useTranslation } from 'react-i18next';
-import { EditIcon, LocationIcon } from '@/assets/icons';
+import { EditIcon, LocationIcon, RemoveIcon } from '@/assets/icons';
 import RHFOutlinedInput from '@/components/hook-form-fields/RHFOutlinedInput';
 import LoadingButton from '@mui/lab/LoadingButton';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
@@ -25,6 +25,7 @@ import { DEFAULT_POSITION } from '@/config-global';
 import MapDialog from '@/components/dialogs/map-dialog';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
+import ConfirmDialog from '@/components/dialogs/confirm-dialog';
 
 type AddOrderProps = {
   open: boolean;
@@ -32,6 +33,7 @@ type AddOrderProps = {
   data?: IOrderAddress | null;
   storeId: number;
 };
+
 const resolver = yupResolver(
   Yup.object().shape({
     storeBranch: Yup.object()
@@ -61,6 +63,7 @@ const resolver = yupResolver(
 const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) => {
   const { t } = useTranslation();
   const [openMapDialog, setOpenMapDialog] = useState(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   const { data: activeStores, isLoading: isActiveStoresLoading } = useGetAllActiveStoresQuery();
   const [postAddress, { isLoading: isPostLoading }] = usePostOrderAddressesMutation();
@@ -99,10 +102,18 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
 
   const watchLocation = watch('location');
 
+  const handleOpenAlert = () => {
+    setOpenAlertDialog(true);
+  };
+
   const handleClose = () => {
-    console.log('handleClose');
     reset();
+    setOpenAlertDialog(false);
     setOpen(false);
+  };
+
+  const onConfirm = () => {
+    setOpenAlertDialog(false);
   };
 
   useEffect(() => {
@@ -124,7 +135,6 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
   };
 
   const onSubmit = async (values: IOrderAddress) => {
-    console.log('on submit :', values);
     try {
       if (data?.id) {
         await putAddress({ id: data?.id, data: values }).unwrap();
@@ -148,7 +158,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
     <>
       <CustomDialog
         open={open}
-        setOpen={handleClose}
+        setOpen={handleOpenAlert}
         title={title}
         maxWidth={'lg'}
         fullWidth={true}
@@ -370,15 +380,38 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
           </div>
         </form>
       </CustomDialog>
-      <MapDialog
-        title={title}
-        open={openMapDialog}
-        setOpen={setOpenMapDialog}
-        setAddress={setAddress}
-        onlyView={false}
-        position={watchLocation}
-        icon={<LocationIcon />}
-      />
+      {openMapDialog && (
+        <MapDialog
+          title={title}
+          open={true}
+          setOpen={setOpenMapDialog}
+          setAddress={setAddress}
+          onlyView={false}
+          position={watchLocation}
+          icon={<LocationIcon />}
+        />
+      )}
+      {openAlertDialog && (
+        <ConfirmDialog
+          open={true}
+          title={'لغو ثبت آدرس؟'}
+          subTitle={'در صورت بستن صفحه ثبت آدرس، هیچ اطلاعاتی از آدرس جدید در سیستم ثبت نخواهد شد.'}
+          confirmBtnProps={{
+            children: 'ادامه ثبت آدرس',
+            variant: 'contained',
+            color: 'primary',
+          }}
+          cancelBtnProps={{
+            children: 'حذف آدرس',
+            startIcon: <RemoveIcon color={'var(--mui-palette-error-main)'} />,
+            variant: 'outlined',
+            color: 'error',
+          }}
+          onConfirm={onConfirm}
+          onCancel={handleClose}
+          setOpen={handleClose}
+        />
+      )}
     </>
   );
 };

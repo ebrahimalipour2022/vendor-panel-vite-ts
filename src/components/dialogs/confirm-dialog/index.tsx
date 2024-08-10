@@ -48,22 +48,19 @@ const ConfirmDialog = (props: Props) => {
         <div className={'flex flex-row items-center gap-2'}>
           {onConfirm && (
             <LoadingButton
-              {...confirmBtnProps}
               fullWidth
-              variant={'contained'}
               size={'large'}
-              color={'error'}
               onClick={onConfirm}
-              className={'w-[calc(100% - 80px)]'}
+              {...confirmBtnProps}
+              // className={'w-[calc(100% - 80px)]'}
             />
           )}
           {onCancel && (
             <Button
-              {...cancelBtnProps}
-              variant={'outlined'}
               size={'large'}
               onClick={onCancel}
-              className={'min-w-[80px]'}
+              className={'text-nowrap min-w-[25%]'}
+              {...cancelBtnProps}
             />
           )}
         </div>
