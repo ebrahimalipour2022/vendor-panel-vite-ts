@@ -104,7 +104,7 @@ function CustomizedSteppers({ steps }: { steps: IStep[] }) {
         {steps.map((item, index) => (
           <Step key={index}>
             <MuiStepLabel StepIconComponent={QontoStepIcon}>
-              <div className={'flex flex-col items-center justify-center'}>
+              <div className={'flex-col items-center justify-center hidden md:flex'}>
                 <Typography
                   variant={'caption'}
                   component={'div'}

@@ -13,4 +13,5 @@ export interface IStep {
   title?: IStepTitle;
   subtitle?: string;
   status?: StepStatus;
+  name?: string;
 }
