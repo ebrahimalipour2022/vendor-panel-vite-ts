@@ -23,9 +23,14 @@ import menuItemStyles from '@/layouts/materialize-layout/@core/styles/vertical/m
 import menuSectionStyles from '@/layouts/materialize-layout/@core/styles/vertical/menuSectionStyles';
 import WalletBalance from '@/layouts/materialize-layout/components/layout/shared/WalletBalance';
 import AccountMenuItem from '@/layouts/materialize-layout/@menu/components/vertical-menu/AccountMenuItem';
-import ArrowUpIcon from '@/assets/icons/ArrowUp';
-import { ArrowRightIcon } from '@mui/x-date-pickers';
 import { ArrowForwardIosOutlined } from '@mui/icons-material';
+import {
+  OrdersIcon,
+  ReportsIcon,
+  TransactionIcon,
+  SettingsIcon,
+  OrderAddressIcon,
+} from '@/assets/icons';
 
 // Menu Data Imports
 // import menuData from '@/data/navigation/verticalMenuData'
@@ -85,24 +90,21 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
         <AccountMenuItem settings={settings} />
         <div className="border-b w-full  border-[--mui-palette-primary-light]" />
-        <MenuItem
-          href="/dashboard/orders"
-          icon={<i className="ri-home-smile-line" />}
-        >{`سفارش ها`}</MenuItem>
-        <MenuItem
-          href="/dashboard/reports"
-          icon={<i className="ri-home-smile-line" />}
-        >{`گزارش ها`}</MenuItem>
+        <MenuItem href="/dashboard/orders" icon={<OrdersIcon />}>{`سفارش ها`}</MenuItem>
+        <MenuItem href="/dashboard/reports" icon={<ReportsIcon />}>{`گزارش ها`}</MenuItem>
         <MenuItem
           href="/dashboard/transactions"
-          icon={<i className="ri-home-smile-line" />}
+          icon={<TransactionIcon />}
         >{`موجودی و تراکنش ها`}</MenuItem>
         <SubMenu
           label="تنظیمات"
-          icon={<i className="ri-home-smile-line" />}
+          icon={<SettingsIcon />}
           // suffix={<Chip label='3' size='small' color='error' />}
         >
-          <MenuItem href="/dashboard/order-address">{`آدرس ها`}</MenuItem>
+          <MenuItem
+            href="/dashboard/order-address"
+            icon={<OrderAddressIcon />}
+          >{`آدرس ها`}</MenuItem>
         </SubMenu>
         <div className="block md:hidden w-full border-b my-2 border-[--mui-palette-primary-light]" />
       </Menu>

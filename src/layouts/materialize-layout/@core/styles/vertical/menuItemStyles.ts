@@ -34,8 +34,8 @@ const menuItemStyles = (
           }),
       [`&.${menuClasses.subMenuRoot}.${menuClasses.open} > .${menuClasses.button}, &.${menuClasses.subMenuRoot} > .${menuClasses.button}.${menuClasses.active}`]:
         {
-          // backgroundColor: 'var(--mui-palette-action-selected) !important'
-          backgroundColor: 'unset !important',
+          backgroundColor: 'var(--mui-palette-primary-light) !important',
+          // backgroundColor: 'unset !important',
           color: 'var(--mui-palette-primary-contrastText)',
         },
       [`&.${menuClasses.disabled} > .${menuClasses.button}`]: {
@@ -56,6 +56,9 @@ const menuItemStyles = (
               boxShadow: 'var(--mui-customShadows-xs)',
               [`& .${menuClasses.icon}`]: {
                 color: 'inherit',
+                '& svg > path': {
+                  fill: 'var(--mui-palette-primary-contrastText)',
+                },
               },
             }),
       },

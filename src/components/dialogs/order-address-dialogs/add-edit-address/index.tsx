@@ -371,7 +371,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
                         required={true}
                         disabled={fullSubmitting}
                         inputProps={{
-                          maxLength: 10,
+                          maxLength: 11,
                         }}
                         {...field}
                       />

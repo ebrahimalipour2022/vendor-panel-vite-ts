@@ -22,3 +22,8 @@ export { default as TodoIcon } from './steps/TodoIcon';
 export { default as ActiveIcon } from './steps/ActiveIcon';
 export { default as DoneIcon } from './steps/DoneIcon';
 export { default as RejectIcon } from './steps/RejectIcon';
+export { default as ReportsIcon } from './menu/ReportsIcon';
+export { default as SettingsIcon } from './menu/SettingsIcon';
+export { default as OrdersIcon } from './menu/OrdersIcon';
+export { default as TransactionIcon } from './menu/TransactionIcon';
+export { default as OrderAddressIcon } from './menu/OrderAddressIcon';
