@@ -19,6 +19,7 @@ import {
   RemoveIcon,
 } from '@/assets/icons';
 import { useTranslation } from 'react-i18next';
+import Divider from '@mui/material/Divider';
 
 const ICONS = {
   fullName: <ReceiverIcon />,
@@ -109,15 +110,16 @@ const AddressCard = ({ address, handleEdit, handleRemove }: Props) => {
       />
       <CardContent className={'px-1 !py-6'}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-          <div className="relative  md:min-w-[100px] md:max-w-[200px] md:px-2 border-b md:border-b-0 ">
+          <div className="relative  md:min-w-[100px] md:max-w-[200px] md:px-2 ">
             <AddressItem
               icon={ICONS.fullName}
               label={t('address.receiver')}
               value={address?.fullName || '-----'}
             />
-            <div className={'absolute left-0 top-1/4 h-1/2 border-l-2'} />
+            <div className={'hidden md:block absolute left-0 top-1/4 h-1/2 border-l-2'} />
           </div>
-          <div className="w-full md:min-w-[100px] md:max-w-[200px] mt-3  md:px-2">
+          <Divider className={'block md:hidden'} />
+          <div className="w-full md:min-w-[100px] md:max-w-[200px]  md:px-2">
             <AddressItem
               icon={ICONS.phoneNumber}
               label={t('address.mobile')}
