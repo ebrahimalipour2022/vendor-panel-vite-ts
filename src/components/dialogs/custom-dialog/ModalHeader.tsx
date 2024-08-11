@@ -4,6 +4,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import { CloseOutlined } from '@mui/icons-material';
+import Typography from '@mui/material/Typography';
 
 type ModalHeaderProps = {
   title: ReactNode | string;
@@ -37,7 +38,9 @@ export const ModalHeader = ({ title, icon: Icon, setOpen }: ModalHeaderProps) =>
             {Icon}
           </Box>
         ) : null}
-        <div className={'mt-1'}>{title}</div>
+        <Typography className={'mt-1'} color={'primary'} fontWeight={'600'}>
+          {title}
+        </Typography>
       </div>
       <IconButton
         onClick={() => setOpen(false)}
