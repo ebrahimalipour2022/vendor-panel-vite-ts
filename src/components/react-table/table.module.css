@@ -16,12 +16,13 @@
     color: var(--mui-palette-text-primary);
 
     th {
-      font-weight: 500;
-      font-size: 0.8125rem;
+      font-weight: 600;
+      font-size: 0.75rem;
       letter-spacing: 0.2px;
       line-height: 1.8462;
       text-align: start;
       block-size: 64px;
+
       background-color: var(--mui-palette-customColors-tableHeaderBg);
       &:not(:first-of-type):not(:last-of-type) {
         padding-block: 0.5rem;
@@ -45,12 +46,12 @@
 
   tbody {
     color: var(--mui-palette-text-secondary);
-
     th,
     td {
-      font-size: 0.9375rem;
+      font-size: 0.875rem;
       line-height: 1.4667;
-      block-size: 50px;
+      block-size: 64px;
+      font-weight: 600;
       &:not(:first-of-type):not(:last-of-type) {
         padding-block: 0.5rem;
         padding-inline: 1rem;

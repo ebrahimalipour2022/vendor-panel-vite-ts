@@ -2,6 +2,7 @@ import TextField, { TextFieldProps } from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { SearchIcon } from '@/assets/icons';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useSearchParams } from 'react-router-dom';
 
 const DebouncedInput = ({
   value: initialValue,
@@ -14,8 +15,8 @@ const DebouncedInput = ({
   debounce?: number;
 } & TextFieldProps) => {
   // States
+  const [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState(initialValue);
-
   useEffect(() => {
     setValue(initialValue);
   }, [initialValue]);
