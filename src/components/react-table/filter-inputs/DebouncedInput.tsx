@@ -36,6 +36,7 @@ const DebouncedInput = ({
       variant={'outlined'}
       size="small"
       value={value}
+      fullWidth
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

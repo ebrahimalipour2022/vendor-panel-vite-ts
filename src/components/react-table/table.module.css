@@ -21,7 +21,8 @@
       letter-spacing: 0.2px;
       line-height: 1.8462;
       text-align: start;
-      block-size: 64px;
+      block-size: 40px;
+      border:1px solid var(--mui-palette-divider) ;
 
       background-color: var(--mui-palette-customColors-tableHeaderBg);
       &:not(:first-of-type):not(:last-of-type) {
@@ -52,6 +53,7 @@
       line-height: 1.4667;
       block-size: 64px;
       font-weight: 600;
+      border:1px solid var(--mui-palette-divider) ;
       &:not(:first-of-type):not(:last-of-type) {
         padding-block: 0.5rem;
         padding-inline: 1rem;

@@ -2,7 +2,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 // MUI Imports
-
 // Third-party Imports
 import type { Column, ColumnDef, PaginationState } from '@tanstack/react-table';
 import { flexRender, getCoreRowModel, RowData, useReactTable } from '@tanstack/react-table';
@@ -12,7 +11,8 @@ import { StateOption } from '@/types';
 import { DebouncedInput } from '@/components/react-table/filter-inputs';
 import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/ReactSelectField';
 import { LoadingScreen } from '@/components/loading-screen';
-import { useMemo } from 'react';
+import { Pagination } from '@mui/material';
+import * as React from 'react';
 import styles from './table.module.css';
 // Data Imports
 
@@ -90,6 +90,9 @@ function Filter({ column }: { column: Column<any, unknown> }) {
       isLoading={false}
       isDisable={false}
       size={'small'}
+      outlinedSx={{
+        bgcolor: 'white',
+      }}
     />
   ) : (
     <DebouncedInput
@@ -117,95 +120,103 @@ const TanStackTable = <TData, TValue>({
     state: {
       pagination,
     },
-    onPaginationChange: setPagination,
+    // onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
     debugTable: true,
   });
+
+  const onChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    console.log('page', page);
+    if (setPagination) {
+      setPagination({ pageIndex: page, pageSize: 10 });
+    }
+  };
 
   return (
     <>
       {isLoading ? (
         <LoadingScreen />
       ) : (
-        <div className="overflow-x-auto">
-          <table className={styles.table}>
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
+        <div className={'flex flex-col gap-2'}>
+          <div className="overflow-x-auto">
+            <table className={styles.table}>
+              <thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <th key={header.id}>
+                          {header.isPlaceholder ? null : (
+                            <>
+                              <div
+                              // className={classnames({
+                              //   'flex items-center': header.column.getIsSorted(),
+                              //   'cursor-pointer select-none': header.column.getCanSort(),
+                              // })}
+                              // onClick={header.column.getToggleSortingHandler()}
+                              >
+                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                {/*{{*/}
+                                {/*  asc: <ChevronRight fontSize="1.25rem" className="-rotate-90" />,*/}
+                                {/*  desc: <ChevronRight fontSize="1.25rem" className="rotate-90" />,*/}
+                                {/*}[header.column.getIsSorted() as 'asc' | 'desc'] ?? null}*/}
+                              </div>
+                              {header.column.getCanFilter() && (
+                                <>
+                                  {/*@ts-ignore*/}
+                                  <Filter column={header.column} table={table} />
+                                </>
+                              )}
+                            </>
+                          )}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </thead>
+              {table.getFilteredRowModel().rows.length === 0 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={table.getVisibleFlatColumns().length} className="text-center">
+                      No data available
+                    </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {table.getRowModel().rows.map((row) => {
                     return (
-                      <th key={header.id}>
-                        {header.isPlaceholder ? null : (
-                          <>
-                            <div
-                            // className={classnames({
-                            //   'flex items-center': header.column.getIsSorted(),
-                            //   'cursor-pointer select-none': header.column.getCanSort(),
-                            // })}
-                            // onClick={header.column.getToggleSortingHandler()}
-                            >
-                              {flexRender(header.column.columnDef.header, header.getContext())}
-                              {/*{{*/}
-                              {/*  asc: <ChevronRight fontSize="1.25rem" className="-rotate-90" />,*/}
-                              {/*  desc: <ChevronRight fontSize="1.25rem" className="rotate-90" />,*/}
-                              {/*}[header.column.getIsSorted() as 'asc' | 'desc'] ?? null}*/}
-                            </div>
-                            {header.column.getCanFilter() && (
-                              <>
-                                {/*@ts-ignore*/}
-                                <Filter column={header.column} table={table} />
-                              </>
-                            )}
-                          </>
-                        )}
-                      </th>
+                      <tr key={row.id}>
+                        {row.getVisibleCells().map((cell) => {
+                          return (
+                            <td key={cell.id}>
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-              ))}
-            </thead>
-            {table.getFilteredRowModel().rows.length === 0 ? (
-              <tbody>
-                <tr>
-                  <td colSpan={table.getVisibleFlatColumns().length} className="text-center">
-                    No data available
-                  </td>
-                </tr>
-              </tbody>
-            ) : (
-              <tbody>
-                {table.getRowModel().rows.map((row) => {
-                  return (
-                    <tr key={row.id}>
-                      {row.getVisibleCells().map((cell) => {
-                        return (
-                          <td key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            )}
-          </table>
+                </tbody>
+              )}
+            </table>
+          </div>
+          <div className={'flex flex-row justify-center align-center '}>
+            <div className={'p-1 bg-[var(--mui-palette-action-disabledBackground)] rounded-2xl'}>
+              <Pagination
+                count={11}
+                defaultPage={1}
+                siblingCount={0}
+                shape="rounded"
+                color={'primary'}
+                onChange={onChange}
+              />
+            </div>
+          </div>
         </div>
       )}
-
-      {/*<TablePagination*/}
-      {/*  rowsPerPageOptions={[7, 10, 25, { label: 'All', value: data.length }]}*/}
-      {/*  component="div"*/}
-      {/*  className="border-bs"*/}
-      {/*  count={table.getFilteredRowModel().rows.length}*/}
-      {/*  rowsPerPage={table.getState().pagination.pageSize}*/}
-      {/*  page={table.getState().pagination.pageIndex}*/}
-      {/*  onPageChange={(_, page) => {*/}
-      {/*    table.setPageIndex(page);*/}
-      {/*  }}*/}
-      {/*  onRowsPerPageChange={(e) => table.setPageSize(Number(e.target.value))}*/}
-      {/*/>*/}
     </>
   );
 };
