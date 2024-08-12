@@ -13,6 +13,7 @@ import RHFReactSelectField from '@/components/hook-form-fields/RHFSelectField/Re
 import { LoadingScreen } from '@/components/loading-screen';
 import { Pagination } from '@mui/material';
 import * as React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styles from './table.module.css';
 // Data Imports
 
@@ -21,6 +22,7 @@ declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     filterVariant?: 'text' | 'number' | 'select' | 'date';
     filterOptions?: StateOption[];
+    filterName?: string;
   }
 }
 
@@ -46,29 +48,33 @@ export interface TableProps<TData, TValue> {
 }
 
 function Filter({ column }: { column: Column<any, unknown> }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  // console.log('column :', column);
   const columnFilterValue = column.getFilterValue();
   const filterOptions = column?.columnDef?.meta?.filterOptions;
+  const filterName = column?.columnDef?.meta?.filterName;
+  console.log('filterName :', filterName);
   const { filterVariant } = column.columnDef.meta ?? {};
 
   return filterVariant === 'number' ? (
     <div>
-      <div className="flex space-x-2">
-        {/* See faceted column filters example for min max values functionality */}
-        <DebouncedInput
-          type="number"
-          value={(columnFilterValue as [number, number])?.[0] ?? ''}
-          onChange={(value) => column.setFilterValue((old: [number, number]) => [value, old?.[1]])}
-          placeholder={`Min`}
-          className="w-24 border shadow rounded"
-        />
-        <DebouncedInput
-          type="number"
-          value={(columnFilterValue as [number, number])?.[1] ?? ''}
-          onChange={(value) => column.setFilterValue((old: [number, number]) => [old?.[0], value])}
-          placeholder={`Max`}
-          className="w-24 border shadow rounded"
-        />
-      </div>
+      {/*<div className="flex space-x-2">*/}
+      {/*  /!* See faceted column filters example for min max values functionality *!/*/}
+      {/*  <DebouncedInput*/}
+      {/*    type="number"*/}
+      {/*    value={(columnFilterValue as [number, number])?.[0] ?? ''}*/}
+      {/*    onChange={(value) => column.setFilterValue((old: [number, number]) => [value, old?.[1]])}*/}
+      {/*    placeholder={`Min`}*/}
+      {/*    className="w-24 border shadow rounded"*/}
+      {/*  />*/}
+      {/*  <DebouncedInput*/}
+      {/*    type="number"*/}
+      {/*    value={(columnFilterValue as [number, number])?.[1] ?? ''}*/}
+      {/*    onChange={(value) => column.setFilterValue((old: [number, number]) => [old?.[0], value])}*/}
+      {/*    placeholder={`Max`}*/}
+      {/*    className="w-24 border shadow rounded"*/}
+      {/*  />*/}
+      {/*</div>*/}
       <div className="h-1" />
     </div>
   ) : filterVariant === 'select' ? (
@@ -81,6 +87,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
         // if (item?.value) {
         if ('value' in item) {
           column.setFilterValue(item?.value);
+          // onChange(item?.value);
         }
         // }
       }}
@@ -95,12 +102,7 @@ function Filter({ column }: { column: Column<any, unknown> }) {
       }}
     />
   ) : (
-    <DebouncedInput
-      className="w-36 border rounded"
-      onChange={(value) => column.setFilterValue(value)}
-      type="text"
-      value={(columnFilterValue ?? '') as string}
-    />
+    <DebouncedInput className="w-36 border rounded" type="text" name={filterName!} />
     // See faceted column filters example for datalist search suggestions
   );
 }

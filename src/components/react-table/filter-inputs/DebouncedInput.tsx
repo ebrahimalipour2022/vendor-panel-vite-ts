@@ -5,25 +5,30 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useSearchParams } from 'react-router-dom';
 
 const DebouncedInput = ({
-  value: initialValue,
-  onChange,
+  // value: initialValue,
+  // onChange,
+  name,
   debounce = 500,
   ...props
 }: {
-  value: string | number;
-  onChange: (value: string | number) => void;
+  name: string;
+  // value: string | number;
+  // onChange: (value: string | number) => void;
   debounce?: number;
 } & TextFieldProps) => {
   // States
   const [searchParams, setSearchParams] = useSearchParams();
-  const [value, setValue] = useState(initialValue);
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+  const [value, setValue] = useState('');
+  // useEffect(() => {
+  //   setValue(searchParams.get(name) ?? '');
+  // }, [searchParams]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      onChange(value);
+      if (name) {
+        searchParams.set(name, value);
+        setSearchParams(searchParams);
+      }
     }, debounce);
 
     return () => clearTimeout(timeout);
