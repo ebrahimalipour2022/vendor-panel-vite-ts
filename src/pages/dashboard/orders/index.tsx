@@ -13,18 +13,18 @@ export default function Page() {
       <Helmet>
         <title> {t('pagesTitle.orders')}</title>
       </Helmet>
-      <div className={'w-full mb-5'}>
-        <CustomizedSteppers steps={progressStep.successfully} />
-      </div>
-      <div className={'w-full mb-5'}>
-        <CustomizedSteppers steps={progressStep.returned} />
-      </div>
-      <div className={'w-full mb-5'}>
-        <CustomizedSteppers steps={progressStep.canceled} />
-      </div>
-      <div className={'w-full'}>
-        <CustomizedSteppers steps={progressStep.backAndForth} />
-      </div>
+      {/*<div className={'w-full mb-5'}>*/}
+      {/*  <CustomizedSteppers steps={progressStep.successfully} />*/}
+      {/*</div>*/}
+      {/*<div className={'w-full mb-5'}>*/}
+      {/*  <CustomizedSteppers steps={progressStep.returned} />*/}
+      {/*</div>*/}
+      {/*<div className={'w-full mb-5'}>*/}
+      {/*  <CustomizedSteppers steps={progressStep.canceled} />*/}
+      {/*</div>*/}
+      {/*<div className={'w-full'}>*/}
+      {/*  <CustomizedSteppers steps={progressStep.backAndForth} />*/}
+      {/*</div>*/}
     </>
   );
 }

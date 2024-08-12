@@ -18,6 +18,7 @@ export const paths = {
     orders: `${ROOTS.DASHBOARD}/orders`,
     reports: `${ROOTS.DASHBOARD}/reports`,
     transactions: `${ROOTS.DASHBOARD}/transactions`,
+    wallet: `${ROOTS.DASHBOARD}/wallet`,
     settings: {
       orderAddress: `${ROOTS.DASHBOARD}/order-address`,
     },

@@ -27,3 +27,4 @@ export { default as SettingsIcon } from './menu/SettingsIcon';
 export { default as OrdersIcon } from './menu/OrdersIcon';
 export { default as TransactionIcon } from './menu/TransactionIcon';
 export { default as OrderAddressIcon } from './menu/OrderAddressIcon';
+export { default as ChevronRight } from './ChevronRight';

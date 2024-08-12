@@ -2,7 +2,7 @@ import type { JSX, ReactNode } from 'react';
 import { forwardRef, useState } from 'react';
 import classnames from 'classnames';
 import type { StylesConfig } from 'react-select';
-import Select, { components, useStateManager } from 'react-select';
+import Select, { components } from 'react-select';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -12,8 +12,9 @@ import type { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInp
 import type { StateOption } from '@/types/select-field';
 import FormLabel from '@mui/material/FormLabel';
 import Stack from '@mui/material/Stack';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, SxProps } from '@mui/material';
 import { SearchIcon } from '@/assets/icons';
+import { Theme } from '@mui/material/styles';
 
 const selectStyles: StylesConfig<StateOption, false> = {
   // @ts-ignore
@@ -27,7 +28,7 @@ const selectStyles: StylesConfig<StateOption, false> = {
   // @ts-ignore
   placeholder: (props) => ({
     ...props,
-    fontSize: '0.875rem',
+    fontSize: '0.75rem',
   }),
   // @ts-ignore
   input: (props) => ({
@@ -53,8 +54,10 @@ type Props = {
   isMulti?: boolean;
   error?: boolean;
   defaultValue?: StateOption[];
-  handleChange?: (value: StateOption[]) => void;
+  handleChange?: (value: StateOption | StateOption[]) => void;
   outlinedProps?: OutlinedInputProps;
+  outlinedSx?: SxProps<Theme>;
+  size?: 'small' | 'medium';
 };
 
 const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode }, ref: any) => {
@@ -70,10 +73,12 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
     isDisable,
     required,
     isLoading = true,
+    size,
     allOptionText,
     handleChange,
     defaultValue,
     outlinedProps,
+    outlinedSx,
   } = props;
   const [isOpen, setIsOpen] = useState(false);
   const disabled = isDisable || isLoading;
@@ -82,6 +87,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
     <Dropdown
       isOpen={isOpen}
       onClose={() => setIsOpen(false)}
+      size={size || 'medium'}
       target={
         <Stack spacing={1.7}>
           {label && (
@@ -93,6 +99,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
             ref={ref}
             name={name}
             disabled={disabled}
+            size={size || 'medium'}
             endAdornment={
               isOpen ? (
                 <InputAdornment position="end">
@@ -119,6 +126,7 @@ const RHFReactSelectField = forwardRef((props: Props & { helperText?: ReactNode 
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
               },
+              ...outlinedSx,
             }}
             {...(error && {
               error: true,
@@ -191,17 +199,26 @@ const Dropdown = ({
   isOpen,
   target,
   onClose,
+  size,
 }: {
   children?: ReactNode;
   readonly isOpen: boolean;
   readonly target: ReactNode;
   readonly onClose: () => void;
+  size?: 'small' | 'medium';
 }) => (
-  <div className={'relative'}>
+  <Box
+    sx={{
+      position: 'relative',
+      '& .option-item-class': {
+        padding: size === 'small' ? '3px' : '6px',
+      },
+    }}
+  >
     {target}
     {isOpen ? <Menu>{children}</Menu> : null}
     {isOpen ? <Blanket onClick={onClose} /> : null}
-  </div>
+  </Box>
 );
 const Svg = (p: JSX.IntrinsicElements['svg']) => (
   <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" role="presentation" {...p} />
@@ -233,7 +250,6 @@ const ChevronUp = () => (
 );
 const Option = (props: any) => {
   // const { data, options } = props
-
   const isLastOption = props?.data?.value === props?.options[props?.options?.length - 1]?.value;
 
   return (
@@ -241,7 +257,7 @@ const Option = (props: any) => {
       <components.Option
         {...props}
         className={classnames(
-          'cursor-pointer bg-transparent px-1 hover:bg-[var(--mui-palette-action-hover)]',
+          'option-item-class cursor-pointer bg-transparent px-1 hover:bg-[var(--mui-palette-action-hover)]',
           {
             'border-b border-[var(--mui-palette-divider)]': !isLastOption,
           }
