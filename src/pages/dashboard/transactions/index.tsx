@@ -23,7 +23,7 @@ export default function Page() {
         header: 'شماره تراکنش',
         meta: {
           filterVariant: 'text',
-          filterName: 'filterName1',
+          filterName: 'filter1',
         },
       },
       {
@@ -38,6 +38,7 @@ export default function Page() {
         header: 'نوع تراکنش',
         meta: {
           filterVariant: 'select',
+          filterName: 'filter2',
           filterOptions: [
             {
               value: 'all',
@@ -56,7 +57,7 @@ export default function Page() {
         header: 'کد سفارش',
         meta: {
           filterVariant: 'text',
-          filterName: 'filterName2',
+          filterName: 'filter3',
         },
       },
       {

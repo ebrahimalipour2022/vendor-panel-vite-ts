@@ -14,6 +14,7 @@ import { LoadingScreen } from '@/components/loading-screen';
 import { Pagination } from '@mui/material';
 import * as React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import styles from './table.module.css';
 // Data Imports
 
@@ -49,47 +50,52 @@ export interface TableProps<TData, TValue> {
 
 function Filter({ column }: { column: Column<any, unknown> }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [option, setOption] = useState({
+    label: '',
+    value: '',
+  });
+
   // console.log('column :', column);
   const columnFilterValue = column.getFilterValue();
   const filterOptions = column?.columnDef?.meta?.filterOptions;
   const filterName = column?.columnDef?.meta?.filterName;
-  console.log('filterName :', filterName);
   const { filterVariant } = column.columnDef.meta ?? {};
 
+  useEffect(() => {
+    if (filterName && searchParams) {
+      const value = searchParams.get(filterName);
+      if (value) {
+        const index =
+          filterOptions?.length &&
+          filterOptions.findIndex((item) => item.value === value.toLowerCase());
+        if (index) {
+          setOption(filterOptions[index]);
+        }
+      }
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      searchParams.set(filterName!, option.value);
+      setSearchParams(searchParams);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [option]);
+
   return filterVariant === 'number' ? (
-    <div>
-      {/*<div className="flex space-x-2">*/}
-      {/*  /!* See faceted column filters example for min max values functionality *!/*/}
-      {/*  <DebouncedInput*/}
-      {/*    type="number"*/}
-      {/*    value={(columnFilterValue as [number, number])?.[0] ?? ''}*/}
-      {/*    onChange={(value) => column.setFilterValue((old: [number, number]) => [value, old?.[1]])}*/}
-      {/*    placeholder={`Min`}*/}
-      {/*    className="w-24 border shadow rounded"*/}
-      {/*  />*/}
-      {/*  <DebouncedInput*/}
-      {/*    type="number"*/}
-      {/*    value={(columnFilterValue as [number, number])?.[1] ?? ''}*/}
-      {/*    onChange={(value) => column.setFilterValue((old: [number, number]) => [old?.[0], value])}*/}
-      {/*    placeholder={`Max`}*/}
-      {/*    className="w-24 border shadow rounded"*/}
-      {/*  />*/}
-      {/*</div>*/}
-      <div className="h-1" />
-    </div>
+    <div />
   ) : filterVariant === 'select' ? (
     <RHFReactSelectField
-      value={{ value: columnFilterValue?.toString()!, label: '' }}
+      value={option}
       // allOptionText={t('address.allBranches')}
       // placeholder={t('address.selectBranch')}
       handleChange={(item) => {
-        console.log('item', item);
-        // if (item?.value) {
         if ('value' in item) {
-          column.setFilterValue(item?.value);
-          // onChange(item?.value);
+          setOption(item);
         }
-        // }
       }}
       name={'branches-field'}
       isMulti={false}
