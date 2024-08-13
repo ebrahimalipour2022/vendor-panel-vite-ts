@@ -95,6 +95,7 @@ const AddEditAddressDialog = ({ open, setOpen, data, storeId }: AddOrderProps) =
       },
       mobile: '',
     },
+    //@ts-ignore
     resolver,
   });
 
